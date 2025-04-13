@@ -5,12 +5,11 @@ import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faShoppingCart,faHeart } from '@fortawesome/free-solid-svg-icons';
-import { CarrosselCorDinamicaComponent } from "../carrossel-cor-dinamica/carrossel-cor-dinamica.component";
 import { MegaMenuComponent } from "../mega-menu/mega-menu.component";
 
 @Component({
   selector: 'app-header',
-  imports: [ButtonModule, MenubarModule, DialogModule, InputTextModule, FontAwesomeModule, CarrosselCorDinamicaComponent, MegaMenuComponent],
+  imports: [ButtonModule, MenubarModule, DialogModule, InputTextModule, FontAwesomeModule, MegaMenuComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })

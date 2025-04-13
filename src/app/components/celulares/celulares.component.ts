@@ -6,10 +6,13 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import Produtos from '../../../data/Produtos';
 import { ProdutoCardComponent } from '../produto-card/produto-card.component';
+import { FooterComponent } from "../footer/footer.component";
+import { HeaderComponent } from "../header/header.component";
 
 @Component({
   selector: 'app-celulares',
-  imports: [CarouselModule, ButtonModule, CommonModule, FontAwesomeModule, ProdutoCardComponent],
+
+  imports: [CarouselModule, ButtonModule, CommonModule, FontAwesomeModule, ProdutoCardComponent, FooterComponent, HeaderComponent],
   templateUrl: './celulares.component.html',
   styleUrls: ['./celulares.component.scss', '../produtos/produtos.component.scss']
 })
@@ -44,4 +47,4 @@ export class CelularesComponent {
       },
     ];
   }
-} 
+}

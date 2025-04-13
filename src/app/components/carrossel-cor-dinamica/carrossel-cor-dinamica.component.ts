@@ -4,6 +4,7 @@ import { ProdutosComponent } from "../produtos/produtos.component";
 
 @Component({
   selector: 'app-carrossel-cor-dinamica',
+
   templateUrl: './carrossel-cor-dinamica.component.html',
   styleUrls: ['./carrossel-cor-dinamica.component.scss'],
   imports: [CommonModule, ProdutosComponent]

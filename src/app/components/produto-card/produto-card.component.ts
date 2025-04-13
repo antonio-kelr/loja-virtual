@@ -5,7 +5,7 @@ import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-produto-card',
-  standalone: true,
+  // standalone: true,
   imports: [CommonModule, FontAwesomeModule],
   templateUrl: './produto-card.component.html',
   styleUrls: ['./produto-card.component.scss']
