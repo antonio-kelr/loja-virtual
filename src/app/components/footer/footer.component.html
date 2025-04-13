@@ -1,0 +1,72 @@
+<footer class="footer">
+  <div class="footer-content maxWidth">
+    <div class="footer-section">
+      <h3>Sobre a KaBum!</h3>
+      <p>A KaBum! é uma das maiores lojas de tecnologia do Brasil, oferecendo os melhores produtos com os melhores preços.</p>
+      <div class="social-media">
+        <a href="#" class="social-link"><fa-icon [icon]="faFacebook"></fa-icon></a>
+        <a href="#" class="social-link"><fa-icon [icon]="faInstagram"></fa-icon></a>
+        <a href="#" class="social-link"><fa-icon [icon]="faTwitter"></fa-icon></a>
+        <a href="#" class="social-link"><fa-icon [icon]="faYoutube"></fa-icon></a>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h3>Links Úteis</h3>
+      <ul>
+        <li><a routerLink="/sobre">Sobre Nós</a></li>
+        <li><a routerLink="/contato">Contato</a></li>
+        <li><a routerLink="/politica-privacidade">Política de Privacidade</a></li>
+        <li><a routerLink="/termos-uso">Termos de Uso</a></li>
+        <li><a routerLink="/trocas-devolucoes">Trocas e Devoluções</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h3>Contato</h3>
+      <ul class="contact-info">
+        <li>
+          <fa-icon [icon]="faPhone"></fa-icon>
+          <span>(11) 1234-5678</span>
+        </li>
+        <li>
+          <fa-icon [icon]="faEnvelope"></fa-icon>
+          <span>contatokabum.com.br</span>
+        </li>
+        <li>
+          <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
+          <span>São Paulo, SP - Brasil</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h3>Newsletter</h3>
+      <p>Receba nossas novidades e promoções exclusivas!</p>
+      <form (ngSubmit)="onSubmit()" class="newsletter-form">
+        <input 
+          type="email" 
+          pInputText 
+          [(ngModel)]="email" 
+          name="email" 
+          placeholder="Seu melhor e-mail"
+          required
+        >
+        <p-button 
+          type="submit" 
+          label="Inscrever-se" 
+          styleClass="p-button-success"
+        ></p-button>
+      </form>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="maxWidth">
+      <p>&copy; 2024 KaBum! Todos os direitos reservados.</p>
+      <div class="payment-methods">
+        <img src="assets/img/payment-methods.png" alt="Métodos de pagamento">
+      </div>
+    </div>
+  </div>
+</footer>
