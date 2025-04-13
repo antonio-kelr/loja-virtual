@@ -4,13 +4,13 @@ import  Produtos from '../../../data/Produtos';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { CelularesComponent } from "../celulares/celulares.component";
 
 
 @Component({
   selector: 'app-produtos',
-  imports: [CarouselModule, ButtonModule, CommonModule,FontAwesomeModule],
+  imports: [CarouselModule, ButtonModule, CommonModule,FontAwesomeModule,CelularesComponent],
   templateUrl: './produtos.component.html',
   styleUrl: './produtos.component.scss'
 })

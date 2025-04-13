@@ -4,20 +4,12 @@
   line-height: 1.875rem;
   font-weight: 700;
 }
-.bg-fundo {
-  background: #FAFAFB;
-  height: 100vh;
-}
-.card {
-  border: none;
-  background: #FAFAFB;
 
-}
-
-.butto_comprar span  {
+.butto_comprar span {
   font-size: 14px;
 }
-.butto_comprar  {
+
+.butto_comprar {
   background: #FF6500;
   display: flex;
   align-items: center;
@@ -28,21 +20,14 @@
   color: white;
   border-radius: 5px;
 }
+
 .p_item_componet .icon {
- display: none;
- 
+  display: none;
 }
-.p_item_componet  {
-  background: #FFFFFF;
-}
+
 .p_item_componet:hover .icon {
- display: flex !important;
- font-size: 16px !important;
- 
-}
-.p_item_componet:hover {
-  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2); /* Sombra focada no bottom */
-  transition: box-shadow 0.3s ease-in-out;
+  display: flex !important;
+  font-size: 16px !important;
 }
 
 .op_payment, span {
@@ -57,11 +42,6 @@
   margin-top: 0.5rem;
   color: rgb(66, 70, 77);
   min-height: 3.75rem;
-}
-
-.cfPGuy * {
-  min-width: 0px;
-  
 }
 
 .nlmfp {
