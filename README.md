@@ -1,3 +1,50 @@
+# Loja Virtual - Front-End
+
+Este é o projeto front-end de uma loja virtual desenvolvida com Angular.
+
+## Fluxo de Compra
+
+O fluxo de compra da aplicação segue os seguintes passos:
+
+1. **Visualização de Produtos**
+   - Os produtos são exibidos na página inicial e nas páginas de categorias
+   - Cada produto possui um card com imagem, descrição e preço
+   - Ao clicar em um produto, o usuário é redirecionado para a página de detalhes
+
+2. **Página de Detalhes do Produto**
+   - Exibe imagens do produto
+   - Mostra descrição e especificações
+   - Apresenta o preço e opções de parcelamento
+   - Disponibiliza opções de frete
+   - Possui botões para adicionar ao carrinho e ir para o carrinho
+
+3. **Carrinho de Compras**
+   - Lista todos os produtos adicionados
+   - Permite alterar a quantidade de cada item
+   - Exibe o valor total da compra
+   - Oferece opções para continuar comprando, limpar o carrinho ou finalizar a compra
+
+4. **Finalização da Compra (Checkout)**
+   - Mostra o resumo dos itens no carrinho
+   - Exibe o valor total
+   - Oferece opções de pagamento: PIX e Cartão
+   - Possui botão para confirmar a compra
+
+## Tecnologias Utilizadas
+
+- Angular
+- TypeScript
+- SCSS
+- PrimeNG
+- Font Awesome
+
+## Como Executar o Projeto
+
+1. Clone o repositório
+2. Instale as dependências com `npm install`
+3. Execute o projeto com `ng serve`
+4. Acesse a aplicação em `http://localhost:4200`
+
 # Kaboom
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.0.

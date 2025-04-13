@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
+import { CarrinhoService } from '../../services/carrinho.service';
 
 @Component({
   selector: 'app-produto-card',
@@ -15,17 +16,24 @@ export class ProdutoCardComponent {
   @Input() produto: any;
   faShoppingCart = faShoppingCart;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private carrinhoService: CarrinhoService
+  ) {}
 
   get precoParcelado(): number {
     return this.produto.precoAtual / 10;
   }
 
+  verDetalhes(produto: any) {
+    this.router.navigate(['/produto', produto.id]);
+  }
+
   comprarAgora(produto: any) {
-    // Navegação para a página de checkout com o produto selecionado
-    // Em um caso real, você poderia usar um serviço para compartilhar os dados do produto
-    // ou usar parâmetros de rota ou estado de navegação
-    localStorage.setItem('produtoCompra', JSON.stringify(produto));
-    this.router.navigate(['/checkout']);
+    // Adiciona ao carrinho primeiro
+    this.carrinhoService.adicionarAoCarrinho(produto);
+
+    // Navega para a página de detalhes do produto
+    this.router.navigate(['/produto', produto.id]);
   }
 }

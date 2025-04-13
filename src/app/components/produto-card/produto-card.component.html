@@ -1,9 +1,9 @@
-<div class="p_item_componet border-surface-200 dark:border-surface-700 rounded m-2 p-4">
+<div class="p_item_componet border-surface-200 dark:border-surface-700 rounded m-2 p-4" (click)="verDetalhes(produto)">
   <div class="mb-4">
     <div class="relative mx-auto">
       <img
         src="https://images8.kabum.com.br/produtos/fotos/320908/gabinete-gamer-rise-mode-galaxy-glass-lateral-em-vidro-temperado-preto-rm-ga-gg-fb_1657738212_g.jpg"
-        [alt]="produto.name"
+        [alt]="produto.descricao"
         class="w-full rounded-border"
         style="height: 10.125rem; width: auto; max-width: 100%"
       />
@@ -25,13 +25,15 @@
       <span> ou até <b>10x de R$ {{ precoParcelado | number:'1.2-2' }}</b> </span>
     </div>
 
-    <div class="butto_comprar" (click)="comprarAgora(produto)">
-      <fa-icon
-        [icon]="faShoppingCart"
-        style="font-size: 20px; color: white"
-        class="icon"
-      ></fa-icon>
-      <span>Comprar</span>
+    <div class="botoes-container">
+      <div class="butto_comprar" (click)="comprarAgora(produto); $event.stopPropagation()">
+        <fa-icon
+          [icon]="faShoppingCart"
+          style="font-size: 20px; color: white"
+          class="icon"
+        ></fa-icon>
+        <span>Comprar</span>
+      </div>
     </div>
   </div>
 </div>

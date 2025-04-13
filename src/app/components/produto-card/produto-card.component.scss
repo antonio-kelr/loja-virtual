@@ -2,7 +2,7 @@
   background: #FFFFFF;
   transition: all 0.3s ease;
   cursor: pointer;
-  
+
   &:hover {
     box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
     transition: box-shadow 0.3s ease-in-out;
@@ -41,20 +41,58 @@
   font-size: .75rem;
 }
 
-.butto_comprar {
-  background: #FF6500;
+.botoes-container {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.625rem;
-  cursor: pointer;
-  padding: 4px;
-  color: white;
-  border-radius: 5px;
+  flex-direction: column;
 }
 
-.butto_comprar span {
+.butto_comprar {
+  background-color: #FF6500;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  font-weight: 600;
+
+  .icon {
+    margin-right: 8px;
+  }
+
+  span {
+    font-size: 1rem;
+    padding-top: 0;
+  }
+
+  &:hover {
+    background-color: darken(#FF6500, 10%);
+  }
+}
+
+.btn-add-carrinho {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #FF6500;
+  color: #FF6500;
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: white;
   font-size: 14px;
+
+  .icon {
+    margin-right: 8px;
+  }
+
+  &:hover {
+    background-color: rgba(255, 101, 0, 0.1);
+  }
 }
 
 .p_item_componet .icon {

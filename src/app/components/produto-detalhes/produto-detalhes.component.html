@@ -1,0 +1,132 @@
+<app-header></app-header>
+
+<div class="produto-detalhes-container" *ngIf="produto">
+  <div class="produto-grid">
+    <!-- Seção de imagens -->
+    <div class="produto-imagens">
+      <div class="imagem-principal">
+        <!-- Usando uma imagem temporária, normalmente viria do produto -->
+        <img
+          src="https://images8.kabum.com.br/produtos/fotos/320908/gabinete-gamer-rise-mode-galaxy-glass-lateral-em-vidro-temperado-preto-rm-ga-gg-fb_1657738212_g.jpg"
+          [alt]="produto.descricao"
+          class="imagem-produto"
+        />
+      </div>
+      <!-- Opcionalmente, adicionar miniaturas para mais imagens -->
+    </div>
+
+    <!-- Seção de informações -->
+    <div class="produto-info">
+      <h1 class="produto-titulo">{{ produto.descricao }}</h1>
+
+      <!-- Preço e condições -->
+      <div class="produto-preco-container">
+        <div class="preco-antigo" *ngIf="produto.precoAntigo">
+          <span>De: </span>
+          <span class="riscado">R$ {{ produto.precoAntigo | number:'1.2-2' }}</span>
+        </div>
+        <div class="preco-atual">
+          <span>Por: </span>
+          <span class="valor">R$ {{ produto.precoAtual | number:'1.2-2' }}</span>
+        </div>
+        <div class="condicoes">
+          À vista no PIX
+          <div class="parcelamento">
+            ou até <strong>10x de R$ {{ precoParcelado | number:'1.2-2' }} sem juros</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Opções de frete -->
+      <div class="opcoes-frete">
+        <h3>
+          <fa-icon [icon]="faTruck"></fa-icon>
+          Opções de Frete
+        </h3>
+        <div class="frete-lista">
+          <div
+            *ngFor="let frete of opcoesFrete"
+            class="frete-opcao"
+            [class.selecionado]="freteSelecionado === frete"
+            (click)="selecionarFrete(frete)"
+          >
+            <div class="radio">
+              <div class="radio-inner" *ngIf="freteSelecionado === frete"></div>
+            </div>
+            <div class="frete-info">
+              <div class="frete-tipo">{{ frete.tipo }}</div>
+              <div class="frete-prazo">{{ frete.prazo }}</div>
+            </div>
+            <div class="frete-preco">
+              {{ frete.preco === 0 ? 'Grátis' : 'R$ ' + frete.preco.toFixed(2) }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botões de ação -->
+      <div class="botoes-acao">
+        <button class="btn-adicionar-carrinho" (click)="adicionarAoCarrinho()">
+          <fa-icon [icon]="faShoppingCart"></fa-icon>
+          Adicionar ao Carrinho
+        </button>
+        <a routerLink="/carrinho" class="btn-ir-carrinho">
+          Ir para o Carrinho
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Seção de descrição e especificações -->
+  <div class="produto-detalhes-tabs">
+    <div class="tabs-header">
+      <div
+        class="tab-item"
+        [class.active]="tabAtiva === 'descricao'"
+        (click)="selecionarTab('descricao')"
+      >
+        Descrição
+      </div>
+      <div
+        class="tab-item"
+        [class.active]="tabAtiva === 'especificacoes'"
+        (click)="selecionarTab('especificacoes')"
+      >
+        Especificações
+      </div>
+    </div>
+    <div class="tabs-content">
+      <div class="tab-content" [class.active]="tabAtiva === 'descricao'">
+        <h3>Descrição do Produto</h3>
+        <p>{{ produto.descricao }}</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl.</p>
+      </div>
+      <div class="tab-content" [class.active]="tabAtiva === 'especificacoes'">
+        <h3>Especificações</h3>
+        <div class="especificacoes-lista">
+          <div class="especificacao-item">
+            <div class="especificacao-nome">Modelo</div>
+            <div class="especificacao-valor">{{ produto.descricao }}</div>
+          </div>
+          <div class="especificacao-item">
+            <div class="especificacao-nome">Marca</div>
+            <div class="especificacao-valor">Marca do Produto</div>
+          </div>
+          <div class="especificacao-item">
+            <div class="especificacao-nome">Garantia</div>
+            <div class="especificacao-valor">12 meses de garantia</div>
+          </div>
+          <!-- Mais especificações seriam adicionadas dinamicamente -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="produto-nao-encontrado" *ngIf="!produto">
+  <h2>Produto não encontrado</h2>
+  <p>Desculpe, não conseguimos encontrar o produto que você está procurando.</p>
+  <a routerLink="/" class="btn-voltar-home">Voltar para a página inicial</a>
+</div>
+
+<app-footer></app-footer>

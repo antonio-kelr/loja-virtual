@@ -33,7 +33,9 @@
       </div>
 
       <div class="logo">
-        <img src="../../../assets/img/Kabum.png" alt="Logo" class="logo-img" />
+        <a routerLink="">
+          <img src="../../../assets/img/Kabum.png" alt="Logo" class="logo-img" />
+        </a>
       </div>
       <div class="search">
         <input type="text" pInputText placeholder="Aperte o K e busque aqui" />
@@ -133,10 +135,13 @@
           [icon]="faHeart"
           style="font-size: 20px; color: white"
         ></fa-icon>
-        <fa-icon
-          [icon]="faShoppingCart"
-          style="font-size: 20px; color: white"
-        ></fa-icon>
+        <div class="carrinho-icon" (click)="irParaCarrinho()">
+          <fa-icon
+            [icon]="faShoppingCart"
+            style="font-size: 20px; color: white"
+          ></fa-icon>
+          <span class="contador-carrinho" *ngIf="qtdItensCarrinho > 0">{{ qtdItensCarrinho }}</span>
+        </div>
       </div>
     </ul>
   </nav>
