@@ -25,7 +25,7 @@
       <span> ou até <b>10x de R$ {{ precoParcelado | number:'1.2-2' }}</b> </span>
     </div>
 
-    <div class="butto_comprar">
+    <div class="butto_comprar" (click)="comprarAgora(produto)">
       <fa-icon
         [icon]="faShoppingCart"
         style="font-size: 20px; color: white"

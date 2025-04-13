@@ -1,0 +1,94 @@
+<app-header></app-header>
+
+<div class="checkout-container">
+  <h2>Finalizar Compra</h2>
+
+  <div class="produto-info" *ngIf="produto">
+    <div class="produto-imagem">
+      <img [src]="produto.imagem" alt="Imagem do produto">
+    </div>
+    <div class="produto-detalhes">
+      <h3>{{ produto.nome }}</h3>
+      <p class="produto-descricao">{{ produto.descricao }}</p>
+      <p class="produto-preco">R$ {{ produto.preco?.toFixed(2) || produto.precoAtual?.toFixed(2) }}</p>
+    </div>
+  </div>
+
+  <div class="metodos-pagamento">
+    <h3>Método de Pagamento</h3>
+
+    <div class="opcoes-pagamento">
+      <div class="opcao" [class.selecionado]="metodoPagamento === 'pix'" (click)="metodoPagamento = 'pix'">
+        <div class="radio-button">
+          <div class="inner-circle" *ngIf="metodoPagamento === 'pix'"></div>
+        </div>
+        <div class="opcao-info">
+          <span class="titulo-opcao">PIX</span>
+          <span class="descricao-opcao">Pagamento instantâneo</span>
+        </div>
+      </div>
+
+      <div class="opcao" [class.selecionado]="metodoPagamento === 'cartao'" (click)="metodoPagamento = 'cartao'">
+        <div class="radio-button">
+          <div class="inner-circle" *ngIf="metodoPagamento === 'cartao'"></div>
+        </div>
+        <div class="opcao-info">
+          <span class="titulo-opcao">Cartão de Crédito/Débito</span>
+          <span class="descricao-opcao">Visa, Mastercard, Elo e outros</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalhes-pagamento" *ngIf="metodoPagamento === 'pix'">
+      <div class="qr-code-container">
+        <div class="qr-code-placeholder">
+          <!-- Substituir por componente de QR Code real -->
+          QR Code do PIX
+        </div>
+        <button class="copiar-codigo">Copiar código PIX</button>
+      </div>
+    </div>
+
+    <div class="detalhes-pagamento" *ngIf="metodoPagamento === 'cartao'">
+      <div class="form-cartao">
+        <div class="input-group">
+          <label>Número do Cartão</label>
+          <input type="text" placeholder="0000 0000 0000 0000">
+        </div>
+        <div class="input-row">
+          <div class="input-group">
+            <label>Validade</label>
+            <input type="text" placeholder="MM/AA">
+          </div>
+          <div class="input-group">
+            <label>CVV</label>
+            <input type="text" placeholder="123">
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Nome no Cartão</label>
+          <input type="text" placeholder="NOME COMO NO CARTÃO">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="resumo-compra">
+    <div class="linha-resumo">
+      <span>Subtotal</span>
+      <span *ngIf="produto">R$ {{ produto.preco?.toFixed(2) || produto.precoAtual?.toFixed(2) }}</span>
+    </div>
+    <div class="linha-resumo">
+      <span>Frete</span>
+      <span>Grátis</span>
+    </div>
+    <div class="linha-resumo total">
+      <span>Total</span>
+      <span *ngIf="produto">R$ {{ produto.preco?.toFixed(2) || produto.precoAtual?.toFixed(2) }}</span>
+    </div>
+  </div>
+
+  <button class="btn-finalizar" (click)="finalizarCompra()">Finalizar Compra</button>
+</div>
+
+<app-footer></app-footer>
