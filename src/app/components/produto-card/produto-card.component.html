@@ -1,0 +1,37 @@
+<div class="p_item_componet border-surface-200 dark:border-surface-700 rounded m-2 p-4">
+  <div class="mb-4">
+    <div class="relative mx-auto">
+      <img
+        src="https://images8.kabum.com.br/produtos/fotos/320908/gabinete-gamer-rise-mode-galaxy-glass-lateral-em-vidro-temperado-preto-rm-ga-gg-fb_1657738212_g.jpg"
+        [alt]="produto.name"
+        class="w-full rounded-border"
+        style="height: 10.125rem; width: auto; max-width: 100%"
+      />
+    </div>
+  </div>
+  <div class="sc-d79c9c3f-0 nlmfp sc-27518a44-9 iJKRqI nameCard">{{ produto.descricao }}</div>
+  <div class="">
+    <div class="font-semibold text-xl" style="margin: 0; padding: 4px 0">
+      <p class="old-price" style="font-size: 0.75rem; margin: 0; padding: 4px 0">
+        <s>R$ {{ produto.precoAntigo | currency : "BRL" }}</s>
+      </p>
+    </div>
+    <div class="value_atual">
+      {{ produto.precoAtual | currency : "BRL" }}
+    </div>
+    <div class="op_payment" style="margin-bottom: 20px;">
+      À vista no PIX
+      <br />
+      <span> ou até <b>10x de R$ {{ precoParcelado | number:'1.2-2' }}</b> </span>
+    </div>
+
+    <div class="butto_comprar">
+      <fa-icon
+        [icon]="faShoppingCart"
+        style="font-size: 20px; color: white"
+        class="icon"
+      ></fa-icon>
+      <span>Comprar</span>
+    </div>
+  </div>
+</div>

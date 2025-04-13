@@ -6,11 +6,11 @@ import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { CelularesComponent } from "../celulares/celulares.component";
-
+import { ProdutoCardComponent } from '../produto-card/produto-card.component';
 
 @Component({
   selector: 'app-produtos',
-  imports: [CarouselModule, ButtonModule, CommonModule,FontAwesomeModule,CelularesComponent],
+  imports: [CarouselModule, ButtonModule, CommonModule, FontAwesomeModule, CelularesComponent, ProdutoCardComponent],
   templateUrl: './produtos.component.html',
   styleUrl: './produtos.component.scss'
 })
@@ -21,10 +21,7 @@ export class ProdutosComponent {
 
   responsiveOptions: any[] | undefined;
 
-
   ngOnInit() {
-
-
       this.responsiveOptions = [
           {
               breakpoint: '1400px',
@@ -48,6 +45,4 @@ export class ProdutosComponent {
           },
       ];
   }
-
-
 }

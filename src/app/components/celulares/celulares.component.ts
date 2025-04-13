@@ -5,10 +5,11 @@ import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import Produtos from '../../../data/Produtos';
+import { ProdutoCardComponent } from '../produto-card/produto-card.component';
 
 @Component({
   selector: 'app-celulares',
-  imports: [CarouselModule, ButtonModule, CommonModule, FontAwesomeModule],
+  imports: [CarouselModule, ButtonModule, CommonModule, FontAwesomeModule, ProdutoCardComponent],
   templateUrl: './celulares.component.html',
   styleUrls: ['./celulares.component.scss', '../produtos/produtos.component.scss']
 })

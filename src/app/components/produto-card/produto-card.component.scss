@@ -1,0 +1,67 @@
+.p_item_componet {
+  background: #FFFFFF;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  
+  &:hover {
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease-in-out;
+  }
+}
+
+.nameCard {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  color: rgb(66, 70, 77);
+  min-height: 3.75rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  word-break: break-word;
+  max-height: 3.375rem;
+}
+
+.old-price {
+  color: #999;
+}
+
+.value_atual {
+  color: #FF6500;
+  font-size: 1.25rem;
+  line-height: 1.875rem;
+  font-weight: 700;
+}
+
+.op_payment, span {
+  padding-top: 2px;
+  font-size: .75rem;
+}
+
+.butto_comprar {
+  background: #FF6500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  cursor: pointer;
+  padding: 4px;
+  color: white;
+  border-radius: 5px;
+}
+
+.butto_comprar span {
+  font-size: 14px;
+}
+
+.p_item_componet .icon {
+  display: none;
+}
+
+.p_item_componet:hover .icon {
+  display: flex !important;
+  font-size: 16px !important;
+}

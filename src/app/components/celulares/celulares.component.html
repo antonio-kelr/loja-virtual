@@ -6,44 +6,7 @@
     [showIndicators]="false"
     [responsiveOptions]="responsiveOptions">
     <ng-template let-celular pTemplate="item">
-      <div class="p_item_componet border-surface-200 dark:border-surface-700 rounded m-2 p-4">
-        <div class="mb-4">
-          <div class="relative mx-auto">
-            <img
-            src="https://images9.kabum.com.br/produtos/fotos/sync_mirakl/537219/Monitor-Gamer-Conc-rdia-Curvo-27-LED-Full-HD-240Hz-1Ms-2-HDMI-2-DP-Freesync-Premium-SRGB-99-Cz270f_1730123167_g.jpg"
-
-              [alt]="celular.name"
-              class="w-full rounded-border"
-              style="height: 10.125rem; width: auto; max-width: 100%"
-            />
-          </div>
-        </div>
-        <div class="sc-d79c9c3f-0 nlmfp sc-27518a44-9 iJKRqI nameCard">{{ celular.descricao }}</div>
-        <div class="">
-          <div class="font-semibold text-xl" style="margin: 0; padding: 4px 0">
-            <p class="old-price" style="font-size: 0.75rem; margin: 0; padding: 4px 0">
-              <s>R$ {{ celular.precoAntigo | currency : "BRL" }}</s>
-            </p>
-          </div>
-          <div class="value_atual">
-            {{ celular.precoAtual | currency : "BRL" }}
-          </div>
-          <div class="op_payment" style="margin-bottom: 20px;">
-            À vista no PIX
-            <br />
-            <span> ou até <b>10x de R$ {{ celular.precoAtual / 10 | number:'1.2-2' }}</b> </span>
-          </div>
-
-          <div class="butto_comprar">
-            <fa-icon
-              [icon]="faShoppingCart"
-              style="font-size: 20px; color: white"
-              class="icon"
-            ></fa-icon>
-            <span>Comprar</span>
-          </div>
-        </div>
-      </div>
+      <app-produto-card [produto]="celular"></app-produto-card>
     </ng-template>
   </p-carousel>
 </div> 
