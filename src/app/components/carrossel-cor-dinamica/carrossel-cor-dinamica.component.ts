@@ -1,10 +1,11 @@
 import { Component, AfterViewInit, ViewChild, ElementRef, PLATFORM_ID, Inject } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ProdutosComponent } from "../produtos/produtos.component";
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-carrossel-cor-dinamica',
-
+  standalone: true,
   templateUrl: './carrossel-cor-dinamica.component.html',
   styleUrls: ['./carrossel-cor-dinamica.component.scss'],
   imports: [CommonModule, ProdutosComponent]
@@ -22,7 +23,10 @@ export class CarrosselCorDinamicaComponent implements AfterViewInit {
     'assets/img/img-7.webp',
   ];
 
-  constructor(@Inject(PLATFORM_ID) private platformId: object) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: object,
+    private themeService: ThemeService
+  ) {}
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) { // Verifica se está no browser
@@ -52,10 +56,8 @@ export class CarrosselCorDinamicaComponent implements AfterViewInit {
   async changeBackground(imageUrl: string) {
     if (isPlatformBrowser(this.platformId)) { // Verifica se está no browser antes de usar o document
       const color = await this.getDominantColor(imageUrl);
-      // Certifica-se de que o código de manipulação do DOM só ocorra no navegador
-      if (typeof document !== 'undefined') {
-        document.body.style.backgroundColor = color;
-      }
+      // Usar o serviço de tema para definir a cor de fundo
+      this.themeService.setBackgroundColor(color);
     }
   }
 
@@ -76,7 +78,12 @@ export class CarrosselCorDinamicaComponent implements AfterViewInit {
         if (imageData) {
           const [r, g, b] = imageData;
           resolve(`rgb(${r}, ${g}, ${b})`);
+        } else {
+          resolve('rgb(255, 255, 255)');
         }
+      };
+      img.onerror = () => {
+        resolve('rgb(255, 255, 255)');
       };
     });
   }

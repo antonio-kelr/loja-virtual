@@ -1,13 +1,21 @@
 @import "primeicons/primeicons.css";
-body {
-  margin: 0px;
-  padding: 0px;
+
+html, body {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
   font-family: 'Lato', sans-serif !important;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  transition: background-color 0.5s ease;
+  overflow-x: hidden;
+  background-color: #ffffff;
 }
 
 .maxWidth {
-  max-width: 1500px;
+  max-width: 1600px;
   margin: 0 auto !important;
-
 }
