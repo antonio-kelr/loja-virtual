@@ -1,7 +1,16 @@
 .produto-detalhes-container {
-  max-width: 1200px;
+  max-width: 1700px;
   margin: 0 auto;
   padding: 20px;
+}
+
+.produto-titulo.principal {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 25px;
+  width: 100%;
+  text-align: left;
 }
 
 .produto-grid {
@@ -165,7 +174,7 @@
   gap: 15px;
   margin-top: 25px;
 
-  .btn-adicionar-carrinho, .btn-ir-carrinho {
+  .btn-comprar, .btn-adicionar-carrinho {
     padding: 12px 16px;
     border-radius: 8px;
     font-weight: 600;
@@ -176,25 +185,31 @@
     transition: all 0.3s ease;
     font-size: 1rem;
     cursor: pointer;
+    border: none;
   }
 
-  .btn-adicionar-carrinho {
+  .btn-comprar {
     background-color: var(--cor-primaria);
     color: white;
-    border: none;
-    flex: 1;
+    width: 248px;
+    flex: initial;
 
     &:hover {
       background-color: var(--cor-primaria-escura);
     }
   }
 
-  .btn-ir-carrinho {
+  .btn-adicionar-carrinho {
     background-color: white;
     color: var(--cor-primaria);
     border: 1px solid var(--cor-primaria);
-    text-decoration: none;
-    padding: 12px 20px;
+    padding: 12px;
+    width: 80px;
+    height: 48px;
+
+    fa-icon {
+      font-size: 16px;
+    }
 
     &:hover {
       background-color: rgba(255, 101, 0, 0.05);

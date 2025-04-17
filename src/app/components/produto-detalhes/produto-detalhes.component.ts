@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faShoppingCart, faTruck } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart, faTruck, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { CarrinhoService } from '../../services/carrinho.service';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
@@ -18,6 +18,7 @@ import produtos from '../../../data/Produtos';
 export class ProdutoDetalhesComponent implements OnInit {
   faShoppingCart = faShoppingCart;
   faTruck = faTruck;
+  faPlus = faPlus;
 
   produto: any = null;
   quantidadeSelecionada: number = 1;
@@ -78,5 +79,16 @@ export class ProdutoDetalhesComponent implements OnInit {
 
   irParaCarrinho(): void {
     // A navegação será feita pelo routerLink no template
+  }
+
+  comprarAgora(): void {
+    if (this.produto) {
+      this.carrinhoService.adicionarAoCarrinho({
+        ...this.produto,
+        frete: this.freteSelecionado
+      });
+      // Redirecionar para a página de checkout
+      window.location.href = '/carrinho';
+    }
   }
 }
