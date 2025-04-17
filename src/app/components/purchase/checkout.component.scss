@@ -73,7 +73,7 @@
 
     .item-preco {
       font-weight: 700;
-      color: #FF6500;
+      color: var(--cor-primaria);
       font-size: 1.1rem;
     }
   }
@@ -139,12 +139,12 @@
   }
 
   .btn-finalizar-compra {
-    background-color: #FF6500;
+    background-color: var(--cor-primaria);
     color: white;
     flex: 2;
 
     &:hover {
-      background-color: darken(#FF6500, 10%);
+      background-color: var(--cor-primaria-escura);
     }
   }
 }
@@ -198,7 +198,7 @@
         position: absolute;
         width: 12px;
         height: 12px;
-        background-color: #FF6500;
+        background-color: var(--cor-primaria);
         border-radius: 50%;
         top: 50%;
         left: 50%;
@@ -227,7 +227,7 @@
   margin-top: 30px;
 
   .btn-confirmar {
-    background-color: #FF6500;
+    background-color: var(--cor-primaria);
     color: white;
     padding: 16px 30px;
     border-radius: 8px;
@@ -238,7 +238,7 @@
     transition: background-color 0.3s;
 
     &:hover {
-      background-color: darken(#FF6500, 10%);
+      background-color: var(--cor-primaria-escura);
     }
   }
 }

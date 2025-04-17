@@ -30,7 +30,7 @@
 }
 
 .value_atual {
-  color: #FF6500;
+  color: var(--cor-primaria);
   font-size: 1.25rem;
   line-height: 1.875rem;
   font-weight: 700;
@@ -47,7 +47,7 @@
 }
 
 .butto_comprar {
-  background-color: #FF6500;
+  background-color: var(--cor-primaria);
   color: white;
   display: flex;
   justify-content: center;
@@ -69,7 +69,7 @@
   }
 
   &:hover {
-    background-color: darken(#FF6500, 10%);
+    background-color: var(--cor-primaria-escura);
   }
 }
 
@@ -77,8 +77,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #FF6500;
-  color: #FF6500;
+  border: 1px solid var(--cor-primaria);
+  color: var(--cor-primaria);
   border-radius: 8px;
   padding: 8px;
   cursor: pointer;

@@ -39,7 +39,7 @@
           transition: color 0.3s;
 
           &:hover {
-            color: #FF6500;
+            color: var(--cor-primaria);
           }
         }
       }
@@ -56,7 +56,7 @@
         transition: color 0.3s;
 
         &:hover {
-          color: #FF6500;
+          color: var(--cor-primaria);
         }
       }
     }
@@ -69,7 +69,7 @@
         color: #ccc;
 
         fa-icon {
-          color: #FF6500;
+          color: var(--cor-primaria);
         }
       }
     }
@@ -89,7 +89,7 @@
 
         &:focus {
           outline: none;
-          border-color: #FF6500;
+          border-color: var(--cor-primaria);
         }
       }
 

@@ -1,5 +1,5 @@
 .value_atual {
-  color: #FF6500;
+  color: var(--cor-primaria);
   font-size: 1.25rem;
   line-height: 1.875rem;
   font-weight: 700;
@@ -18,7 +18,7 @@
   font-size: 14px;
 }
 .butto_comprar  {
-  background: #FF6500;
+  background: var(--cor-primaria);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,7 +30,7 @@
 }
 .p_item_componet .icon {
  display: none;
- 
+
 }
 .p_item_componet  {
   background: #FFFFFF;
@@ -38,7 +38,7 @@
 .p_item_componet:hover .icon {
  display: flex !important;
  font-size: 16px !important;
- 
+
 }
 .p_item_componet:hover {
   box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2); /* Sombra focada no bottom */
@@ -61,7 +61,7 @@
 
 .cfPGuy * {
   min-width: 0px;
-  
+
 }
 
 .nlmfp {

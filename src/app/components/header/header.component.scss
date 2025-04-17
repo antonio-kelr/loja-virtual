@@ -4,52 +4,62 @@
   box-sizing: border-box;
 }
 
-body {
-  font-family: Arial, sans-serif;
-}
 
 .header {
-  background-color: #0060b1;
-  padding: 10px 0;
+  background-color: #161719;
 }
 
 .search {
+  width: 680px;
   display: flex;
   align-items: center;
   position: relative;
 
-  input {
-    width: 450px;
-    padding: 8px 12px;
-    border-radius: 5px;
-    border: none;
-  }
-
   svg {
     position: absolute;
-    right: 0;
-    top: 0;
+    right: -25px;
+    top: 55%;
+    transform: translateY(-50%);
     cursor: pointer;
   }
 }
+.p-inputtext {
+  height: 2.25rem;
+  border-radius: 4px;
+  width: 100%;
+  background: white;
+  color: black;
+  padding: 8px 12px;
+  border: none;
+
+}
+
+
+.p-inputtext:focus {
+  border-color: rgb(22, 21, 21);
+  outline: none;
+  box-shadow: 0 0 8px rgba(29, 28, 28, 0.5);
+}
+
 
 .nav-container {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 40px;
 }
 
 .logo-img {
-  height: 50px;
+  height: 150px;
 }
 
 .nav-links {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   list-style: none;
   margin: 0;
   padding: 0;
-  gap: 20px;
+   width: 460px;
 }
 
 .isLogin {
@@ -59,17 +69,15 @@ body {
   color: white;
 
   span {
-    font-size: 12px;
+    font-size: 13px;
+    font-weight: 700;
+
   }
 
   a {
     color: white;
     text-decoration: none;
     font-weight: bold;
-
-    &:hover {
-      text-decoration: underline;
-    }
   }
 }
 
@@ -92,7 +100,7 @@ body {
   position: absolute;
   top: -8px;
   right: -8px;
-  background-color: #FF6500;
+  background-color: var(--cor-primaria);
   color: white;
   border-radius: 50%;
   width: 20px;
@@ -107,32 +115,14 @@ body {
 }
 
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 0 20px;
 }
-
 .maxWidth {
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: 1600px;
 }
 
-.p-inputtext {
-  height: 2.25rem !important;
-  border-radius: 4px;
-  width: 100%;
-}
 
-input[type="text"] {
-  padding: 16px;
-}
 
-.p-inputtext:focus {
-  border-color: rgb(22, 21, 21);
-  outline: none;
-  box-shadow: 0 0 8px rgba(29, 28, 28, 0.5);
-}
 
 .login-opçoes {
   display: flex;

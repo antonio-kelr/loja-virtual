@@ -1,5 +1,5 @@
 .value_atual {
-  color: #FF6500;
+  color: var(--cor-primaria);
   font-size: 1.25rem;
   line-height: 1.875rem;
   font-weight: 700;
@@ -10,7 +10,7 @@
 }
 
 .butto_comprar {
-  background: #FF6500;
+  background: var(--cor-primaria);
   display: flex;
   align-items: center;
   justify-content: center;

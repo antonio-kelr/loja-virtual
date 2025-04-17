@@ -1,5 +1,12 @@
 @import "primeicons/primeicons.css";
 
+:root {
+  // --cor-primaria: #FF6500;
+  // --cor-primaria-escura: #D95400; /* Versão escurecida da cor primária (aproximadamente 10% mais escura) */
+  --cor-primaria: #0a7de9;
+  --cor-primaria-escura: #064894de; /* Versão escurecida da cor primária (aproximadamente 10% mais escura) */
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -16,6 +23,6 @@ body {
 }
 
 .maxWidth {
-  max-width: 1600px;
+  max-width: 1700px;
   margin: 0 auto !important;
 }

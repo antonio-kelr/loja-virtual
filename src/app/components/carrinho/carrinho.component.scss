@@ -35,7 +35,7 @@
 
   .btn-continuar {
     padding: 12px 25px;
-    background-color: #FF6500;
+    background-color: var(--cor-primaria);
     color: white;
     border: none;
     border-radius: 8px;
@@ -45,7 +45,7 @@
     transition: background-color 0.2s ease;
 
     &:hover {
-      background-color: darken(#FF6500, 10%);
+      background-color: var(--cor-primaria-escura);
     }
   }
 }
@@ -211,7 +211,7 @@
     border-bottom: none;
 
     span:last-child {
-      color: #FF6500;
+      color: var(--cor-primaria);
     }
   }
 }
@@ -232,12 +232,12 @@
   }
 
   .btn-finalizar {
-    background-color: #FF6500;
+    background-color: var(--cor-primaria);
     color: white;
     font-weight: bold;
 
     &:hover {
-      background-color: darken(#FF6500, 10%);
+      background-color: var(--cor-primaria-escura);
     }
   }
 
