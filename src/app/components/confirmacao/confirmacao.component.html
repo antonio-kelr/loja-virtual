@@ -1,0 +1,49 @@
+<app-header></app-header>
+
+<div class="confirmacao-container">
+  <app-processo-compra [etapaAtual]="3"></app-processo-compra>
+
+  <div class="confirmacao-content">
+    <div class="confirmacao-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+      </svg>
+    </div>
+
+    <h1>Pedido Confirmado!</h1>
+
+    <div class="confirmacao-detalhes">
+      <div class="detalhe">
+        <span class="label">Método de Pagamento:</span>
+        <span class="valor">{{ getMetodoPagamentoFormatado() }}</span>
+      </div>
+
+      <div class="detalhe">
+        <span class="label">Valor Total:</span>
+        <span class="valor">{{ valorTotal | currency:'BRL' }}</span>
+      </div>
+
+      <div *ngIf="metodoPagamento === 'pix'" class="detalhe-pix">
+        <p>O QR Code do PIX será enviado para seu e-mail.</p>
+        <p>Assim que confirmado o pagamento, seu pedido será processado.</p>
+      </div>
+
+      <div *ngIf="metodoPagamento === 'cartao'" class="detalhe-cartao">
+        <p>O pagamento com cartão foi aprovado.</p>
+        <p>Seu pedido será processado e você receberá atualizações por e-mail.</p>
+      </div>
+
+      <div *ngIf="metodoPagamento === 'boleto'" class="detalhe-boleto">
+        <p>O boleto foi gerado e enviado para seu e-mail.</p>
+        <p>Após o pagamento, seu pedido será processado em até 3 dias úteis.</p>
+      </div>
+    </div>
+
+    <div class="botoes">
+      <button class="btn-principal" (click)="voltarParaHome()">Continuar Comprando</button>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

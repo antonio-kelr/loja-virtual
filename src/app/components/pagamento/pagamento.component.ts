@@ -36,8 +36,20 @@ export class PagamentoComponent implements OnInit {
   }
 
   concluirPagamento(): void {
-    // Lógica para concluir o pagamento
-    this.router.navigate(['/confirmacao']);
+    // Calcular o valor total considerando o desconto para PIX
+    let valorFinal = this.totalCarrinho;
+    if (this.formaPagamentoSelecionada === 'pix') {
+      // Aplicar 10% de desconto para pagamento via PIX
+      valorFinal = this.totalCarrinho * 0.9;
+    }
+
+    // Navegar para a página de confirmação com os parâmetros
+    this.router.navigate(['/confirmacao'], {
+      queryParams: {
+        metodoPagamento: this.formaPagamentoSelecionada,
+        valor: valorFinal
+      }
+    });
   }
 
   voltarAoCarrinho(): void {
