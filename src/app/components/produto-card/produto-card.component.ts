@@ -33,7 +33,7 @@ export class ProdutoCardComponent {
     // Adiciona ao carrinho primeiro
     this.carrinhoService.adicionarAoCarrinho(produto);
 
-    // Navega para a página de detalhes do produto
-    this.router.navigate(['/produto', produto.id]);
+    // Navega diretamente para a página do carrinho
+    this.router.navigate(['/carrinho']);
   }
 }
