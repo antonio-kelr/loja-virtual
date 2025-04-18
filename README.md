@@ -24,7 +24,7 @@ O fluxo de compra da aplicação segue os seguintes passos:
    - Exibe o valor total da compra
    - Oferece opções para continuar comprando, limpar o carrinho ou finalizar a compra
 
-4. **Finalização da Compra (Checkout)**
+4. **Finalização da Compra (Pagamento)**
    - Mostra o resumo dos itens no carrinho
    - Exibe o valor total
    - Oferece opções de pagamento: PIX e Cartão

@@ -1,0 +1,133 @@
+.pix-destaque {
+  font-size: 12px;
+  font-weight: bold;
+  color: black;
+  text-transform: uppercase;
+}
+
+.carrinho-resumo {
+  flex: 1 1 20%;
+
+  .resumo-conteudo {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      color: #333;
+      font-size: 16px;
+      font-weight: 700;
+      text-align: left;
+    }
+  }
+}
+
+.resumo-linha {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+
+  span:first-child {
+    font-size: 0.75rem;
+    color: #666;
+  }
+
+  span:last-child {
+    font-weight: 700;
+    color: rgb(66, 70, 77);
+    font-size: 0.875rem;
+  }
+
+  &.total {
+    font-weight: bold;
+    font-size: 18px;
+    padding-top: 15px;
+    margin-top: 5px;
+    border-top: 1px solid #ddd;
+    border-bottom: none;
+    background-color: #D0FFE4;
+
+    span:first-child {
+      font-size: 0.75rem;
+    }
+
+    span:last-child {
+      color: rgb(66, 70, 77);
+      font-weight: 800;
+      font-size: 1rem;
+    }
+  }
+
+  &.prazo {
+    font-weight: 600;
+    padding-top: 15px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom: none;
+
+    span:first-child {
+      font-size: 0.75rem;
+    }
+
+    span:last-child {
+      font-weight: 700;
+      font-size: 0.875rem;
+    }
+  }
+
+  &.parcelas {
+    padding-top: 5px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+
+    span:first-child {
+      visibility: hidden;
+    }
+
+    span:last-child {
+      font-weight: 600;
+      font-size: 0.75rem;
+      color: #666;
+    }
+  }
+}
+
+.acoes-resumo {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  button {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .btn-finalizar {
+    background-color: var(--cor-primaria);
+    color: white;
+    font-weight: bold;
+
+    &:hover {
+      background-color: var(--cor-primaria-escura);
+    }
+  }
+
+  .btn-continuar {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ddd;
+
+    &:hover {
+      background-color: #e0e0e0;
+    }
+  }
+}

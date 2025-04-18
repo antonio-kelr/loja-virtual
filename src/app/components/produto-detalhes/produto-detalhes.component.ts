@@ -87,7 +87,7 @@ export class ProdutoDetalhesComponent implements OnInit {
         ...this.produto,
         frete: this.freteSelecionado
       });
-      // Redirecionar para a página de checkout
+      // Redirecionar para a página de pagamento
       window.location.href = '/carrinho';
     }
   }

@@ -5,11 +5,20 @@ import { Router } from '@angular/router';
 import { CarrinhoService } from '../../services/carrinho.service';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
+import { ProcessoCompraComponent } from '../processo-compra/processo-compra.component';
+import { ResumoCarrinhoComponent } from '../resumo-carrinho/resumo-carrinho.component';
 
 @Component({
   selector: 'app-carrinho',
   standalone: true,
-  imports: [CommonModule, FormsModule, HeaderComponent, FooterComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    HeaderComponent,
+    FooterComponent,
+    ProcessoCompraComponent,
+    ResumoCarrinhoComponent
+  ],
   templateUrl: './carrinho.component.html',
   styleUrls: ['./carrinho.component.scss']
 })
@@ -62,9 +71,9 @@ export class CarrinhoComponent implements OnInit {
 
   finalizarCompra(): void {
     if (this.itensCarrinho.length > 0) {
-      // Seleciona o primeiro item do carrinho para checkout
+      // Seleciona o primeiro item do carrinho para pagamento
       localStorage.setItem('produtoCompra', JSON.stringify(this.itensCarrinho[0]));
-      this.router.navigate(['/checkout']);
+      this.router.navigate(['/pagamento']);
     } else {
       alert('Seu carrinho está vazio!');
     }
