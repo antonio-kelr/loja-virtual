@@ -10,7 +10,7 @@
 }
 
 .search {
-  width: 680px;
+  width: 730px;
   display: flex;
   align-items: center;
   position: relative;
@@ -42,6 +42,7 @@
 }
 
 
+
 .nav-container {
   display: flex;
   align-items: center;
@@ -49,7 +50,14 @@
 }
 
 .logo-img {
-  height: 110px;
+  height: 120px;
+}
+.eCbeLP {
+  font-size: 0.75rem;
+  line-height: 1.125rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
 }
 
 .nav-links {
@@ -59,7 +67,7 @@
   list-style: none;
   margin: 0;
   padding: 0;
-   width: 460px;
+  width: 460px;
 }
 
 .isLogin {

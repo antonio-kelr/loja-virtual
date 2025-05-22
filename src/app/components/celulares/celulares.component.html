@@ -1,4 +1,5 @@
 <app-header></app-header>
+
 <div class="card maxWidth">
   <p-carousel
     [value]="celulares"
@@ -6,9 +7,11 @@
     [numScroll]="1"
     [showIndicators]="false"
     [responsiveOptions]="responsiveOptions">
+
     <ng-template let-celular pTemplate="item">
       <app-produto-card [produto]="celular"></app-produto-card>
     </ng-template>
+
   </p-carousel>
 </div>
 

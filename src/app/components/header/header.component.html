@@ -17,8 +17,17 @@
           id="staticBackdrop"
           aria-labelledby="staticBackdropLabel"
         >
-          <div class="offcanvas-header" style="display: flex; align-items: center;justify-content: space-between;">
-            <h5 class="offcanvas-title" id="staticBackdropLabel">Bem vindo ao KaBum!</h5>
+          <div
+            class="offcanvas-header"
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+            "
+          >
+            <h5 class="offcanvas-title" id="staticBackdropLabel">
+              Bem vindo ao KaBum!
+            </h5>
             <button
               type="button"
               class="btn-close btn-fechar"
@@ -125,7 +134,7 @@
           >
           ou <br /><a
             id="linkCadastroHeader"
-            href="/cadastro"
+            [routerLink]="['/cadastro']"
             class="sc-bbaee818-4 eCbeLP"
             >CADASTRE-SE</a
           ></span
@@ -141,11 +150,12 @@
             [icon]="faShoppingCart"
             style="font-size: 20px; color: white"
           ></fa-icon>
-          <span class="contador-carrinho" *ngIf="qtdItensCarrinho > 0">{{ qtdItensCarrinho }}</span>
+          <span class="contador-carrinho" *ngIf="qtdItensCarrinho > 0">{{
+            qtdItensCarrinho
+          }}</span>
         </div>
       </div>
     </ul>
   </nav>
 </header>
 <app-mega-menu></app-mega-menu>
-

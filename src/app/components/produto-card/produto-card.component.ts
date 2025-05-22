@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
-import { CarrinhoService } from '../../services/carrinho.service';
 
 @Component({
   selector: 'app-produto-card',
@@ -17,23 +16,14 @@ export class ProdutoCardComponent {
   faShoppingCart = faShoppingCart;
 
   constructor(
-    private router: Router,
-    private carrinhoService: CarrinhoService
+    private router: Router
   ) {}
 
   get precoParcelado(): number {
-    return this.produto.precoAtual / 10;
+    return this.produto.preco / 10;
   }
 
   verDetalhes(produto: any) {
     this.router.navigate(['/produto', produto.id]);
-  }
-
-  comprarAgora(produto: any) {
-    // Adiciona ao carrinho primeiro
-    this.carrinhoService.adicionarAoCarrinho(produto);
-
-    // Navega diretamente para a página do carrinho
-    this.router.navigate(['/carrinho']);
   }
 }

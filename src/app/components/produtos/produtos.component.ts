@@ -1,48 +1,57 @@
-import { Component } from '@angular/core';
-import { CarouselModule } from 'primeng/carousel';
-import  Produtos from '../../../data/Produtos';
-import { ButtonModule } from 'primeng/button';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { CarouselModule } from 'primeng/carousel';
 import { ProdutoCardComponent } from '../produto-card/produto-card.component';
+import { ProdutoService } from '../../services/produto.service';
+import { Produto } from '../../interfaces/produto.interface';
 
 @Component({
   selector: 'app-produtos',
-
-  imports: [CarouselModule, ButtonModule, CommonModule, FontAwesomeModule, ProdutoCardComponent],
+  standalone: true,
+  imports: [CommonModule, CarouselModule, ProdutoCardComponent],
   templateUrl: './produtos.component.html',
-  styleUrl: './produtos.component.scss'
+  styleUrls: ['./produtos.component.scss']
 })
-export class ProdutosComponent {
-    faShoppingCart = faShoppingCart
+export class ProdutosComponent implements OnInit {
+  products: Produto[] = [];
+  responsiveOptions = [
+    {
+      breakpoint: '1400px',
+      numVisible: 4,
+      numScroll: 1
+    },
+    {
+      breakpoint: '1220px',
+      numVisible: 3,
+      numScroll: 1
+    },
+    {
+      breakpoint: '1100px',
+      numVisible: 2,
+      numScroll: 1
+    },
+    {
+      breakpoint: '768px',
+      numVisible: 1,
+      numScroll: 1
+    }
+  ];
 
-  products = Produtos;
-
-  responsiveOptions: any[] | undefined;
+  constructor(private produtoService: ProdutoService) {}
 
   ngOnInit() {
-      this.responsiveOptions = [
-          {
-              breakpoint: '1400px',
-              numVisible: 2,
-              numScroll: 1,
-          },
-          {
-              breakpoint: '1199px',
-              numVisible: 3,
-              numScroll: 1,
-          },
-          {
-              breakpoint: '767px',
-              numVisible: 2,
-              numScroll: 1,
-          },
-          {
-              breakpoint: '575px',
-              numVisible: 1,
-              numScroll: 1,
-          },
-      ];
+    this.carregarProdutos();
+  }
+
+  carregarProdutos() {
+    console.log('Iniciando carregamento de produtos...');
+    this.produtoService.getProdutos().subscribe({
+      next: (produtos) => {
+        this.products = produtos;
+      },
+      error: (erro) => {
+        console.error('Erro ao carregar produtos:', erro);
+      }
+    });
   }
 }

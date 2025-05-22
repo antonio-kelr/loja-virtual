@@ -1,85 +1,79 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarrinhoService {
-  private itensCarrinho: any[] = [];
+  // private carrinhoKey = 'carrinho';
   private carrinhoSubject = new BehaviorSubject<any[]>([]);
+  carrinho$ = this.carrinhoSubject.asObservable();
 
   constructor() {
-    // Recupera o carrinho do localStorage ao iniciar o serviço
-    const carrinhoSalvo = localStorage.getItem('carrinho');
-    if (carrinhoSalvo) {
-      this.itensCarrinho = JSON.parse(carrinhoSalvo);
-      this.carrinhoSubject.next(this.itensCarrinho);
-    }
+    // Temporariamente desabilitado para evitar erro de localStorage
+    // const carrinhoSalvo = localStorage.getItem(this.carrinhoKey);
+    // if (carrinhoSalvo) {
+    //   this.carrinhoSubject.next(JSON.parse(carrinhoSalvo));
+    // }
   }
 
-  getCarrinho() {
-    return this.carrinhoSubject.asObservable();
+  getCarrinho(): Observable<any[]> {
+    return this.carrinho$;
   }
 
   getQuantidadeItens() {
-    return this.itensCarrinho.length;
+    return this.carrinhoSubject.value.length;
   }
 
-  adicionarAoCarrinho(produto: any) {
-    // Verificar se o produto já existe no carrinho
-    const produtoExistente = this.itensCarrinho.find(item => item.id === produto.id);
+  adicionarAoCarrinho(produto: any): void {
+    // Temporariamente desabilitado
+    console.log('Funcionalidade de carrinho temporariamente desabilitada');
+    // const carrinhoAtual = this.carrinhoSubject.value;
+    // const produtoExistente = carrinhoAtual.find(item => item.id === produto.id);
 
-    if (produtoExistente) {
-      // Se já existe, incrementa a quantidade
-      produtoExistente.quantidade += 1;
-    } else {
-      // Se não existe, adiciona com quantidade 1
-      this.itensCarrinho.push({
-        ...produto,
-        quantidade: 1
-      });
-    }
+    // if (produtoExistente) {
+    //   produtoExistente.quantidade += 1;
+    // } else {
+    //   carrinhoAtual.push({ ...produto, quantidade: 1 });
+    // }
 
-    // Atualiza o observable e o localStorage
-    this.atualizarCarrinho();
-
-    return this.itensCarrinho.length;
+    // this.carrinhoSubject.next(carrinhoAtual);
+    // localStorage.setItem(this.carrinhoKey, JSON.stringify(carrinhoAtual));
   }
 
-  removerDoCarrinho(produtoId: number) {
-    this.itensCarrinho = this.itensCarrinho.filter(item => item.id !== produtoId);
-    this.atualizarCarrinho();
+  removerDoCarrinho(produtoId: number): void {
+    // Temporariamente desabilitado
+    console.log('Funcionalidade de carrinho temporariamente desabilitada');
+    // const carrinhoAtual = this.carrinhoSubject.value;
+    // const novoCarrinho = carrinhoAtual.filter(item => item.id !== produtoId);
+    // this.carrinhoSubject.next(novoCarrinho);
+    // localStorage.setItem(this.carrinhoKey, JSON.stringify(novoCarrinho));
   }
 
-  alterarQuantidade(produtoId: number, quantidade: number) {
-    const produto = this.itensCarrinho.find(item => item.id === produtoId);
-    if (produto) {
-      produto.quantidade = quantidade;
-      if (quantidade <= 0) {
-        this.removerDoCarrinho(produtoId);
-      } else {
-        this.atualizarCarrinho();
-      }
-    }
+  alterarQuantidade(produtoId: number, quantidade: number): void {
+    // Temporariamente desabilitado
+    console.log('Funcionalidade de carrinho temporariamente desabilitada');
+    // const carrinhoAtual = this.carrinhoSubject.value;
+    // const produto = carrinhoAtual.find(item => item.id === produtoId);
+    // if (produto) {
+    //   produto.quantidade = quantidade;
+    //   this.carrinhoSubject.next(carrinhoAtual);
+    //   localStorage.setItem(this.carrinhoKey, JSON.stringify(carrinhoAtual));
+    // }
   }
 
-  limparCarrinho() {
-    this.itensCarrinho = [];
-    this.atualizarCarrinho();
+  limparCarrinho(): void {
+    // Temporariamente desabilitado
+    console.log('Funcionalidade de carrinho temporariamente desabilitada');
+    // this.carrinhoSubject.next([]);
+    // localStorage.removeItem(this.carrinhoKey);
   }
 
-  calcularTotal() {
-    return this.itensCarrinho.reduce((total, item) => {
-      const preco = item.preco || item.precoAtual || 0;
-      return total + (preco * item.quantidade);
-    }, 0);
-  }
-
-  private atualizarCarrinho() {
-    // Atualiza o BehaviorSubject para notificar os componentes inscritos
-    this.carrinhoSubject.next([...this.itensCarrinho]);
-
-    // Salva no localStorage
-    localStorage.setItem('carrinho', JSON.stringify(this.itensCarrinho));
+  calcularTotal(): number {
+    // Temporariamente desabilitado
+    return 0;
+    // return this.carrinhoSubject.value.reduce((total, item) => {
+    //   return total + (item.preco * item.quantidade);
+    // }, 0);
   }
 }

@@ -5,6 +5,7 @@ import { PagamentoComponent } from './components/pagamento/pagamento.component';
 import { CarrinhoComponent } from './components/carrinho/carrinho.component';
 import { ProdutoDetalhesComponent } from './components/produto-detalhes/produto-detalhes.component';
 import { ConfirmacaoComponent } from './components/confirmacao/confirmacao.component';
+import { CadastroComponent } from './components/cadastro/cadastro.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -13,5 +14,6 @@ export const routes: Routes = [
   { path: 'carrinho', component: CarrinhoComponent },
   { path: 'produto/:id', component: ProdutoDetalhesComponent },
   { path: 'confirmacao', component: ConfirmacaoComponent },
+  { path: 'cadastro', component: CadastroComponent },
 ];
 
