@@ -4,16 +4,20 @@ import { CarouselModule } from 'primeng/carousel';
 import { ProdutoCardComponent } from '../produto-card/produto-card.component';
 import { ProdutoService } from '../../services/produto.service';
 import { Produto } from '../../interfaces/produto.interface';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-produtos',
   standalone: true,
-  imports: [CommonModule, CarouselModule, ProdutoCardComponent],
+  imports: [CommonModule, CarouselModule, ProdutoCardComponent, ButtonModule],
   templateUrl: './produtos.component.html',
   styleUrls: ['./produtos.component.scss']
 })
 export class ProdutosComponent implements OnInit {
-  products: Produto[] = [];
+  celulares: Produto[] = [];
+  notebooks: Produto[] = [];
+  monitores: Produto[] = [];
+
   responsiveOptions = [
     {
       breakpoint: '1400px',
@@ -40,17 +44,40 @@ export class ProdutosComponent implements OnInit {
   constructor(private produtoService: ProdutoService) {}
 
   ngOnInit() {
-    this.carregarProdutos();
+    this.carregarProdutosPorCategoria();
   }
 
-  carregarProdutos() {
-    console.log('Iniciando carregamento de produtos...');
-    this.produtoService.getProdutos().subscribe({
+  carregarProdutosPorCategoria() {
+    // Carregar Celulares
+    this.produtoService.getProdutosPorCategoria('celular-smartphone').subscribe({
       next: (produtos) => {
-        this.products = produtos;
+        this.celulares = produtos;
+        console.log('Celulares carregados:', this.celulares);
       },
       error: (erro) => {
-        console.error('Erro ao carregar produtos:', erro);
+        console.error('Erro ao carregar celulares:', erro);
+      }
+    });
+
+    // Carregar Notebooks
+    this.produtoService.getProdutosPorCategoria('Computadores').subscribe({
+      next: (produtos) => {
+        this.notebooks = produtos;
+        console.log('Notebooks carregados:', this.notebooks);
+      },
+      error: (erro) => {
+        console.error('Erro ao carregar notebooks:', erro);
+      }
+    });
+
+    // Carregar Monitores
+    this.produtoService.getProdutosPorCategoria('moinitor').subscribe({
+      next: (produtos) => {
+        this.monitores = produtos;
+        console.log('Monitores carregados:', this.monitores);
+      },
+      error: (erro) => {
+        console.error('Erro ao carregar monitores:', erro);
       }
     });
   }

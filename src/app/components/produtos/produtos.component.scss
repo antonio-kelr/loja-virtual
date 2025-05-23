@@ -6,7 +6,8 @@
 }
 .bg-fundo {
   background: #FAFAFB;
-  height: 100vh;
+  min-height: 100vh;
+  padding: 2rem 0;
 }
 .card {
   border: none;
@@ -72,4 +73,26 @@
   -webkit-box-orient: vertical;
   word-break: break-word;
   max-height: 3.375rem;
+}
+
+.categoria-section {
+  margin-bottom: 3rem;
+  padding: 1rem;
+}
+
+.categoria-titulo {
+  color: var(--cor-primaria-escura);
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  padding-left: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  i {
+    font-size: 1.2rem;
+    color: var(--cor-primaria);
+  }
 }

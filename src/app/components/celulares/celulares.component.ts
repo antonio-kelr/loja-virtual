@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CarouselModule } from 'primeng/carousel';
-import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { FormsModule } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
 import { ProdutoCardComponent } from '../produto-card/produto-card.component';
 import { FooterComponent } from "../footer/footer.component";
 import { HeaderComponent } from "../header/header.component";
@@ -13,26 +11,36 @@ import { Produto } from '../../interfaces/produto.interface';
 @Component({
   selector: 'app-celulares',
   standalone: true,
-  imports: [CarouselModule, ButtonModule, CommonModule, FontAwesomeModule, ProdutoCardComponent, FooterComponent, HeaderComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    InputTextModule,
+    ProdutoCardComponent,
+    FooterComponent,
+    HeaderComponent
+  ],
   templateUrl: './celulares.component.html',
-  styleUrls: ['./celulares.component.scss', '../produtos/produtos.component.scss']
+  styleUrls: ['./celulares.component.scss']
 })
 export class CelularesComponent implements OnInit {
-  faShoppingCart = faShoppingCart;
   celulares: Produto[] = [];
-  responsiveOptions: any[] | undefined;
+  celularesFiltrados: Produto[] = [];
+  nomesCelulares: string[] = [];
+  filtroAtivo: string | null = null;
 
   constructor(private produtoService: ProdutoService) {}
 
   ngOnInit() {
     this.carregarCelulares();
-    this.configurarResponsividade();
   }
 
   carregarCelulares() {
     this.produtoService.getProdutosPorCategoria('celular-smartphone').subscribe({
       next: (produtos) => {
         this.celulares = produtos;
+        this.celularesFiltrados = produtos;
+        // Extrair nomes únicos dos celulares
+        this.nomesCelulares = [...new Set(produtos.map(celular => celular.nome))];
         console.log('Celulares carregados:', this.celulares);
       },
       error: (erro) => {
@@ -41,28 +49,17 @@ export class CelularesComponent implements OnInit {
     });
   }
 
-  private configurarResponsividade() {
-    this.responsiveOptions = [
-      {
-        breakpoint: '1400px',
-        numVisible: 2,
-        numScroll: 1,
-      },
-      {
-        breakpoint: '1199px',
-        numVisible: 3,
-        numScroll: 1,
-      },
-      {
-        breakpoint: '767px',
-        numVisible: 2,
-        numScroll: 1,
-      },
-      {
-        breakpoint: '575px',
-        numVisible: 1,
-        numScroll: 1,
-      },
-    ];
+  filtrarPorNome(nome: string) {
+    if (this.filtroAtivo === nome) {
+      // Se clicar no mesmo filtro, remove o filtro
+      this.filtroAtivo = null;
+      this.celularesFiltrados = this.celulares;
+    } else {
+      // Aplica o novo filtro
+      this.filtroAtivo = nome;
+      this.celularesFiltrados = this.celulares.filter(celular =>
+        celular.nome === nome
+      );
+    }
   }
 }
