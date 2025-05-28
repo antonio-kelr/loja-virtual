@@ -41,7 +41,6 @@ export class CelularesComponent implements OnInit {
         this.celularesFiltrados = produtos;
         // Extrair nomes únicos dos celulares
         this.nomesCelulares = [...new Set(produtos.map(celular => celular.nome))];
-        console.log('Celulares carregados:', this.celulares);
       },
       error: (erro) => {
         console.error('Erro ao carregar celulares:', erro);

@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { NavComponent } from "../nav/nav.component";
+import { AuthService } from '../../services/auth.service';
+import { User } from 'firebase/auth';
 
 @Component({
   selector: 'app-cadastro',
@@ -16,10 +18,12 @@ import { NavComponent } from "../nav/nav.component";
 export class CadastroComponent {
   cadastroForm: FormGroup;
   generos = ['Homem', 'Mulher'];
+  isLoading = false;
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.cadastroForm = this.fb.group({
       nome: ['', [Validators.required, Validators.minLength(3)]],
@@ -43,9 +47,27 @@ export class CadastroComponent {
     return senha === confirmarSenha ? null : { senhasDiferentes: true };
   }
 
+  async loginComGoogle() {
+    try {
+      this.isLoading = true;
+      const user = await this.authService.loginWithGoogle();
+      console.log('Dados do usuário Google:', {
+        nome: user.displayName,
+        email: user.email,
+        foto: user.photoURL,
+        uid: user.uid
+      });
+    } catch (error) {
+      console.error('Erro ao fazer login com Google:', error);
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
   onSubmit() {
     if (this.cadastroForm.valid) {
       const formData = this.cadastroForm.value;
+      console.log('Dados do formulário:', formData);
       // Remover confirmarSenha antes de enviar
       delete formData.confirmarSenha;
 
@@ -55,11 +77,6 @@ export class CadastroComponent {
       console.log('Dados do formulário:', formData);
       // Aqui você implementará a lógica de cadastro
     }
-  }
-
-  loginComGoogle() {
-    console.log('Login com Google');
-    // Implementar integração com Google
   }
 
   loginComFacebook() {

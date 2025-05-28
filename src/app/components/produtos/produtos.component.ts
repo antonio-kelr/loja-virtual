@@ -52,7 +52,6 @@ export class ProdutosComponent implements OnInit {
     this.produtoService.getProdutosPorCategoria('celular-smartphone').subscribe({
       next: (produtos) => {
         this.celulares = produtos;
-        console.log('Celulares carregados:', this.celulares);
       },
       error: (erro) => {
         console.error('Erro ao carregar celulares:', erro);
@@ -63,7 +62,6 @@ export class ProdutosComponent implements OnInit {
     this.produtoService.getProdutosPorCategoria('Computadores').subscribe({
       next: (produtos) => {
         this.notebooks = produtos;
-        console.log('Notebooks carregados:', this.notebooks);
       },
       error: (erro) => {
         console.error('Erro ao carregar notebooks:', erro);
@@ -74,7 +72,6 @@ export class ProdutosComponent implements OnInit {
     this.produtoService.getProdutosPorCategoria('moinitor').subscribe({
       next: (produtos) => {
         this.monitores = produtos;
-        console.log('Monitores carregados:', this.monitores);
       },
       error: (erro) => {
         console.error('Erro ao carregar monitores:', erro);

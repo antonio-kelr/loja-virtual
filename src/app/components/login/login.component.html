@@ -1,0 +1,64 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="text-center mb-4">Login</h2>
+
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                formControlName="email"
+                [ngClass]="{'is-invalid': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}"
+              >
+              <div class="invalid-feedback" *ngIf="loginForm.get('email')?.errors?.['required']">
+                Email é obrigatório
+              </div>
+              <div class="invalid-feedback" *ngIf="loginForm.get('email')?.errors?.['email']">
+                Email inválido
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="senha" class="form-label">Senha</label>
+              <input
+                type="password"
+                class="form-control"
+                id="senha"
+                formControlName="senha"
+                [ngClass]="{'is-invalid': loginForm.get('senha')?.invalid && loginForm.get('senha')?.touched}"
+              >
+              <div class="invalid-feedback" *ngIf="loginForm.get('senha')?.errors?.['required']">
+                Senha é obrigatória
+              </div>
+              <div class="invalid-feedback" *ngIf="loginForm.get('senha')?.errors?.['minlength']">
+                Senha deve ter no mínimo 6 caracteres
+              </div>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">
+                Entrar
+              </button>
+            </div>
+          </form>
+
+          <div class="text-center mt-3">
+            <p>Ou</p>
+            <button class="btn btn-outline-danger" (click)="loginComGoogle()">
+              <i class="fab fa-google me-2"></i>Entrar com Google
+            </button>
+          </div>
+
+          <div class="text-center mt-3">
+            <p>Não tem uma conta? <a href="#" (click)="irParaCadastro()">Cadastre-se</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

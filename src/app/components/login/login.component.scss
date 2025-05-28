@@ -1,0 +1,23 @@
+.card {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 10px;
+}
+
+.btn-outline-danger {
+  &:hover {
+    background-color: #dc3545;
+    color: white;
+  }
+}
+
+.form-control {
+  &:focus {
+    box-shadow: none;
+    border-color: #0d6efd;
+  }
+}
+
+.invalid-feedback {
+  font-size: 0.875rem;
+}
