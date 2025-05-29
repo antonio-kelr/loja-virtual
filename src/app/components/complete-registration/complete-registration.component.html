@@ -1,0 +1,83 @@
+<app-nav></app-nav>
+
+<div class="container mt-5 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h3 class="text-center mb-0">Complete seu Cadastro</h3>
+        </div>
+        <div class="card-body p-4">
+          <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+            <div class="mb-4">
+              <label for="cpf" class="form-label fw-bold">CPF</label>
+              <input
+                type="text"
+                class="form-control form-control-lg"
+                id="cpf"
+                formControlName="cpf"
+                placeholder="Digite seu CPF"
+                [ngClass]="{'is-invalid': registrationForm.get('cpf')?.invalid && registrationForm.get('cpf')?.touched}"
+              >
+              <div class="invalid-feedback" *ngIf="registrationForm.get('cpf')?.errors?.['required']">
+                CPF é obrigatório
+              </div>
+              <div class="invalid-feedback" *ngIf="registrationForm.get('cpf')?.errors?.['pattern']">
+                CPF deve conter 11 dígitos
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label for="dateOfBirth" class="form-label fw-bold">Data de Nascimento</label>
+              <input
+                type="date"
+                class="form-control form-control-lg"
+                id="dateOfBirth"
+                formControlName="dateOfBirth"
+                [ngClass]="{'is-invalid': registrationForm.get('dateOfBirth')?.invalid && registrationForm.get('dateOfBirth')?.touched}"
+              >
+              <div class="invalid-feedback" *ngIf="registrationForm.get('dateOfBirth')?.errors?.['required']">
+                Data de nascimento é obrigatória
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label for="gender" class="form-label fw-bold">Gênero</label>
+              <select
+                class="form-select form-select-lg"
+                id="gender"
+                formControlName="gender"
+                [ngClass]="{'is-invalid': registrationForm.get('gender')?.invalid && registrationForm.get('gender')?.touched}"
+              >
+                <option value="">Selecione</option>
+                <option value="M">Masculino</option>
+                <option value="F">Feminino</option>
+                <option value="O">Outro</option>
+              </select>
+              <div class="invalid-feedback" *ngIf="registrationForm.get('gender')?.errors?.['required']">
+                Gênero é obrigatório
+              </div>
+            </div>
+
+            <div class="alert alert-danger" *ngIf="error">
+              {{ error }}
+            </div>
+
+            <div class="d-grid gap-2">
+              <button
+                type="submit"
+                class="btn btn-primary btn-lg"
+                [disabled]="registrationForm.invalid || loading"
+              >
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                {{ loading ? 'Salvando...' : 'Completar Cadastro' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

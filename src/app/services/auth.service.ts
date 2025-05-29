@@ -7,7 +7,8 @@ import {
   signInWithPopup,
   User
 } from 'firebase/auth';
-import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
+import { BehaviorSubject, Observable, firstValueFrom, tap } from 'rxjs';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,13 +16,13 @@ import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 export class AuthService {
   private userSubject = new BehaviorSubject<User | null>(null);
   user$ = this.userSubject.asObservable();
-  private apiUrl = 'http://localhost:5299/api/auth';
+  private apiUrl = 'http://localhost:5299/api/GoogleAuth/login';
 
   constructor(
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private userService: UserService
   ) {
-    // Observar mudanças no estado de autenticação
     auth.onAuthStateChanged((user) => {
       this.userSubject.next(user);
     });
@@ -30,38 +31,34 @@ export class AuthService {
   async loginWithGoogle() {
     try {
       const provider = new GoogleAuthProvider();
-
-      // Configurações adicionais para o provedor Google
       provider.setCustomParameters({
-        prompt: 'select_account',
-        // Forçar a abertura em uma nova janela
-        authType: 'signInWithPopup'
+        prompt: 'select_account'
       });
-
-      // Configurar opções do popup
-      const popupOptions = {
-        width: 500,
-        height: 600,
-        left: window.screenX + (window.outerWidth - 500) / 2,
-        top: window.screenY + (window.outerHeight - 600) / 2
-      };
 
       const result = await signInWithPopup(auth, provider);
       this.userSubject.next(result.user);
 
-      // Obter o token do Google
-      const idToken = await result.user.getIdToken();
-      console.log('Token obtido:', idToken); // Debug
+      // 🔑 Obter o ID Token (JWT) correto
+      const idToken = await result.user?.getIdToken();
 
-      // Enviar dados para o backend
-      try {
-        const response = await firstValueFrom(this.enviarDadosGoogle(idToken));
-        console.log('Resposta do backend:', response); // Debug
-      } catch (error) {
-        console.error('Erro ao enviar dados para o backend:', error);
+      if (!idToken) {
+        throw new Error('ID Token não foi obtido');
       }
 
-      this.router.navigate(['/']);
+      console.log('ID Token JWT obtido:', idToken);
+
+      // Enviar para o backend
+      try {
+        const response = await firstValueFrom(this.enviarDadosGoogle(idToken));
+        console.log('Resposta do backend:', response);
+
+        // Após login bem-sucedido, redirecionar direto para completar cadastro
+        this.router.navigate(['/complete-registration']);
+      } catch (error) {
+        console.error('Erro ao enviar dados para o backend:', error);
+        throw error;
+      }
+
       return result.user;
     } catch (error) {
       console.error('Erro ao fazer login com Google:', error);
@@ -70,8 +67,43 @@ export class AuthService {
   }
 
   enviarDadosGoogle(idToken: string): Observable<any> {
-    console.log('Enviando token para o backend:', idToken); // Debug
-    return this.http.post(`${this.apiUrl}/google`, { idToken });
+    console.log('Enviando ID Token (JWT) para o backend:', idToken);
+    const payload = { token: idToken };
+
+    return this.http.post(this.apiUrl, payload, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      responseType: 'text'
+    }).pipe(
+      tap({
+        next: (response) => {
+          console.log('Resposta do servidor:', response);
+          try {
+            const jsonResponse = JSON.parse(response);
+            console.log('Resposta convertida para JSON:', jsonResponse);
+          } catch (e) {
+            console.log('Resposta não é um JSON válido:', response);
+          }
+        },
+        error: (error) => {
+          console.error('Erro detalhado:', {
+            status: error.status,
+            statusText: error.statusText,
+            error: error.error,
+            headers: error.headers,
+            url: error.url
+          });
+
+          if (error.error instanceof ErrorEvent) {
+            console.error('Erro do cliente:', error.error.message);
+          } else {
+            console.error('Erro do servidor:', error.error);
+          }
+        }
+      })
+    );
   }
 
   logout() {
