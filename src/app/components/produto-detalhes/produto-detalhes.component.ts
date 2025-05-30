@@ -35,17 +35,17 @@ export class ProdutoDetalhesComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      const produtoId = +params['id'];
+      const produtoSlug = params['slug'];
 
-      if (produtoId) {
-        this.carregarProduto(produtoId);
+      if (produtoSlug) {
+        this.carregarProduto(produtoSlug);
         this.freteSelecionado = this.opcoesFrete[0];
       }
     });
   }
 
-  carregarProduto(id: number): void {
-    this.produtoService.getProdutoPorId(id).subscribe({
+  carregarProduto(slug: string): void {
+    this.produtoService.getProdutoPorSlug(slug).subscribe({
       next: (produto) => {
         console.log('Produto carregado:', produto);
         this.produto = produto;

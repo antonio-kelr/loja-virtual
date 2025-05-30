@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { NavComponent } from '../nav/nav.component';
 import { FooterComponent } from '../footer/footer.component';
+import { UserProfile } from '../../models/user-profile.model';
 
 @Component({
   selector: 'app-complete-registration',
@@ -18,7 +19,7 @@ import { FooterComponent } from '../footer/footer.component';
   templateUrl: './complete-registration.component.html',
   styleUrls: ['./complete-registration.component.scss']
 })
-export class CompleteRegistrationComponent implements OnInit {
+export class CompleteRegistrationComponent {
   registrationForm: FormGroup;
   error: string | null = null;
   loading = false;
@@ -30,14 +31,10 @@ export class CompleteRegistrationComponent implements OnInit {
   ) {
     this.registrationForm = this.fb.group({
       cpf: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
-      dateOfBirth: ['', Validators.required],
-      gender: ['', Validators.required]
+      dataNascimento: ['', Validators.required],
+      genero: ['', Validators.required],
+      telefone: ['', [Validators.required, Validators.pattern(/^\(\d{2}\)\s\d{5}-\d{4}$/)]]
     });
-  }
-
-  ngOnInit(): void {
-    // Não precisamos mais verificar se o perfil está completo
-    // pois o usuário sempre será redirecionado para cá após o login
   }
 
   onSubmit(): void {
@@ -45,15 +42,40 @@ export class CompleteRegistrationComponent implements OnInit {
       this.loading = true;
       this.error = null;
 
-      this.userService.updateUserProfile(this.registrationForm.value).subscribe({
-        next: () => {
-          this.loading = false;
-          // Redirecionar para a home após salvar com sucesso
-          this.router.navigate(['/']);
+      const userId = localStorage.getItem('userId');
+      if (!userId) {
+        this.error = 'ID do usuário não encontrado';
+        this.loading = false;
+        return;
+      }
+
+      // Primeiro, buscar o usuário completo
+      this.userService.getUserProfile().subscribe({
+        next: (userProfile) => {
+          // Atualizar apenas os campos do formulário
+          const updatedProfile: UserProfile = {
+            ...userProfile, // Mantém todos os dados existentes
+            cpf: this.registrationForm.get('cpf')?.value,
+            dataNascimento: this.registrationForm.get('dataNascimento')?.value,
+            genero: this.registrationForm.get('genero')?.value,
+            telefone: this.registrationForm.get('telefone')?.value
+          };
+
+          // Enviar a atualização
+          this.userService.updateUserProfile(updatedProfile).subscribe({
+            next: () => {
+              this.loading = false;
+              this.router.navigate(['/']);
+            },
+            error: (err) => {
+              this.loading = false;
+              this.error = err.error?.message || 'Erro ao atualizar perfil. Tente novamente.';
+            }
+          });
         },
         error: (err) => {
           this.loading = false;
-          this.error = err.error?.message || 'Erro ao atualizar perfil. Tente novamente.';
+          this.error = 'Erro ao carregar dados do usuário. Tente novamente.';
         }
       });
     }

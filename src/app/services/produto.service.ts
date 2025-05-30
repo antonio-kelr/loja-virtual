@@ -50,4 +50,9 @@ getProdutosPorCategoria(nomeCategoria: string): Observable<Produto[]> {
   deletarProduto(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  // Buscar produto por slug
+  getProdutoPorSlug(slug: string): Observable<Produto> {
+    return this.http.get<Produto>(`${this.apiUrl}/slug/${slug}`);
+  }
 }

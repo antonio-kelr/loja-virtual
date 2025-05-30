@@ -1,14 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { auth } from '../firebase.config';
 import {
   GoogleAuthProvider,
   signInWithPopup,
-  User
+  User,
+  signInWithEmailAndPassword
 } from 'firebase/auth';
 import { BehaviorSubject, Observable, firstValueFrom, tap } from 'rxjs';
 import { UserService } from './user.service';
+import { UserProfile } from '../models/user-profile.model';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -17,14 +20,28 @@ export class AuthService {
   private userSubject = new BehaviorSubject<User | null>(null);
   user$ = this.userSubject.asObservable();
   private apiUrl = 'http://localhost:5299/api/GoogleAuth/login';
+  private loginUrl = 'http://localhost:5299/api/Users/login';
 
   constructor(
     private router: Router,
     private http: HttpClient,
-    private userService: UserService
+    private userService: UserService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     auth.onAuthStateChanged((user) => {
       this.userSubject.next(user);
+    });
+  }
+
+  getUserProfile(): Observable<UserProfile> {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      throw new Error('ID do usuário não encontrado');
+    }
+    return this.http.get<UserProfile>(`http://localhost:5299/api/Users/${userId}`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
     });
   }
 
@@ -38,7 +55,6 @@ export class AuthService {
       const result = await signInWithPopup(auth, provider);
       this.userSubject.next(result.user);
 
-      // 🔑 Obter o ID Token (JWT) correto
       const idToken = await result.user?.getIdToken();
 
       if (!idToken) {
@@ -47,12 +63,18 @@ export class AuthService {
 
       console.log('ID Token JWT obtido:', idToken);
 
-      // Enviar para o backend
       try {
         const response = await firstValueFrom(this.enviarDadosGoogle(idToken));
         console.log('Resposta do backend:', response);
 
-        // Após login bem-sucedido, redirecionar direto para completar cadastro
+        // Salvar o userId e token no localStorage
+        if (response && response.userId) {
+          localStorage.setItem('userId', response.userId.toString());
+        }
+        if (response && response.token) {
+          localStorage.setItem('token', response.token);
+        }
+
         this.router.navigate(['/complete-registration']);
       } catch (error) {
         console.error('Erro ao enviar dados para o backend:', error);
@@ -66,26 +88,65 @@ export class AuthService {
     }
   }
 
-  enviarDadosGoogle(idToken: string): Observable<any> {
+  async loginWithEmailAndPassword(email: string, senha: string) {
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, senha);
+      const user = userCredential.user;
+
+      const idToken = await user.getIdToken();
+
+      if (!idToken) {
+        throw new Error('ID Token não foi obtido');
+      }
+
+      const loginData = {
+        email: email,
+        senha: senha,
+        token: idToken
+      };
+
+      const response = await firstValueFrom(
+        this.http.post<{token: string, message: string, userId: number}>(this.loginUrl, loginData, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }
+        })
+      );
+
+      console.log('Resposta do backend:', response);
+
+      // Salvar o userId e token no localStorage
+      if (response && response.userId) {
+        localStorage.setItem('userId', response.userId.toString());
+      }
+      if (response && response.token) {
+        localStorage.setItem('token', response.token);
+      }
+
+      this.userSubject.next(user);
+      this.router.navigate(['/']);
+
+      return user;
+    } catch (error) {
+      console.error('Erro ao fazer login:', error);
+      throw error;
+    }
+  }
+
+  enviarDadosGoogle(idToken: string): Observable<{token: string, message: string, userId: number}> {
     console.log('Enviando ID Token (JWT) para o backend:', idToken);
     const payload = { token: idToken };
 
-    return this.http.post(this.apiUrl, payload, {
+    return this.http.post<{token: string, message: string, userId: number}>(this.apiUrl, payload, {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
-      },
-      responseType: 'text'
+      }
     }).pipe(
       tap({
         next: (response) => {
           console.log('Resposta do servidor:', response);
-          try {
-            const jsonResponse = JSON.parse(response);
-            console.log('Resposta convertida para JSON:', jsonResponse);
-          } catch (e) {
-            console.log('Resposta não é um JSON válido:', response);
-          }
         },
         error: (error) => {
           console.error('Erro detalhado:', {
@@ -109,6 +170,8 @@ export class AuthService {
   logout() {
     auth.signOut();
     this.userSubject.next(null);
+    localStorage.removeItem('userId');
+    localStorage.removeItem('token');
     this.router.navigate(['/login']);
   }
 }

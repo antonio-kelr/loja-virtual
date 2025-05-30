@@ -1,45 +1,6 @@
 <header class="header">
   <nav class="navbar maxWidth">
     <div class="nav-container">
-      <div class="menu-amburguer">
-        <i
-          class="pi pi-bars"
-          style="font-size: 2rem; color: white"
-          data-bs-toggle="offcanvas"
-          data-bs-target="#staticBackdrop"
-          aria-controls="staticBackdrop"
-        ></i>
-
-        <div
-          class="offcanvas offcanvas-start Offcanvas-menu"
-          data-bs-backdrop="static"
-          tabindex="-1"
-          id="staticBackdrop"
-          aria-labelledby="staticBackdropLabel"
-        >
-          <div
-            class="offcanvas-header"
-            style="
-              display: flex;
-              align-items: center;
-              justify-content: space-between;
-            "
-          >
-            <h5 class="offcanvas-title" id="staticBackdropLabel">
-              Bem vindo ao KaBum!
-            </h5>
-            <button
-              type="button"
-              class="btn-close btn-fechar"
-              data-bs-dismiss="offcanvas"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="offcanvas-body">
-            <div>I will not close if you click outside of me.</div>
-          </div>
-        </div>
-      </div>
 
       <div class="logo">
         <a routerLink="">
@@ -97,48 +58,66 @@
 
     <ul class="nav-links">
       <div class="isLogin">
-        <svg
-          width="28"
-          height="28"
-          viewBox="0 0 28 28"
-          fill="none"
-          xmlns="https://www.w3.org/2000/svg"
-          class="IconDefaultProfileLogo"
-        >
-          <mask
-            id="mask0"
-            maskUnits="userSpaceOnUse"
-            x="0"
-            y="0"
+        <ng-container *ngIf="!isLoggedIn">
+          <svg
             width="28"
             height="28"
-            style="mask-type: alpha"
+            viewBox="0 0 28 28"
+            fill="none"
+            xmlns="https://www.w3.org/2000/svg"
+            class="IconDefaultProfileLogo"
           >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M18.6375 13.5625C20.6063 12.2062 21.875 9.975 21.875 7.4375C21.875 3.325 18.55 0 14.4375 0C10.325 0 7 3.325 7 7.4375C7 9.975 8.26875 12.2062 10.2375 13.5625C6.34375 14.7875 3.5 18.4625 3.5 22.75V28H25.375V22.75C25.375 18.4625 22.5312 14.7875 18.6375 13.5625Z"
-              fill="#347BBE"
-            ></path>
-          </mask>
-          <g mask="url(#mask0)">
-            <circle cx="14.5" cy="11.5" r="15.5" fill="#C4C4C4"></circle>
-          </g>
-        </svg>
-        <span
-          ><a
-            id="linkLoginHeader"
-            href="/login?redirect_uri=https://www.kabum.com.br/"
-            class="sc-bbaee818-4 eCbeLP"
-            >ENTRE</a
-          >
-          ou <br /><a
-            id="linkCadastroHeader"
-            [routerLink]="['/cadastro']"
-            class="sc-bbaee818-4 eCbeLP"
-            >CADASTRE-SE</a
-          ></span
-        >
+            <mask
+              id="mask0"
+              maskUnits="userSpaceOnUse"
+              x="0"
+              y="0"
+              width="28"
+              height="28"
+              style="mask-type: alpha"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M18.6375 13.5625C20.6063 12.2062 21.875 9.975 21.875 7.4375C21.875 3.325 18.55 0 14.4375 0C10.325 0 7 3.325 7 7.4375C7 9.975 8.26875 12.2062 10.2375 13.5625C6.34375 14.7875 3.5 18.4625 3.5 22.75V28H25.375V22.75C25.375 18.4625 22.5312 14.7875 18.6375 13.5625Z"
+                fill="#347BBE"
+              ></path>
+            </mask>
+            <g mask="url(#mask0)">
+              <circle cx="14.5" cy="11.5" r="15.5" fill="#C4C4C4"></circle>
+            </g>
+          </svg>
+          <span>
+            <a
+              id="linkLoginHeader"
+              href="/login?redirect_uri=https://www.kabum.com.br/"
+              class="sc-bbaee818-4 eCbeLP"
+              >ENTRE</a
+            >
+            ou <br /><a
+              id="linkCadastroHeader"
+              [routerLink]="['/cadastro']"
+              class="sc-bbaee818-4 eCbeLP"
+              >CADASTRE-SE</a
+            >
+          </span>
+        </ng-container>
+
+        <ng-container *ngIf="isLoggedIn && userProfile">
+          <div class="user-profile">
+            <img
+              [src]="userProfile.fotoPerfil || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcQ_eoyu-ek2ju7f-NhDlzLtQXNWg-etAXco7UbW4u7S50sgCImeUex34beKj8Q66dmAw&usqp=CAU'"
+              alt="Foto de perfil"
+              class="profile-image"
+            >
+            <div class="user-info">
+              <span class="user-name">
+                <span class="user-name-text">Olá, </span>
+                {{ getPrimeiroNome() }}
+              </span>
+            </div>
+          </div>
+        </ng-container>
       </div>
       <div class="icons">
         <fa-icon

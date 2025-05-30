@@ -24,6 +24,6 @@ export class ProdutoCardComponent {
   }
 
   verDetalhes(produto: any) {
-    this.router.navigate(['/produto', produto.id]);
+    this.router.navigate(['/produto', produto.slug]);
   }
 }
