@@ -4,7 +4,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faShoppingCart, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart, faHeart, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { MegaMenuComponent } from "../mega-menu/mega-menu.component";
 import { CarrinhoService } from '../../services/carrinho.service';
 import { CommonModule } from '@angular/common';
@@ -24,6 +24,7 @@ import { isPlatformBrowser } from '@angular/common';
 export class HeaderComponent implements OnInit {
   faShoppingCart = faShoppingCart;
   faHeart = faHeart;
+  faChevronDown = faChevronDown;
   qtdItensCarrinho: number = 0;
   userProfile: UserProfile | null = null;
   isLoggedIn = false;
@@ -86,6 +87,11 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout();
+    alert('teste');
+    // // Limpar dados do usuário
+    // this.userProfile = null;
+    // this.isLoggedIn = false;
+    // // Redirecionar para a página inicial
+    // this.router.navigate(['/']);
   }
 }
