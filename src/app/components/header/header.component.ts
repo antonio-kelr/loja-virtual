@@ -17,7 +17,7 @@ import { isPlatformBrowser } from '@angular/common';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [ButtonModule, MenubarModule, DialogModule, InputTextModule, FontAwesomeModule, MegaMenuComponent, CommonModule,RouterLink, MenuModule],
+  imports: [ButtonModule, MenubarModule, DialogModule, InputTextModule, FontAwesomeModule, MegaMenuComponent, CommonModule, RouterLink, MenuModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -49,12 +49,7 @@ export class HeaderComponent implements OnInit {
 
     // Verificar se está no navegador antes de acessar localStorage
     if (isPlatformBrowser(this.platformId)) {
-      // Verificar se já existe um token
-      const token = localStorage.getItem('token');
-      if (token) {
-        this.isLoggedIn = true;
-        this.loadUserProfile();
-      }
+      this.checkLoginStatus();
     }
 
     // Observar mudanças no estado do usuário
@@ -68,16 +63,50 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  private checkLoginStatus() {
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
+
+    if (token && userId) {
+      this.isLoggedIn = true;
+      this.loadUserProfile();
+    } else {
+      this.isLoggedIn = false;
+      this.userProfile = null;
+    }
+  }
+
   private loadUserProfile() {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
+
+    if (!token || !userId) {
+      console.log('Usuário não está autenticado');
+      this.userProfile = null;
+      this.isLoggedIn = false;
+      return;
+    }
+
     console.log('Carregando perfil do usuário...');
     this.authService.getUserProfile().subscribe({
       next: (profile) => {
         console.log('Perfil carregado:', profile);
         this.userProfile = profile;
+        this.isLoggedIn = true;
       },
       error: (error) => {
         console.error('Erro ao carregar perfil:', error);
         this.userProfile = null;
+        this.isLoggedIn = false;
+        // Se houver erro de autenticação, limpar os dados do localStorage
+        if (error.status === 401) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('userId');
+        }
       }
     });
   }
@@ -87,11 +116,9 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    alert('teste');
-    // // Limpar dados do usuário
-    // this.userProfile = null;
-    // this.isLoggedIn = false;
-    // // Redirecionar para a página inicial
-    // this.router.navigate(['/']);
+    this.authService.logout();
+    this.userProfile = null;
+    this.isLoggedIn = false;
+    this.router.navigate(['/']);
   }
 }

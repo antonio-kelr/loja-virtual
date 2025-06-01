@@ -9,6 +9,7 @@ import { CadastroComponent } from './components/cadastro/cadastro.component';
 import { LoginComponent } from './components/login/login.component';
 import { CompleteRegistrationComponent } from './components/complete-registration/complete-registration.component';
 import { AuthGuard } from './guards/auth.guard';
+import { AdminComponent } from './components/admin/admin.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -24,5 +25,13 @@ export const routes: Routes = [
     component: CompleteRegistrationComponent,
     canActivate: [AuthGuard]
   },
+  {
+    path: 'painel-administrativo',
+    component: AdminComponent,
+    canActivate: [AuthGuard],
+    children: [
+      // Aqui serão adicionadas as rotas filhas do painel administrativo
+    ]
+  }
 ];
 

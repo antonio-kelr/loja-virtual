@@ -45,6 +45,28 @@ export class AuthService {
     });
   }
 
+  private async verificarCadastroCompleto(userId: number): Promise<boolean> {
+    try {
+      const profile = await firstValueFrom(this.getUserProfile());
+      return !!profile.nome && !!profile.cpf; // Verifica se tem nome e CPF cadastrados
+    } catch (error) {
+      console.error('Erro ao verificar cadastro:', error);
+      return false;
+    }
+  }
+
+  private async redirecionarAposLogin(userId: number) {
+    const cadastroCompleto = await this.verificarCadastroCompleto(userId);
+
+    if (!cadastroCompleto) {
+      console.log('Cadastro incompleto, redirecionando para completar...');
+      this.router.navigate(['/complete-registration']);
+    } else {
+      console.log('Cadastro completo, redirecionando para home...');
+      this.router.navigate(['/']);
+    }
+  }
+
   async loginWithGoogle() {
     try {
       const provider = new GoogleAuthProvider();
@@ -75,7 +97,10 @@ export class AuthService {
           localStorage.setItem('token', response.token);
         }
 
-        this.router.navigate(['/complete-registration']);
+        // Verifica se precisa completar o cadastro
+        if (response && response.userId) {
+          await this.redirecionarAposLogin(response.userId);
+        }
       } catch (error) {
         console.error('Erro ao enviar dados para o backend:', error);
         throw error;
@@ -125,7 +150,11 @@ export class AuthService {
       }
 
       this.userSubject.next(user);
-      this.router.navigate(['/']);
+
+      // Verifica se precisa completar o cadastro
+      if (response && response.userId) {
+        await this.redirecionarAposLogin(response.userId);
+      }
 
       return user;
     } catch (error) {
