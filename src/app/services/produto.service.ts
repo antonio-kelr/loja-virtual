@@ -30,10 +30,6 @@ getProdutosPorCategoria(nomeCategoria: string): Observable<Produto[]> {
     return this.http.get<Produto[]>(`${this.apiUrl}?destaque=true`);
   }
 
-  getProdutosMercadoLivre(query: string): Observable<any> {
-    const url = `https://api.mercadolibre.com/sites/MLB/search?q=${query}`;
-    return this.http.get<any>(url);
-  }
 
 
   // Criar novo produto

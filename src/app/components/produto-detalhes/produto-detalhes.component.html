@@ -8,14 +8,19 @@
     <div class="produto-imagens">
       <div class="imagem-principal">
         <img
-          [src]="produto.imagens?.[0]?.url || 'https://via.placeholder.com/400'"
+          [src]="imagemPrincipal?.url || 'https://via.placeholder.com/400'"
           [alt]="produto.nome"
           class="imagem-produto"
         />
       </div>
       <!-- Miniaturas das imagens -->
       <div class="miniaturas" *ngIf="produto.imagens && produto.imagens.length > 1">
-        <div class="miniatura" *ngFor="let imagem of produto.imagens">
+        <div
+          class="miniatura"
+          *ngFor="let imagem of produto.imagens"
+          [class.ativa]="imagemPrincipal?.id === imagem.id"
+          (click)="trocarImagemPrincipal(imagem)"
+        >
           <img [src]="imagem.url" [alt]="imagem.titulo" />
         </div>
       </div>

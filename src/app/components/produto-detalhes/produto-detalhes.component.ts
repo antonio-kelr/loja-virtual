@@ -7,6 +7,7 @@ import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { ProdutoService } from '../../services/produto.service';
 import { Produto } from '../../interfaces/produto.interface';
+import { ProdutoImagem } from '../../interfaces/produto.interface';
 
 @Component({
   selector: 'app-produto-detalhes',
@@ -19,6 +20,7 @@ export class ProdutoDetalhesComponent implements OnInit {
   faTruck = faTruck;
 
   produto: Produto | null = null;
+  imagemPrincipal: ProdutoImagem | null = null;
   quantidadeSelecionada: number = 1;
   opcoesFrete: any[] = [
     { tipo: 'Frete Grátis', preco: 0, prazo: '7-10 dias úteis' },
@@ -49,11 +51,18 @@ export class ProdutoDetalhesComponent implements OnInit {
       next: (produto) => {
         console.log('Produto carregado:', produto);
         this.produto = produto;
+        if (produto.imagens && produto.imagens.length > 0) {
+          this.imagemPrincipal = produto.imagens[0];
+        }
       },
       error: (erro) => {
         console.error('Erro ao carregar produto:', erro);
       }
     });
+  }
+
+  trocarImagemPrincipal(imagem: ProdutoImagem): void {
+    this.imagemPrincipal = imagem;
   }
 
   get precoParcelado(): number {

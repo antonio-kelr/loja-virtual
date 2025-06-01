@@ -1,17 +1,64 @@
 <div class="admin-container">
-  <header class="admin-header">
-    <h1>Painel Administrativo</h1>
-  </header>
+  <aside class="admin-sidebar">
+    <div class="sidebar-header">
+      <h2>Painel Admin</h2>
+    </div>
 
-  <nav class="admin-nav">
-    <ul>
-      <li><a routerLink="produtos">Gerenciar Produtos</a></li>
-      <li><a routerLink="categorias">Gerenciar Categorias</a></li>
-      <li><a routerLink="pedidos">Gerenciar Pedidos</a></li>
-    </ul>
-  </nav>
+    <nav class="sidebar-nav">
+      <ul>
+        <li>
+          <a routerLink="/" class="nav-link">
+            <fa-icon [icon]="faHome"></fa-icon>
+            Voltar ao Site
+          </a>
+        </li>
+        <li>
+          <a routerLink="produtos" class="nav-link">
+            <fa-icon [icon]="faBox"></fa-icon>
+            Produtos
+          </a>
+        </li>
+        <li>
+          <a routerLink="categorias" class="nav-link">
+            <fa-icon [icon]="faTags"></fa-icon>
+            Categorias
+          </a>
+        </li>
+        <li>
+          <a routerLink="pedidos" class="nav-link">
+            <fa-icon [icon]="faShoppingCart"></fa-icon>
+            Pedidos
+          </a>
+        </li>
+        <li>
+          <a routerLink="usuarios" class="nav-link">
+            <fa-icon [icon]="faUsers"></fa-icon>
+            Usuários
+          </a>
+        </li>
+        <li>
+          <a routerLink="relatorios" class="nav-link">
+            <fa-icon [icon]="faChartBar"></fa-icon>
+            Relatórios
+          </a>
+        </li>
+        <li>
+          <a routerLink="configuracoes" class="nav-link">
+            <fa-icon [icon]="faCog"></fa-icon>
+            Configurações
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
 
-  <main class="admin-content">
-    <router-outlet></router-outlet>
+  <main class="admin-main">
+    <header class="admin-header">
+      <h1>Painel Administrativo</h1>
+    </header>
+
+    <div class="admin-content">
+      <router-outlet></router-outlet>
+    </div>
   </main>
 </div>
