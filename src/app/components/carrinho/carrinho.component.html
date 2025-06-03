@@ -1,82 +1,76 @@
-<!-- <app-header></app-header>
+<app-header></app-header>
 
 <div class="carrinho-container">
-  <app-processo-compra [etapaAtual]="1"></app-processo-compra>
+  <div class="carrinho-content">
+    <h1 class="titulo-carrinho">
+      <i class="pi pi-shopping-cart"></i>
+      Meu Carrinho
+    </h1>
 
-  <div class="carrinho-vazio" *ngIf="itensCarrinho.length === 0">
-    <div class="icone-vazio">
-      <i class="fas fa-shopping-cart"></i>
-    </div>
-    <p>Seu carrinho está vazio</p>
-    <button class="btn-continuar" (click)="continuarComprando()">Continuar Comprando</button>
-  </div>
+    <div class="carrinho-grid">
+      <!-- Lista de Produtos -->
+      <div class="lista-produtos">
+        <div class="produto-item" *ngFor="let item of itensCarrinho">
+          <div class="produto-imagem">
+            <img [src]="item.imagem" [alt]="item.nome">
+          </div>
 
-  <div class="carrinho-com-itens" *ngIf="itensCarrinho.length > 0">
-    <div class="itens-container">
-      <div class="topo-itens">
-        <h2>MEU CARRINHO</h2>
-        <button class="btn-limpar-topo" (click)="limparCarrinho()">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="3 6 5 6 21 6"></polyline>
-            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-            <line x1="10" y1="11" x2="10" y2="17"></line>
-            <line x1="14" y1="11" x2="14" y2="17"></line>
-          </svg>
-          Limpar Carrinho
+          <div class="produto-info">
+            <h3 class="produto-nome">{{ item.nome }}</h3>
+            <div class="produto-preco">R$ {{ item.preco | number:'1.2-2' }}</div>
+          </div>
+
+          <div class="produto-quantidade">
+            <button class="btn-quantidade" (click)="atualizarQuantidade(item, -1)">
+              <fa-icon [icon]="faMinus"></fa-icon>
+            </button>
+            <span class="quantidade">{{ item.quantidade }}</span>
+            <button class="btn-quantidade" (click)="atualizarQuantidade(item, 1)">
+              <fa-icon [icon]="faPlus"></fa-icon>
+            </button>
+          </div>
+
+          <div class="produto-subtotal">
+            R$ {{ (item.preco * item.quantidade) | number:'1.2-2' }}
+          </div>
+
+          <button class="btn-remover" (click)="removerItem(item)">
+            <fa-icon [icon]="faTrash"></fa-icon>
+          </button>
+        </div>
+
+        <div class="carrinho-vazio" *ngIf="itensCarrinho.length === 0">
+          <i class="pi pi-shopping-cart"></i>
+          <p>Seu carrinho está vazio</p>
+          <a routerLink="/" class="btn-continuar-comprando">Continuar Comprando</a>
+        </div>
+      </div>
+
+      <!-- Resumo do Pedido -->
+      <div class="resumo-pedido" *ngIf="itensCarrinho.length > 0">
+        <h2>Resumo do Pedido</h2>
+
+        <div class="resumo-item">
+          <span>Subtotal</span>
+          <span>R$ {{ total | number:'1.2-2' }}</span>
+        </div>
+
+        <div class="resumo-item">
+          <span>Frete</span>
+          <span>Grátis</span>
+        </div>
+
+        <div class="resumo-item total">
+          <span>Total</span>
+          <span>R$ {{ total | number:'1.2-2' }}</span>
+        </div>
+
+        <button class="btn-finalizar" (click)="finalizarCompra()">
+          Finalizar Compra
         </button>
       </div>
-
-      <div class="item-cabecalho">
-        <div class="col-produto">Produto</div>
-        <div class="col-preco">Preço</div>
-        <div class="col-quantidade">Quantidade</div>
-        <div class="col-subtotal">Subtotal</div>
-        <div class="col-acoes">Ações</div>
-      </div>
-
-      <div class="item-carrinho" *ngFor="let item of itensCarrinho">
-        <div class="col-produto">
-          <div class="produto-info">
-            <div class="produto-imagem">
-              <img [src]="item.imagem" alt="Imagem do produto">
-            </div>
-            <div class="produto-detalhes">
-              <h3>{{ item.nome }}</h3>
-              <p class="produto-descricao">{{ item.descricao }}</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-preco">
-          <span>{{ (item.preco || item.precoAtual)?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</span>
-        </div>
-
-        <div class="col-quantidade">
-          <div class="controle-quantidade">
-            <button class="btn-quantidade" (click)="atualizarQuantidade(item, item.quantidade - 1)">-</button>
-            <input type="number" [value]="item.quantidade" min="1" (change)="atualizarQuantidadeInput($event, item)">
-            <button class="btn-quantidade" (click)="atualizarQuantidade(item, item.quantidade + 1)">+</button>
-          </div>
-        </div>
-
-        <div class="col-subtotal">
-          <span>{{ ((item.preco || item.precoAtual) * item.quantidade)?.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</span>
-        </div>
-
-        <div class="col-acoes">
-          <button class="btn-remover" (click)="removerItem(item)">Remover</button>
-        </div>
-      </div>
     </div>
-
-    <app-resumo-carrinho
-      [totalCarrinho]="totalCarrinho"
-      [botaoPrincipal]="'Ir para Pagamento'"
-      [botaoSecundario]="'Continuar Comprando'"
-      (continuar)="finalizarCompra()"
-      (voltarAtras)="continuarComprando()"
-    ></app-resumo-carrinho>
   </div>
 </div>
 
-<app-footer></app-footer> -->
+<app-footer></app-footer>

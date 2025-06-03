@@ -1,81 +1,82 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { CarrinhoService } from '../../services/carrinho.service';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faTrash, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
-import { ProcessoCompraComponent } from '../processo-compra/processo-compra.component';
-import { ResumoCarrinhoComponent } from '../resumo-carrinho/resumo-carrinho.component';
+
+interface ItemCarrinho {
+  id: number;
+  nome: string;
+  preco: number;
+  quantidade: number;
+  imagem: string;
+}
 
 @Component({
   selector: 'app-carrinho',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    HeaderComponent,
-    FooterComponent,
-    ProcessoCompraComponent,
-    ResumoCarrinhoComponent
-  ],
+  imports: [CommonModule, FontAwesomeModule, HeaderComponent, FooterComponent],
   templateUrl: './carrinho.component.html',
   styleUrls: ['./carrinho.component.scss']
 })
-export class CarrinhoComponent {
-  // itensCarrinho: any[] = [];
-  // totalCarrinho: number = 0;
+export class CarrinhoComponent implements OnInit {
+  faTrash = faTrash;
+  faMinus = faMinus;
+  faPlus = faPlus;
 
-  // constructor(
-  //   // private carrinhoService: CarrinhoService,
-  //   private router: Router
-  // ) {}
+  itensCarrinho: ItemCarrinho[] = [];
+  total: number = 0;
 
-  // ngOnInit(): void {
-  //   // Inscreve-se no observable do carrinho para receber atualizações
-  //   this.carrinhoService.getCarrinho().subscribe(itens => {
-  //     this.itensCarrinho = itens;
-  //     this.calcularTotal();
-  //   });
-  // }
+  constructor() {}
 
-  // calcularTotal(): void {
-  //   this.totalCarrinho = this.carrinhoService.calcularTotal();
-  // }
+  ngOnInit(): void {
+    // Aqui vamos carregar os itens do carrinho
+    this.carregarCarrinho();
+  }
 
-  // atualizarQuantidade(produto: any, quantidade: number): void {
-  //   this.carrinhoService.alterarQuantidade(produto.id, quantidade);
-  // }
+  carregarCarrinho(): void {
+    // Simulando dados do carrinho
+    this.itensCarrinho = [
+      {
+        id: 1,
+        nome: 'Produto 1',
+        preco: 199.90,
+        quantidade: 1,
+        imagem: 'https://via.placeholder.com/150'
+      },
+      {
+        id: 2,
+        nome: 'Produto 2',
+        preco: 299.90,
+        quantidade: 2,
+        imagem: 'https://via.placeholder.com/150'
+      }
+    ];
+    this.calcularTotal();
+  }
 
-  // atualizarQuantidadeInput(event: Event, produto: any): void {
-  //   const input = event.target as HTMLInputElement;
-  //   if (input && input.value) {
-  //     const quantidade = parseInt(input.value, 10);
-  //     if (!isNaN(quantidade) && quantidade > 0) {
-  //       this.carrinhoService.alterarQuantidade(produto.id, quantidade);
-  //     }
-  //   }
-  // }
+  atualizarQuantidade(item: ItemCarrinho, incremento: number): void {
+    const novaQuantidade = item.quantidade + incremento;
+    if (novaQuantidade > 0) {
+      item.quantidade = novaQuantidade;
+      this.calcularTotal();
+    }
+  }
 
-  // removerItem(produto: any): void {
-  //   this.carrinhoService.removerDoCarrinho(produto.id);
-  // }
+  removerItem(item: ItemCarrinho): void {
+    this.itensCarrinho = this.itensCarrinho.filter(i => i.id !== item.id);
+    this.calcularTotal();
+  }
 
-  // limparCarrinho(): void {
-  //   this.carrinhoService.limparCarrinho();
-  // }
+  calcularTotal(): void {
+    this.total = this.itensCarrinho.reduce((acc, item) => {
+      return acc + (item.preco * item.quantidade);
+    }, 0);
+  }
 
-  // continuarComprando(): void {
-  //   this.router.navigate(['/']);
-  // }
-
-  // finalizarCompra(): void {
-  //   if (this.itensCarrinho.length > 0) {
-  //     // Seleciona o primeiro item do carrinho para pagamento
-  //     localStorage.setItem('produtoCompra', JSON.stringify(this.itensCarrinho[0]));
-  //     this.router.navigate(['/pagamento']);
-  //   } else {
-  //     alert('Seu carrinho está vazio!');
-  //   }
-  // }
+  finalizarCompra(): void {
+    // Implementar lógica de finalização de compra
+    console.log('Finalizando compra...');
+  }
 }
