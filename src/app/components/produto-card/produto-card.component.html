@@ -4,9 +4,12 @@
       <img
         src="https://images8.kabum.com.br/produtos/fotos/320908/gabinete-gamer-rise-mode-galaxy-glass-lateral-em-vidro-temperado-preto-rm-ga-gg-fb_1657738212_g.jpg"
         [alt]="produto.descricao"
-        class="w-full rounded-border"
-        style="height: 10.125rem; width: auto; max-width: 100%"
+        class="w-full rounded-border produto-imagem"
+        style="height: 200px; width: auto; max-width: 100%; object-fit: contain;"
       />
+      <div class="icon-carrinho">
+        <fa-icon [icon]="faCartPlus" class="icon"></fa-icon>
+      </div>
     </div>
   </div>
   <div class="sc-d79c9c3f-0 nlmfp sc-27518a44-9 iJKRqI nameCard">{{ produto.descricao }}</div>

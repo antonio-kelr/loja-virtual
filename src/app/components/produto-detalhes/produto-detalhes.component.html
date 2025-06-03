@@ -32,9 +32,7 @@
       <div class="produto-preco-container">
         <div class="preco-antigo" *ngIf="produto.precoAntigo">
           <span>De: </span>
-          <span class="riscado"
-            >R$ {{ produto.precoAntigo | number : "1.2-2" }}</span
-          >
+          <span class="riscado">R$ {{ produto.precoAntigo | number : "1.2-2" }}</span>
         </div>
         <div class="preco-atual">
           <span>Por: </span>
@@ -49,38 +47,43 @@
         </div>
       </div>
 
-      <!-- Opções de frete -->
-      <div class="opcoes-frete">
-        <h3>
-          <fa-icon [icon]="faTruck"></fa-icon>
-          Opções de Frete
-        </h3>
-        <div class="frete-lista">
-          <div
-            *ngFor="let frete of opcoesFrete"
-            class="frete-opcao"
-            [class.selecionado]="freteSelecionado === frete"
-            (click)="selecionarFrete(frete)"
-          >
-            <div class="radio">
-              <div class="radio-inner" *ngIf="freteSelecionado === frete"></div>
-            </div>
-            <div class="frete-info">
-              <div class="frete-tipo">{{ frete.tipo }}</div>
-              <div class="frete-prazo">{{ frete.prazo }}</div>
-            </div>
-            <div class="frete-preco">
-              {{
-                frete.preco === 0 ? "Grátis" : "R$ " + frete.preco.toFixed(2)
-              }}
-            </div>
-          </div>
-        </div>
-      </div>
-
       <!-- Botões de ação -->
       <div class="botoes-acao">
-        <button class="btn-comprar" disabled>Em breve</button>
+        <button class="btn-comprar">
+          <i class="pi pi-shopping-cart"></i>
+          Comprar
+        </button>
+        <button class="btn-adicionar-carrinho">
+          <fa-icon [icon]="faCartPlus"></fa-icon>
+        </button>
+      </div>
+
+      <!-- Produtos relacionados -->
+      <div class="produtos-relacionados" *ngIf="produtosRelacionados.length > 0">
+        <h2 class="titulo-secao">
+          <i class="pi pi-tag"></i>
+          Produtos Relacionados
+        </h2>
+        <div class="slider-wrapper">
+          <button class="btn-slider prev" (click)="slideAnterior()">
+            <i class="pi pi-chevron-left"></i>
+          </button>
+          <div class="slider-container">
+            <div class="slider-produtos" [style.transform]="'translateX(' + posicaoSlider + 'px)'">
+              <div class="produto-relacionado" *ngFor="let produto of produtosRelacionados">
+                <div class="imagem-produto">
+                  <img [src]="produto.imagens?.[0]?.url || 'https://via.placeholder.com/200'" [alt]="produto.nome">
+                </div>
+                <div class="preco-produto">
+                  R$ {{ produto.preco | number : "1.2-2" }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="btn-slider next" (click)="slideProximo()">
+            <i class="pi pi-chevron-right"></i>
+          </button>
+        </div>
       </div>
     </div>
   </div>

@@ -2,6 +2,8 @@
   background: #FFFFFF;
   transition: all 0.3s ease;
   cursor: pointer;
+  width: 100%;
+  max-width: 300px;
 
   &:hover {
     box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
@@ -102,4 +104,54 @@
 .p_item_componet:hover .icon {
   display: flex !important;
   font-size: 16px !important;
+}
+
+.relative {
+  position: relative;
+}
+
+.icon-carrinho {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+
+  .icon {
+    color: var(--cor-primaria);
+    font-size: 16px;
+  }
+
+  &:hover {
+    background: var(--cor-primaria);
+    .icon {
+      color: white;
+    }
+  }
+}
+
+.p_item_componet:hover .icon-carrinho {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.produto-imagem {
+  padding: 10px;
+  background: white;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 }
