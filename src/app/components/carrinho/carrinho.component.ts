@@ -4,14 +4,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTrash, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
-
-interface ItemCarrinho {
-  id: number;
-  nome: string;
-  preco: number;
-  quantidade: number;
-  imagem: string;
-}
+import { CarrinhoApiService } from '../../services/carrinho-api.service';
+import { Carrinho, ItemCarrinho } from '../../interfaces/carrinho.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-carrinho',
@@ -25,35 +20,36 @@ export class CarrinhoComponent implements OnInit {
   faMinus = faMinus;
   faPlus = faPlus;
 
-  itensCarrinho: ItemCarrinho[] = [];
+  carrinho: Carrinho | null = null;
   total: number = 0;
+  carregando: boolean = true;
+  erro: string | null = null;
 
-  constructor() {}
+  constructor(
+    private carrinhoApiService: CarrinhoApiService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    // Aqui vamos carregar os itens do carrinho
     this.carregarCarrinho();
   }
 
   carregarCarrinho(): void {
-    // Simulando dados do carrinho
-    this.itensCarrinho = [
-      {
-        id: 1,
-        nome: 'Produto 1',
-        preco: 199.90,
-        quantidade: 1,
-        imagem: 'https://via.placeholder.com/150'
+    this.carregando = true;
+    this.erro = null;
+
+    this.carrinhoApiService.getCarrinho().subscribe({
+      next: (carrinho) => {
+        this.carrinho = carrinho;
+        this.calcularTotal();
+        this.carregando = false;
       },
-      {
-        id: 2,
-        nome: 'Produto 2',
-        preco: 299.90,
-        quantidade: 2,
-        imagem: 'https://via.placeholder.com/150'
+      error: (erro) => {
+        this.erro = 'Erro ao carregar o carrinho. Por favor, tente novamente.';
+        this.carregando = false;
+        console.error('Erro ao carregar carrinho:', erro);
       }
-    ];
-    this.calcularTotal();
+    });
   }
 
   atualizarQuantidade(item: ItemCarrinho, incremento: number): void {
@@ -65,18 +61,26 @@ export class CarrinhoComponent implements OnInit {
   }
 
   removerItem(item: ItemCarrinho): void {
-    this.itensCarrinho = this.itensCarrinho.filter(i => i.id !== item.id);
-    this.calcularTotal();
+    if (this.carrinho) {
+      this.carrinho.itens = this.carrinho.itens.filter(i => i.id !== item.id);
+      this.calcularTotal();
+    }
   }
 
   calcularTotal(): void {
-    this.total = this.itensCarrinho.reduce((acc, item) => {
-      return acc + (item.preco * item.quantidade);
-    }, 0);
+    if (this.carrinho) {
+      this.total = this.carrinho.itens.reduce((acc, item) => {
+        return acc + (item.precoUnitario * item.quantidade);
+      }, 0);
+    }
   }
 
   finalizarCompra(): void {
     // Implementar lógica de finalização de compra
     console.log('Finalizando compra...');
+  }
+
+  continuarComprando(): void {
+    this.router.navigate(['/']);
   }
 }

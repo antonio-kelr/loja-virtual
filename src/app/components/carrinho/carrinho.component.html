@@ -3,21 +3,36 @@
 <div class="carrinho-container">
   <div class="carrinho-content">
     <h1 class="titulo-carrinho">
-      <i class="pi pi-shopping-cart"></i>
-      Meu Carrinho
+      <i class="pi pi-shopping-bag"></i>
+      PRODUTO E SERVIÇO
     </h1>
 
-    <div class="carrinho-grid">
+    <!-- Estado de Carregamento -->
+    <div class="carregando" *ngIf="carregando">
+      <div class="spinner"></div>
+      <p>Carregando seu carrinho...</p>
+    </div>
+
+    <!-- Estado de Erro -->
+    <div class="erro" *ngIf="erro">
+      <i class="pi pi-exclamation-triangle"></i>
+      <p>{{ erro }}</p>
+      <button class="btn-tentar-novamente" (click)="carregarCarrinho()">
+        Tentar Novamente
+      </button>
+    </div>
+
+    <div class="carrinho-grid" *ngIf="!carregando && !erro">
       <!-- Lista de Produtos -->
       <div class="lista-produtos">
-        <div class="produto-item" *ngFor="let item of itensCarrinho">
+        <div class="produto-item" *ngFor="let item of carrinho?.itens">
           <div class="produto-imagem">
-            <img [src]="item.imagem" [alt]="item.nome">
+            <img [src]="item.produto.imagens?.[0]?.url" [alt]="item.produto.nome">
           </div>
 
           <div class="produto-info">
-            <h3 class="produto-nome">{{ item.nome }}</h3>
-            <div class="produto-preco">R$ {{ item.preco | number:'1.2-2' }}</div>
+            <h3 class="produto-nome">{{ item.produto.nome }}</h3>
+            <div class="produto-preco">R$ {{ item.precoUnitario | number:'1.2-2' }}</div>
           </div>
 
           <div class="produto-quantidade">
@@ -31,7 +46,7 @@
           </div>
 
           <div class="produto-subtotal">
-            R$ {{ (item.preco * item.quantidade) | number:'1.2-2' }}
+            R$ {{ (item.precoUnitario * item.quantidade) | number:'1.2-2' }}
           </div>
 
           <button class="btn-remover" (click)="removerItem(item)">
@@ -39,15 +54,17 @@
           </button>
         </div>
 
-        <div class="carrinho-vazio" *ngIf="itensCarrinho.length === 0">
-          <i class="pi pi-shopping-cart"></i>
+        <div class="carrinho-vazio" *ngIf="!carrinho?.itens?.length">
+          <i class="pi pi-shopping-bag"></i>
           <p>Seu carrinho está vazio</p>
-          <a routerLink="/" class="btn-continuar-comprando">Continuar Comprando</a>
+          <button class="btn-continuar-comprando" (click)="continuarComprando()">
+            Continuar Comprando
+          </button>
         </div>
       </div>
 
       <!-- Resumo do Pedido -->
-      <div class="resumo-pedido" *ngIf="itensCarrinho.length > 0">
+      <div class="resumo-pedido" *ngIf="carrinho?.itens?.length">
         <h2>Resumo do Pedido</h2>
 
         <div class="resumo-item">

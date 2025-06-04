@@ -1,5 +1,5 @@
 .carrinho-container {
-  max-width: 1200px;
+    max-width: 1600px;
   margin: 0 auto;
   padding: 20px;
 }
@@ -12,7 +12,7 @@
 }
 
 .titulo-carrinho {
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: 600;
   color: #333;
   margin-bottom: 20px;
@@ -22,7 +22,64 @@
 
   i {
     color: var(--cor-primaria);
+    font-size: 1rem;
   }
+}
+
+// Estados de Carregamento e Erro
+.carregando, .erro {
+  text-align: center;
+  padding: 40px 20px;
+
+  i {
+    font-size: 3rem;
+    color: #ddd;
+    margin-bottom: 15px;
+  }
+
+  p {
+    color: #666;
+    margin-bottom: 20px;
+  }
+}
+
+.carregando {
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--cor-primaria);
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    animation: spin 1s linear infinite;
+  }
+}
+
+.erro {
+  i {
+    color: #f44336;
+  }
+
+  .btn-tentar-novamente {
+    display: inline-block;
+    padding: 12px 24px;
+    background: var(--cor-primaria);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: var(--cor-primaria-escura);
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .carrinho-grid {
@@ -159,9 +216,10 @@
     padding: 12px 24px;
     background: var(--cor-primaria);
     color: white;
-    text-decoration: none;
+    border: none;
     border-radius: 8px;
     font-weight: 500;
+    cursor: pointer;
     transition: background 0.2s ease;
 
     &:hover {

@@ -20,7 +20,7 @@ export class AuthService {
   private userSubject = new BehaviorSubject<User | null>(null);
   user$ = this.userSubject.asObservable();
   private apiUrl = 'http://localhost:5299/api/GoogleAuth/login';
-  private loginUrl = 'http://localhost:5299/api/Users/login';
+  private loginEmailUrl = 'http://localhost:5299/api/Users/login-email';
 
   constructor(
     private router: Router,
@@ -115,23 +115,13 @@ export class AuthService {
 
   async loginWithEmailAndPassword(email: string, senha: string) {
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, senha);
-      const user = userCredential.user;
-
-      const idToken = await user.getIdToken();
-
-      if (!idToken) {
-        throw new Error('ID Token não foi obtido');
-      }
-
       const loginData = {
         email: email,
-        senha: senha,
-        token: idToken
+        senha: senha
       };
 
       const response = await firstValueFrom(
-        this.http.post<{token: string, message: string, userId: number}>(this.loginUrl, loginData, {
+        this.http.post<{token: string, message: string, userId: number}>(this.loginEmailUrl, loginData, {
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
@@ -149,14 +139,12 @@ export class AuthService {
         localStorage.setItem('token', response.token);
       }
 
-      this.userSubject.next(user);
-
       // Verifica se precisa completar o cadastro
       if (response && response.userId) {
         await this.redirecionarAposLogin(response.userId);
       }
 
-      return user;
+      return response;
     } catch (error) {
       console.error('Erro ao fazer login:', error);
       throw error;
