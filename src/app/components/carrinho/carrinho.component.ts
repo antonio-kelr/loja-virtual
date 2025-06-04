@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTrash, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
-import { CarrinhoApiService } from '../../services/carrinho-api.service';
 import { Carrinho, ItemCarrinho } from '../../interfaces/carrinho.interface';
 import { Router } from '@angular/router';
+import { CarrinhoService } from '../../services/carrinho.service';
 
 @Component({
   selector: 'app-carrinho',
@@ -26,28 +26,32 @@ export class CarrinhoComponent implements OnInit {
   erro: string | null = null;
 
   constructor(
-    private carrinhoApiService: CarrinhoApiService,
-    private router: Router
+    private router: Router,
+    private carrinhoService: CarrinhoService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {
-    this.carregarCarrinho();
+    if (isPlatformBrowser(this.platformId)) {
+      this.carregarCarrinho();
+    }
   }
 
   carregarCarrinho(): void {
     this.carregando = true;
     this.erro = null;
 
-    this.carrinhoApiService.getCarrinho().subscribe({
-      next: (carrinho) => {
-        this.carrinho = carrinho;
+    this.carrinhoService.buscarCarrinhoDoServidor().subscribe({
+      next: (dados) => {
+        console.log('Dados do carrinho recebidos:', dados);
+        this.carrinho = dados;
         this.calcularTotal();
         this.carregando = false;
       },
-      error: (erro) => {
-        this.erro = 'Erro ao carregar o carrinho. Por favor, tente novamente.';
+      error: (error) => {
+        console.error('Erro ao carregar carrinho:', error);
+        this.erro = 'Erro ao carregar os dados do carrinho. Tente novamente.';
         this.carregando = false;
-        console.error('Erro ao carregar carrinho:', erro);
       }
     });
   }
@@ -76,7 +80,6 @@ export class CarrinhoComponent implements OnInit {
   }
 
   finalizarCompra(): void {
-    // Implementar lógica de finalização de compra
     console.log('Finalizando compra...');
   }
 
