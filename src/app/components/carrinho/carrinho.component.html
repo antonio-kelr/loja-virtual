@@ -1,5 +1,15 @@
 <app-header></app-header>
 
+<!-- Toast para mensagens -->
+<p-toast position="top-right"></p-toast>
+
+<p-confirmDialog
+  [style]="{width: '550px'}"
+  position="center"
+  [draggable]="false"
+>
+</p-confirmDialog>
+
 <div class="carrinho-container">
   <div class="carrinho-content">
     <h1 class="titulo-carrinho">
@@ -17,7 +27,7 @@
     <div class="erro" *ngIf="erro">
       <i class="pi pi-exclamation-triangle"></i>
       <p>{{ erro }}</p>
-      <button class="btn-tentar-novamente">
+      <button class="btn-tentar-novamente" (click)="carregarCarrinho()">
         Tentar Novamente
       </button>
     </div>
@@ -36,11 +46,11 @@
           </div>
 
           <div class="produto-quantidade">
-            <button class="btn-quantidade" (click)="atualizarQuantidade(item, -1)">
+            <button class="btn-quantidade" (click)="atualizarQuantidade(item, -1)" [disabled]="carregando">
               <fa-icon [icon]="faMinus"></fa-icon>
             </button>
             <span class="quantidade">{{ item.quantidade }}</span>
-            <button class="btn-quantidade" (click)="atualizarQuantidade(item, 1)">
+            <button class="btn-quantidade" (click)="atualizarQuantidade(item, 1)" [disabled]="carregando">
               <fa-icon [icon]="faPlus"></fa-icon>
             </button>
           </div>
@@ -49,8 +59,8 @@
             R$ {{ (item.precoUnitario * item.quantidade) | number:'1.2-2' }}
           </div>
 
-          <button class="btn-remover" (click)="removerItem(item)">
-            <fa-icon [icon]="faTrash"></fa-icon>
+          <button class="btn-remover" (click)="removerItem(item)" [disabled]="carregando" [title]="'Remover ' + item.produto.nome">
+            <fa-icon [icon]="faTrash" [class.removendo]="carregando"></fa-icon>
           </button>
         </div>
 
@@ -82,7 +92,7 @@
           <span>R$ {{ total | number:'1.2-2' }}</span>
         </div>
 
-        <button class="btn-finalizar" (click)="finalizarCompra()">
+        <button class="btn-finalizar" (click)="finalizarCompra()" [disabled]="carregando">
           Finalizar Compra
         </button>
       </div>

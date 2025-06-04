@@ -34,6 +34,31 @@ export class CarrinhoService {
     });
   }
 
+  /**
+   * Remove um produto do carrinho
+   * @param produtoId ID do produto a ser removido
+   */
+  removerProdutoDoCarrinho(produtoId: number): Observable<any> {
+    if (!isBrowser()) {
+      throw new Error('LocalStorage não disponível fora do navegador');
+    }
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('Token não encontrado no localStorage');
+    }
+
+    console.log('Token:', token);
+    console.log('URL:', `${this.apiUrl}/remover-produto/${produtoId}`);
+
+    return this.http.delete<any>(`${this.apiUrl}/remover-produto/${produtoId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+
   getCarrinho(): Observable<any[]> {
     return this.carrinho$;
   }

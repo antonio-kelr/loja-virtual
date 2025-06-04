@@ -7,11 +7,25 @@ import { FooterComponent } from '../footer/footer.component';
 import { Carrinho, ItemCarrinho } from '../../interfaces/carrinho.interface';
 import { Router } from '@angular/router';
 import { CarrinhoService } from '../../services/carrinho.service';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-carrinho',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule, HeaderComponent, FooterComponent],
+  imports: [
+    CommonModule,
+    FontAwesomeModule,
+    HeaderComponent,
+    FooterComponent,
+    ConfirmDialogModule,
+    ButtonModule,
+    ToastModule
+  ],
+  providers: [ConfirmationService, MessageService],
   templateUrl: './carrinho.component.html',
   styleUrls: ['./carrinho.component.scss']
 })
@@ -28,6 +42,8 @@ export class CarrinhoComponent implements OnInit {
   constructor(
     private router: Router,
     private carrinhoService: CarrinhoService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -64,11 +80,56 @@ export class CarrinhoComponent implements OnInit {
     }
   }
 
+  /**
+   * Remove um item do carrinho
+   * @param item Item a ser removido do carrinho
+   */
   removerItem(item: ItemCarrinho): void {
-    if (this.carrinho) {
-      this.carrinho.itens = this.carrinho.itens.filter(i => i.id !== item.id);
-      this.calcularTotal();
-    }
+    if (!this.carrinho) return;
+
+    console.log('Item a ser removido:', item);
+    console.log('ID do item:', item.id);
+    console.log('ID do produto:', item.produtoId);
+
+    this.confirmationService.confirm({
+      message: `Você tem certeza que deseja remover este produto do carrinho?`,
+      header: 'REMOVER PRODUTO',
+      acceptLabel: 'SIM',
+      rejectLabel: 'NÃO',
+      accept: () => {
+        this.carregando = true;
+        this.erro = null;
+
+        this.carrinhoService.removerProdutoDoCarrinho(item.produtoId).subscribe({
+          next: () => {
+            console.log('Produto removido com sucesso');
+            // Atualiza o carrinho local removendo o item
+            this.carrinho!.itens = this.carrinho!.itens.filter(i => i.id !== item.id);
+            this.calcularTotal();
+            this.carregando = false;
+
+            // Mostra mensagem de sucesso
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Sucesso',
+              detail: 'Produto removido do carrinho com sucesso!'
+            });
+          },
+          error: (error) => {
+            console.error('Erro ao remover produto:', error);
+            this.erro = 'Erro ao remover o produto do carrinho. Tente novamente.';
+            this.carregando = false;
+
+            // Mostra mensagem de erro
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Erro ao remover o produto do carrinho. Tente novamente.'
+            });
+          }
+        });
+      }
+    });
   }
 
   calcularTotal(): void {
