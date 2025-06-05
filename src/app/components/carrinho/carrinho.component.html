@@ -11,30 +11,7 @@
 >
 </p-confirmDialog>
 
-<div class="steps-container">
-  <div class="steps">
-    <div class="step active">
-      <i class="pi pi-shopping-cart"></i>
-      <span>Carrinho</span>
-    </div>
-    <div class="step-line"></div>
-    <div class="step">
-      <i class="pi pi-credit-card"></i>
-      <span>Pagamento</span>
-    </div>
-    <div class="step-line"></div>
-    <div class="step">
-      <i class="pi pi-eye"></i>
-      <span>Confirmação</span>
-    </div>
-    <div class="step-line"></div>
-    <div class="step">
-      <i class="pi pi-check"></i>
-      <span>Concluir</span>
-    </div>
-  </div>
-</div>
-
+<app-checkout-steps [etapaAtual]="1"></app-checkout-steps>
 
 <div class="carrinho-container">
   <div class="carrinho-content">
@@ -100,39 +77,13 @@
       </div>
 
       <!-- Resumo do Pedido -->
-      <div class="resumo-pedido" *ngIf="carrinho?.itens?.length">
-        <h2>Resumo do Pedido</h2>
-
-        <div class="resumo-item">
-          <span>Subtotal</span>
-          <span>R$ {{ total | number:'1.2-2' }}</span>
-        </div>
-
-        <div class="resumo-item">
-          <span>Frete</span>
-          <span>Grátis</span>
-        </div>
-
-        <div class="valor-resumo">
-          <div class="valor-info">
-            <span class="text-xs">Valor à vista no</span>
-            <span class="pix-label">PIX:</span>
-          </div>
-          <div class="valor-pix-container">
-            <span class="valor-total">R$ {{ total | number:'1.2-2' }}</span>
-            <span class="economia">(Economize: <b>R$ {{ (total * 0.07) | number:'1.2-2' }}</b>)</span>
-          </div>
-        </div>
-
-        <div class="botoes-container">
-          <button class="btn-ir-pagamento" (click)="finalizarCompra()" [disabled]="carregando">
-            Ir para o pagamento
-          </button>
-          <button class="btn-continuar" (click)="continuarComprando()" [disabled]="carregando">
-            Continuar comprando
-          </button>
-        </div>
-      </div>
+      <app-resumo-carrinho
+        [totalCarrinho]="total"
+        [botaoPrincipal]="'Ir para o pagamento'"
+        [botaoSecundario]="'Continuar comprando'"
+        (continuar)="finalizarCompra()"
+        (voltarAtras)="continuarComprando()"
+      ></app-resumo-carrinho>
     </div>
   </div>
 </div>

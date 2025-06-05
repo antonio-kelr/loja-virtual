@@ -16,6 +16,7 @@ export const routes: Routes = [
   { path: 'celulares', component: CelularesComponent },
   { path: 'pagamento', component: PagamentoComponent },
   { path: 'carrinho', component: CarrinhoComponent },
+  { path: 'forma-pagamento', component: PagamentoComponent },
   { path: 'produto/:slug', component: ProdutoDetalhesComponent },
   { path: 'confirmacao', component: ConfirmacaoComponent },
   { path: 'cadastro', component: CadastroComponent },

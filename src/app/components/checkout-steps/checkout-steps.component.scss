@@ -1,0 +1,51 @@
+.steps-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+.steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #999;
+  font-size: 14px;
+
+  i {
+    font-size: 20px;
+  }
+
+  &.active {
+    color: var(--cor-primaria);
+
+    i {
+      color: var(--cor-primaria);
+    }
+  }
+
+  &.completed {
+    color: #28a745;
+
+    i {
+      color: #28a745;
+    }
+  }
+}
+
+.step-line {
+  flex: 1;
+  height: 2px;
+  background: #ddd;
+  max-width: 100px;
+
+  &.completed {
+    background: #28a745;
+  }
+}

@@ -12,6 +12,8 @@ import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { NavComponent } from "../nav/nav.component";
+import { CheckoutStepsComponent } from '../checkout-steps/checkout-steps.component';
+import { ResumoCarrinhoComponent } from '../resumo-carrinho/resumo-carrinho.component';
 
 @Component({
   selector: 'app-carrinho',
@@ -23,8 +25,10 @@ import { NavComponent } from "../nav/nav.component";
     ConfirmDialogModule,
     ButtonModule,
     ToastModule,
-    NavComponent
-],
+    NavComponent,
+    CheckoutStepsComponent,
+    ResumoCarrinhoComponent
+  ],
   providers: [ConfirmationService, MessageService],
   templateUrl: './carrinho.component.html',
   styleUrls: ['./carrinho.component.scss']
@@ -141,7 +145,7 @@ export class CarrinhoComponent implements OnInit {
   }
 
   finalizarCompra(): void {
-    console.log('Finalizando compra...');
+    this.router.navigate(['/pagamento']);
   }
 
   continuarComprando(): void {

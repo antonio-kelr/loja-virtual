@@ -4,7 +4,7 @@
 
     <div class="resumo-linha">
       <span>Subtotal</span>
-      <span>{{ totalCarrinho.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</span>
+      <span>{{ (subtotal || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</span>
     </div>
 
     <div class="resumo-linha">
@@ -14,20 +14,20 @@
 
     <div class="resumo-linha prazo">
       <span>Total a prazo:</span>
-      <span>{{ totalCarrinho.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</span>
+      <span>{{ (total || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</span>
     </div>
 
     <div class="resumo-linha parcelas">
       <span></span>
       <span>(em até <strong>10x</strong> de
-        {{ (totalCarrinho / 10).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }} sem juros)
+        {{ ((total || 0) / 10).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }} sem juros)
       </span>
     </div>
 
     <div class="resumo-linha total">
       <span>Valor à vista no<br> <strong class="pix-destaque">Pix:</strong></span>
       <span class="valor-pix">
-        {{ (totalCarrinho * 0.9).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}
+        {{ ((total || 0) * 0.98).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}
       </span>
     </div>
 

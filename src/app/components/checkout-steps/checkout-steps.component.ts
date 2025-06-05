@@ -2,12 +2,12 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-processo-compra',
+  selector: 'app-checkout-steps',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './processo-compra.component.html',
-  styleUrls: ['./processo-compra.component.scss']
+  templateUrl: './checkout-steps.component.html',
+  styleUrls: ['./checkout-steps.component.scss']
 })
-export class ProcessoCompraComponent {
+export class CheckoutStepsComponent {
   @Input() etapaAtual: number = 1;
 }

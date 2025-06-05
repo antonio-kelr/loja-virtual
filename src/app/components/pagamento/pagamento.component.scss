@@ -25,6 +25,14 @@
 
 .pagamento-header {
   margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  i {
+    font-size: 1.25rem;
+    color: var(--cor-primaria);
+  }
 
   h2 {
     font-size: 18px;

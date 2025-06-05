@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ProcessoCompraComponent } from '../processo-compra/processo-compra.component';
 import { ResumoCarrinhoComponent } from '../resumo-carrinho/resumo-carrinho.component';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { CarrinhoService } from '../../services/carrinho.service';
+import { CheckoutStepsComponent } from '../checkout-steps/checkout-steps.component';
 
 @Component({
   selector: 'app-pagamento',
@@ -16,8 +16,8 @@ import { CarrinhoService } from '../../services/carrinho.service';
     FormsModule,
     HeaderComponent,
     FooterComponent,
-    ProcessoCompraComponent,
-    ResumoCarrinhoComponent
+    ResumoCarrinhoComponent,
+    CheckoutStepsComponent
   ],
   templateUrl: './pagamento.component.html',
   styleUrls: ['./pagamento.component.scss']
@@ -25,6 +25,7 @@ import { CarrinhoService } from '../../services/carrinho.service';
 export class PagamentoComponent implements OnInit {
   totalCarrinho: number = 0;
   formaPagamentoSelecionada: string = 'pix';
+  descontoPix: number = 0.1; // 10% de desconto
 
   constructor(
     private carrinhoService: CarrinhoService,
@@ -32,22 +33,35 @@ export class PagamentoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.carregarCarrinho();
+  }
+
+  carregarCarrinho(): void {
     this.totalCarrinho = this.carrinhoService.calcularTotal();
   }
 
-  concluirPagamento(): void {
-    // Calcular o valor total considerando o desconto para PIX
-    let valorFinal = this.totalCarrinho;
+  calcularValorComDesconto(): number {
     if (this.formaPagamentoSelecionada === 'pix') {
-      // Aplicar 10% de desconto para pagamento via PIX
-      valorFinal = this.totalCarrinho * 0.9;
+      return this.totalCarrinho * (1 - this.descontoPix);
     }
+    return this.totalCarrinho;
+  }
 
-    // Navegar para a página de confirmação com os parâmetros
+  calcularEconomia(): number {
+    if (this.formaPagamentoSelecionada === 'pix') {
+      return this.totalCarrinho * this.descontoPix;
+    }
+    return 0;
+  }
+
+  concluirPagamento(): void {
+    const valorFinal = this.calcularValorComDesconto();
+
     this.router.navigate(['/confirmacao'], {
       queryParams: {
         metodoPagamento: this.formaPagamentoSelecionada,
-        valor: valorFinal
+        valor: valorFinal,
+        desconto: this.calcularEconomia()
       }
     });
   }

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
-import { ProcessoCompraComponent } from '../processo-compra/processo-compra.component';
+import { CheckoutStepsComponent } from '../checkout-steps/checkout-steps.component';
 
 @Component({
   selector: 'app-confirmacao',
@@ -12,7 +12,7 @@ import { ProcessoCompraComponent } from '../processo-compra/processo-compra.comp
     CommonModule,
     HeaderComponent,
     FooterComponent,
-    ProcessoCompraComponent
+    CheckoutStepsComponent
   ],
   templateUrl: './confirmacao.component.html',
   styleUrls: ['./confirmacao.component.scss']

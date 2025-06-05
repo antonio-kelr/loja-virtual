@@ -1,11 +1,13 @@
 <app-header></app-header>
 
 <div class="pagamento-container">
-  <app-processo-compra [etapaAtual]="2"></app-processo-compra>
+  <app-checkout-steps [etapaAtual]="2"></app-checkout-steps>
 
   <div class="pagamento-content">
     <div class="opcoes-pagamento">
       <div class="pagamento-header">
+        <i class="pi pi-eye"></i>
+
         <h2>FORMAS DE PAGAMENTO</h2>
       </div>
 
@@ -66,6 +68,10 @@
           <div class="detalhes-content">
             <p>Após a confirmação, você receberá um QR Code para pagamento.</p>
             <p>O pagamento via PIX é processado instantaneamente.</p>
+            <div class="valor-pix">
+              <p>Valor com desconto: {{ calcularValorComDesconto() | currency:'BRL' }}</p>
+              <p>Economia: {{ calcularEconomia() | currency:'BRL' }}</p>
+            </div>
           </div>
         </div>
 
@@ -117,14 +123,13 @@
           <div class="detalhes-content">
             <p>O boleto será gerado após a finalização do pedido.</p>
             <p>Vencimento em 3 dias úteis. O pedido será confirmado após o pagamento.</p>
+            <div class="valor-boleto">
+              <p>Valor total: {{ totalCarrinho | currency:'BRL' }}</p>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="botoes-pagamento">
-        <button class="btn-concluir" (click)="concluirPagamento()">Finalizar Pagamento</button>
-        <button class="btn-voltar" (click)="voltarAoCarrinho()">Voltar ao Carrinho</button>
-      </div>
     </div>
 
     <app-resumo-carrinho
