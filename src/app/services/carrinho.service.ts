@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { isBrowser } from '../utils/is-browser'; // importe o helper
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -11,19 +11,28 @@ export class CarrinhoService {
   carrinho$ = this.carrinhoSubject.asObservable();
   private apiUrl = 'http://localhost:5299/api/carrinho';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   /**
    * Busca os dados do carrinho do servidor
    */
   buscarCarrinhoDoServidor(): Observable<any> {
-    if (!isBrowser()) {
-      throw new Error('LocalStorage não disponível fora do navegador');
+    if (!isPlatformBrowser(this.platformId)) {
+      return new Observable<any>(subscriber => {
+        subscriber.next({ itens: [] });
+        subscriber.complete();
+      });
     }
 
     const token = localStorage.getItem('token');
     if (!token) {
-      throw new Error('Token não encontrado no localStorage');
+      return new Observable<any>(subscriber => {
+        subscriber.next({ itens: [] });
+        subscriber.complete();
+      });
     }
 
     return this.http.get<any>(this.apiUrl, {
@@ -39,17 +48,20 @@ export class CarrinhoService {
    * @param produtoId ID do produto a ser removido
    */
   removerProdutoDoCarrinho(produtoId: number): Observable<any> {
-    if (!isBrowser()) {
-      throw new Error('LocalStorage não disponível fora do navegador');
+    if (!isPlatformBrowser(this.platformId)) {
+      return new Observable<any>(subscriber => {
+        subscriber.next({});
+        subscriber.complete();
+      });
     }
 
     const token = localStorage.getItem('token');
     if (!token) {
-      throw new Error('Token não encontrado no localStorage');
+      return new Observable<any>(subscriber => {
+        subscriber.next({});
+        subscriber.complete();
+      });
     }
-
-    console.log('Token:', token);
-    console.log('URL:', `${this.apiUrl}/remover-produto/${produtoId}`);
 
     return this.http.delete<any>(`${this.apiUrl}/remover-produto/${produtoId}`, {
       headers: {
