@@ -1,48 +1,114 @@
-<app-header></app-header>
+<app-nav></app-nav>
+
+<app-checkout-steps [etapaAtual]="etapaAtual"></app-checkout-steps>
 
 <div class="confirmacao-container">
-  <app-checkout-steps [etapaAtual]="3"></app-checkout-steps>
+  <!-- Estado de Carregamento -->
+  <div class="carregando" *ngIf="carregando">
+    <div class="spinner"></div>
+    <p>Carregando dados do pedido...</p>
+  </div>
 
-  <div class="confirmacao-content">
-    <div class="confirmacao-icon">
-      <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-        <polyline points="22 4 12 14.01 9 11.01"></polyline>
-      </svg>
+  <!-- Estado de Erro -->
+  <div class="erro" *ngIf="erro">
+    <i class="pi pi-exclamation-triangle"></i>
+    <p>{{ erro }}</p>
+  </div>
+
+  <div class="confirmacao-content" *ngIf="!carregando && !erro">
+    <div class="main-content">
+      <!-- Dados Pessoais -->
+      <div class="dados-pessoais">
+        <div class="dados-pessoais-header">
+          <h2 class="titulo-secao">
+            <i class="pi pi-user"></i>
+
+            Dados Pessoais
+          </h2>
+          <h6 class="info-nota-fiscal">
+            Informações que serão inseridas na nota fiscal do pedido.
+          </h6>
+        </div>
+        <div class="dados-grid">
+          <div class="dado-item">
+            <span class="label">Nome:</span>
+            <span class="valor item-nome">{{ dadosUsuario?.nome }}</span>
+          </div>
+          <div class="dado-item">
+            <span class="label"> CPF/CNPJ:</span>
+            <span class="valor">{{ dadosUsuario?.cpf }}</span>
+          </div>
+          <div class="dado-item">
+            <span class="label">Data de Nascimento:</span>
+            <span class="valor">{{
+              dadosUsuario?.dataNascimento | date : "dd/MM/yyyy"
+            }}</span>
+          </div>
+          <div class="dado-item">
+            <span class="label">Gênero:</span>
+            <span class="valor">{{ dadosUsuario?.genero }}</span>
+          </div>
+          <div class="dado-item">
+            <span class="label">Telefone:</span>
+            <span class="valor">{{
+              dadosUsuario?.telefone || "Não informado"
+            }}</span>
+          </div>
+          <div class="dado-item">
+            <span class="label">E-mail:</span>
+            <span class="valor">{{ dadosUsuario?.email }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lista de Produtos -->
+      <div class="lista-produtos">
+        <h2 class="titulo-secao">
+          <i class="pi pi-shopping-bag"></i>
+          Lista de Produtos
+        </h2>
+
+        <div class="produtos-grid">
+          <div class="produto-item" *ngFor="let item of carrinho?.itens">
+            <div class="produto-imagem">
+              <img
+                [src]="item.produto.imagens?.[0]?.url"
+                [alt]="item.produto.nome"
+              />
+            </div>
+            <div class="produto-info">
+              <h3 class="produto-nome">{{ item.produto.nome }}</h3>
+              <div class="produto-detalhes">
+                <span class="quantidade"
+                  >Quantidade: {{ item.quantidade }}</span
+                >
+                <span class="preco-unitario"
+                  >Preço Unitário: R$
+                  {{ item.precoUnitario | number : "1.2-2" }}</span
+                >
+                <span class="subtotal"
+                  >Subtotal: R$
+                  {{
+                    item.precoUnitario * item.quantidade | number : "1.2-2"
+                  }}</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <h1>Pedido Confirmado!</h1>
-
-    <div class="confirmacao-detalhes">
-      <div class="detalhe">
-        <span class="label">Método de Pagamento:</span>
-        <span class="valor">{{ getMetodoPagamentoFormatado() }}</span>
-      </div>
-
-      <div class="detalhe">
-        <span class="label">Valor Total:</span>
-        <span class="valor">{{ valorTotal | currency:'BRL' }}</span>
-      </div>
-
-      <div *ngIf="metodoPagamento === 'pix'" class="detalhe-pix">
-        <p>O QR Code do PIX será enviado para seu e-mail.</p>
-        <p>Assim que confirmado o pagamento, seu pedido será processado.</p>
-      </div>
-
-      <div *ngIf="metodoPagamento === 'cartao'" class="detalhe-cartao">
-        <p>O pagamento com cartão foi aprovado.</p>
-        <p>Seu pedido será processado e você receberá atualizações por e-mail.</p>
-      </div>
-
-      <div *ngIf="metodoPagamento === 'boleto'" class="detalhe-boleto">
-        <p>O boleto foi gerado e enviado para seu e-mail.</p>
-        <p>Após o pagamento, seu pedido será processado em até 3 dias úteis.</p>
-      </div>
-    </div>
-
-    <div class="botoes">
-      <button class="btn-principal" (click)="voltarParaHome()">Continuar Comprando</button>
-    </div>
+    <!-- Resumo do Carrinho -->
+      <app-resumo-carrinho
+        [totalCarrinho]="calcularTotal()"
+        [mostrarBotoes]="true"
+        botaoPrincipal="FINALIZAR"
+        botaoSecundario="VOLTAR"
+        (continuar)="finalizarPedido()"
+        (voltarAtras)="voltarParaPagamento()"
+      >
+      </app-resumo-carrinho>
   </div>
 </div>
 

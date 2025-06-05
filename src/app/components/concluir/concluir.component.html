@@ -1,0 +1,19 @@
+<app-header></app-header>
+
+<div class="concluir-container">
+  <app-checkout-steps [etapaAtual]="etapaAtual"></app-checkout-steps>
+
+  <div class="concluir-content">
+    <div class="mensagem-sucesso">
+      <i class="pi pi-check-circle"></i>
+      <h1>PEDIDO CONCLUÍDO COM SUCESSO!</h1>
+      <p>Obrigado por comprar conosco. Seu pedido foi recebido e está sendo processado.</p>
+      <p>Você receberá um e-mail com os detalhes do seu pedido em breve.</p>
+      <button class="btn-voltar" (click)="voltarParaHome()">
+        Voltar para a Página Inicial
+      </button>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

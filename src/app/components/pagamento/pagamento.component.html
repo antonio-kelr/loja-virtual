@@ -1,13 +1,12 @@
-<app-header></app-header>
+<app-nav></app-nav>
 
 <div class="pagamento-container">
-  <app-checkout-steps [etapaAtual]="2"></app-checkout-steps>
+  <app-checkout-steps [etapaAtual]="etapaAtual"></app-checkout-steps>
 
   <div class="pagamento-content">
     <div class="opcoes-pagamento">
       <div class="pagamento-header">
-        <i class="pi pi-eye"></i>
-
+        <i class="pi pi-credit-card"></i>
         <h2>FORMAS DE PAGAMENTO</h2>
       </div>
 
@@ -132,13 +131,16 @@
 
     </div>
 
-    <app-resumo-carrinho
-      [totalCarrinho]="totalCarrinho"
-      [botaoPrincipal]="'Finalizar Pagamento'"
-      [botaoSecundario]="'Voltar ao Carrinho'"
-      (continuar)="concluirPagamento()"
-      (voltarAtras)="voltarAoCarrinho()"
-    ></app-resumo-carrinho>
+    <div class="resumo-sidebar">
+      <app-resumo-carrinho
+        [totalCarrinho]="calcularValorComDesconto()"
+        [mostrarBotoes]="true"
+        botaoPrincipal="CONTINUAR"
+        botaoSecundario="VOLTAR"
+        (continuar)="concluirPagamento()"
+        (voltarAtras)="voltarAoCarrinho()">
+      </app-resumo-carrinho>
+    </div>
   </div>
 </div>
 

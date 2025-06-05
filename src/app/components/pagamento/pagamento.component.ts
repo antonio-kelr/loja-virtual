@@ -7,6 +7,8 @@ import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { CarrinhoService } from '../../services/carrinho.service';
 import { CheckoutStepsComponent } from '../checkout-steps/checkout-steps.component';
+import { Carrinho } from '../../interfaces/carrinho.interface';
+import { NavComponent } from "../nav/nav.component";
 
 @Component({
   selector: 'app-pagamento',
@@ -17,8 +19,9 @@ import { CheckoutStepsComponent } from '../checkout-steps/checkout-steps.compone
     HeaderComponent,
     FooterComponent,
     ResumoCarrinhoComponent,
-    CheckoutStepsComponent
-  ],
+    CheckoutStepsComponent,
+    NavComponent
+],
   templateUrl: './pagamento.component.html',
   styleUrls: ['./pagamento.component.scss']
 })
@@ -26,6 +29,7 @@ export class PagamentoComponent implements OnInit {
   totalCarrinho: number = 0;
   formaPagamentoSelecionada: string = 'pix';
   descontoPix: number = 0.1; // 10% de desconto
+  etapaAtual: number = 2;
 
   constructor(
     private carrinhoService: CarrinhoService,
@@ -37,12 +41,19 @@ export class PagamentoComponent implements OnInit {
   }
 
   carregarCarrinho(): void {
-    this.totalCarrinho = this.carrinhoService.calcularTotal();
+    this.carrinhoService.buscarCarrinhoDoServidor().subscribe({
+      next: (carrinho: Carrinho) => {
+        this.totalCarrinho = carrinho.total;
+      },
+      error: (error) => {
+        console.error('Erro ao carregar carrinho:', error);
+      }
+    });
   }
 
   calcularValorComDesconto(): number {
     if (this.formaPagamentoSelecionada === 'pix') {
-      return this.totalCarrinho * (1 - this.descontoPix);
+      return this.totalCarrinho * 0.9; // 10% de desconto
     }
     return this.totalCarrinho;
   }

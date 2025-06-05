@@ -3,11 +3,15 @@ import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faShoppingCart, faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
+import { CarrinhoService } from '../../services/carrinho.service';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-produto-card',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule],
+  imports: [CommonModule, FontAwesomeModule, ToastModule],
+  providers: [MessageService],
   templateUrl: './produto-card.component.html',
   styleUrls: ['./produto-card.component.scss']
 })
@@ -17,7 +21,9 @@ export class ProdutoCardComponent {
   faCartPlus = faCartPlus;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private carrinhoService: CarrinhoService,
+    private messageService: MessageService
   ) {}
 
   get precoParcelado(): number {
@@ -26,5 +32,48 @@ export class ProdutoCardComponent {
 
   verDetalhes(produto: any) {
     this.router.navigate(['/produto', produto.slug]);
+  }
+
+  adicionarAoCarrinho(event: Event) {
+    event.stopPropagation(); // Impede que o evento de clique se propague para o card
+
+    console.log('Produto a ser adicionado:', this.produto);
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.log('Usuário não está logado');
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Atenção',
+        detail: 'Você precisa estar logado para adicionar produtos ao carrinho.'
+      });
+      return;
+    }
+
+    console.log('Enviando ID do produto:', this.produto.id);
+    this.carrinhoService.adicionarAoCarrinho(this.produto.id).subscribe({
+      next: (response) => {
+        console.log('Produto adicionado com sucesso:', response);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Sucesso',
+          detail: 'Produto adicionado ao carrinho!'
+        });
+      },
+      error: (erro) => {
+        console.error('Erro detalhado ao adicionar ao carrinho:', {
+          status: erro.status,
+          statusText: erro.statusText,
+          url: erro.url,
+          error: erro.error,
+          message: erro.message
+        });
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Não foi possível adicionar o produto ao carrinho.'
+        });
+      }
+    });
   }
 }

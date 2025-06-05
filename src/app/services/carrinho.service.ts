@@ -2,6 +2,7 @@ import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -79,8 +80,64 @@ export class CarrinhoService {
     return this.carrinhoSubject.value.length;
   }
 
-  adicionarAoCarrinho(produto: any): void {
-    console.log('Funcionalidade de carrinho temporariamente desabilitada');
+  adicionarAoCarrinho(produtoId: any): Observable<any> {
+    console.log('Tentando adicionar produto ao carrinho:', produtoId);
+
+    if (!isPlatformBrowser(this.platformId)) {
+      console.log('Não está no navegador, retornando Observable vazio');
+      return new Observable<any>(subscriber => {
+        subscriber.next({});
+        subscriber.complete();
+      });
+    }
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.log('Token não encontrado');
+      return new Observable<any>(subscriber => {
+        subscriber.next({});
+        subscriber.complete();
+      });
+    }
+
+    // Criando o objeto no formato que o servidor espera
+    const produtoCarrinho = {
+      produtoId: produtoId,
+      quantidade: 1
+    };
+
+    console.log('Fazendo requisição para:', `${this.apiUrl}/add-produto`);
+    console.log('Dados enviados:', produtoCarrinho);
+    console.log('Headers:', {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.post<any>(`${this.apiUrl}/add-produto`, produtoCarrinho, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    }).pipe(
+      tap({
+        next: (response) => {
+          console.log('Resposta do servidor:', response);
+          this.buscarCarrinhoDoServidor().subscribe(carrinho => {
+            console.log('Carrinho atualizado:', carrinho);
+            this.carrinhoSubject.next(carrinho.itens);
+          });
+        },
+        error: (error) => {
+          console.error('Erro detalhado:', {
+            status: error.status,
+            statusText: error.statusText,
+            url: error.url,
+            error: error.error,
+            message: error.message
+          });
+        }
+      })
+    );
   }
 
   removerDoCarrinho(produtoId: number): void {
