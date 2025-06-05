@@ -258,6 +258,83 @@
       border-top: 1px solid #ddd;
       padding-top: 15px;
       margin-top: 15px;
+
+
+        .label {
+          font-size: 0.9rem;
+          color: #2e7d32;
+          font-weight: 500;
+        }
+        .pix {
+          font-size: 0.9rem;
+          color: #2e7d32;
+          font-weight: 700;
+        }
+
+        .preco {
+          font-size: 0.95rem;
+          color: #2e7d32;
+          font-weight: 700;
+        }
+
+        .economia {
+          font-size: 0.9rem;
+          color: #2e7d32;
+          font-weight: 500;
+        }
+
+    }
+  }
+
+  .valor-resumo {
+    display: flex;
+    background: #e8f5e9;
+    justify-content: space-between;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    .valor-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+
+      .text-xs {
+        font-size: 0.85rem;
+        color: #2e7d32;
+        font-weight: 500;
+      }
+
+      .pix-label {
+        font-size: 0.85rem;
+        color: #1b5e20;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+    }
+
+    .valor-pix-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 2px;
+
+      .valor-total {
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: #2e7d32;
+      }
+
+      .economia {
+        font-size: 0.8rem;
+        color: #2e7d32;
+        font-weight: 500;
+
+        b {
+          font-weight: 700;
+        }
+      }
     }
   }
 
@@ -353,6 +430,62 @@
 
   &:hover {
     background: var(--cor-primaria-escura) !important;
+  }
+}
+
+.botoes-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+
+  .btn-ir-pagamento {
+    width: 100%;
+    padding: 15px;
+    background: var(--cor-primaria);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: .875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: var(--cor-primaria-escura);
+    }
+
+    &:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+  }
+
+  .btn-continuar {
+    width: 100%;
+    padding: 15px;
+    padding-bottom: 0;
+    background: transparent;
+    color: var(--cor-primaria);
+    border: none;
+    font-size: .875rem;
+
+    text-transform: uppercase;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      border-bottom: 2px solid var(--cor-primaria);
+
+    }
+
+    &:disabled {
+      border-color: #ccc;
+      color: #ccc;
+      cursor: not-allowed;
+    }
   }
 }
 

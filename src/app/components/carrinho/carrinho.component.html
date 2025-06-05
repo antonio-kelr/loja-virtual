@@ -87,14 +87,25 @@
           <span>Grátis</span>
         </div>
 
-        <div class="resumo-item total">
-          <span>Total</span>
-          <span>R$ {{ total | number:'1.2-2' }}</span>
+        <div class="valor-resumo">
+          <div class="valor-info">
+            <span class="text-xs">Valor à vista no</span>
+            <span class="pix-label">PIX:</span>
+          </div>
+          <div class="valor-pix-container">
+            <span class="valor-total">R$ {{ total | number:'1.2-2' }}</span>
+            <span class="economia">(Economize: <b>R$ {{ (total * 0.07) | number:'1.2-2' }}</b>)</span>
+          </div>
         </div>
 
-        <button class="btn-finalizar" (click)="finalizarCompra()" [disabled]="carregando">
-          Finalizar Compra
-        </button>
+        <div class="botoes-container">
+          <button class="btn-ir-pagamento" (click)="finalizarCompra()" [disabled]="carregando">
+            Ir para o pagamento
+          </button>
+          <button class="btn-continuar" (click)="continuarComprando()" [disabled]="carregando">
+            Continuar comprando
+          </button>
+        </div>
       </div>
     </div>
   </div>
