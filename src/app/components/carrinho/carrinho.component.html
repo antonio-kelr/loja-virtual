@@ -1,4 +1,5 @@
-<app-header></app-header>
+<!-- Carrega o NavComponent apenas no lado do cliente -->
+<app-nav *ngIf="isBrowser()"></app-nav>
 
 <!-- Toast para mensagens -->
 <p-toast position="top-right"></p-toast>
@@ -9,6 +10,31 @@
   [draggable]="false"
 >
 </p-confirmDialog>
+
+<div class="steps-container">
+  <div class="steps">
+    <div class="step active">
+      <i class="pi pi-shopping-cart"></i>
+      <span>Carrinho</span>
+    </div>
+    <div class="step-line"></div>
+    <div class="step">
+      <i class="pi pi-credit-card"></i>
+      <span>Pagamento</span>
+    </div>
+    <div class="step-line"></div>
+    <div class="step">
+      <i class="pi pi-eye"></i>
+      <span>Confirmação</span>
+    </div>
+    <div class="step-line"></div>
+    <div class="step">
+      <i class="pi pi-check"></i>
+      <span>Concluir</span>
+    </div>
+  </div>
+</div>
+
 
 <div class="carrinho-container">
   <div class="carrinho-content">
@@ -41,7 +67,7 @@
           </div>
 
           <div class="produto-info">
-            <h3 class="produto-nome">{{ item.produto.nome }}</h3>
+            <h3 class="produto-nome">{{ item.produto.descricao }}</h3>
             <div class="produto-preco">R$ {{ item.precoUnitario | number:'1.2-2' }}</div>
           </div>
 

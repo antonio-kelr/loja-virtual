@@ -2,7 +2,6 @@ import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTrash, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { Carrinho, ItemCarrinho } from '../../interfaces/carrinho.interface';
 import { Router } from '@angular/router';
@@ -12,6 +11,7 @@ import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { NavComponent } from "../nav/nav.component";
 
 @Component({
   selector: 'app-carrinho',
@@ -19,12 +19,12 @@ import { MessageService } from 'primeng/api';
   imports: [
     CommonModule,
     FontAwesomeModule,
-    HeaderComponent,
     FooterComponent,
     ConfirmDialogModule,
     ButtonModule,
-    ToastModule
-  ],
+    ToastModule,
+    NavComponent
+],
   providers: [ConfirmationService, MessageService],
   templateUrl: './carrinho.component.html',
   styleUrls: ['./carrinho.component.scss']
@@ -146,5 +146,9 @@ export class CarrinhoComponent implements OnInit {
 
   continuarComprando(): void {
     this.router.navigate(['/']);
+  }
+
+  isBrowser(): boolean {
+    return isPlatformBrowser(this.platformId);
   }
 }

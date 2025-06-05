@@ -45,3 +45,51 @@
   width: 460px;
 }
 
+.login-opçoes {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.login-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+}
+
+.profile-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.profile-image {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  color: #fff;
+}
+
+.user-name-text {
+  color: #fff;
+}
+
