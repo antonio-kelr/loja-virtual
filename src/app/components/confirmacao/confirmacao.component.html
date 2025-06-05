@@ -103,6 +103,7 @@
       <app-resumo-carrinho
         [totalCarrinho]="calcularTotal()"
         [mostrarBotoes]="true"
+        [metodoPagamento]="metodoPagamento"
         botaoPrincipal="FINALIZAR"
         botaoSecundario="VOLTAR"
         (continuar)="finalizarPedido()"

@@ -14,6 +14,7 @@ export class ResumoCarrinhoComponent implements OnInit {
   @Input() mostrarBotoes: boolean = true;
   @Input() botaoPrincipal: string = 'Finalizar Compra';
   @Input() botaoSecundario: string = 'Continuar Comprando';
+  @Input() metodoPagamento: string = 'pix';
 
   @Output() continuar = new EventEmitter<void>();
   @Output() voltarAtras = new EventEmitter<void>();
@@ -59,4 +60,17 @@ export class ResumoCarrinhoComponent implements OnInit {
       this.total = 0;
     }
   }
-}
+
+  calcularDesconto(): number {
+    switch (this.metodoPagamento.toLowerCase()) {
+      case 'pix':
+        return 0.98; // 2% de desconto
+      case 'cartao':
+        return 1;    // Sem desconto
+      case 'boleto':
+        return 0.99; // ✅ Agora só 1% de desconto
+      default:
+        return 1;
+    }
+  }
+  }

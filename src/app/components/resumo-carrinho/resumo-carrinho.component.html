@@ -25,9 +25,9 @@
     </div>
 
     <div class="resumo-linha total">
-      <span>Valor à vista no<br> <strong class="pix-destaque">Pix:</strong></span>
+      <span>Valor à vista no<br> <strong class="pix-destaque">{{ metodoPagamento | uppercase }}:</strong></span>
       <span class="valor-pix">
-        {{ ((total || 0) * 0.98).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}
+        {{ ((total || 0) * calcularDesconto()).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}
       </span>
     </div>
 

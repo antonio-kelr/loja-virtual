@@ -52,17 +52,25 @@ export class PagamentoComponent implements OnInit {
   }
 
   calcularValorComDesconto(): number {
-    if (this.formaPagamentoSelecionada === 'pix') {
-      return this.totalCarrinho * 0.9; // 10% de desconto
+    switch (this.formaPagamentoSelecionada) {
+      case 'pix':
+        return this.totalCarrinho * 0.9; // 10% de desconto
+      case 'boleto':
+        return this.totalCarrinho * 0.95; // 5% de desconto
+      default:
+        return this.totalCarrinho;
     }
-    return this.totalCarrinho;
   }
 
   calcularEconomia(): number {
-    if (this.formaPagamentoSelecionada === 'pix') {
-      return this.totalCarrinho * this.descontoPix;
+    switch (this.formaPagamentoSelecionada) {
+      case 'pix':
+        return this.totalCarrinho * 0.1; // 10% de desconto
+      case 'boleto':
+        return this.totalCarrinho * 0.05; // 5% de desconto
+      default:
+        return 0;
     }
-    return 0;
   }
 
   concluirPagamento(): void {

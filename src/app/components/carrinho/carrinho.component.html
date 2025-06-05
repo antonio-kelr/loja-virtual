@@ -79,6 +79,7 @@
       <!-- Resumo do Pedido -->
       <app-resumo-carrinho
         [totalCarrinho]="total"
+        [metodoPagamento]="'pix'"
         [botaoPrincipal]="'Ir para o pagamento'"
         [botaoSecundario]="'Continuar comprando'"
         (continuar)="finalizarCompra()"

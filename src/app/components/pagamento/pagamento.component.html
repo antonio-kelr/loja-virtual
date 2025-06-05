@@ -123,7 +123,8 @@
             <p>O boleto será gerado após a finalização do pedido.</p>
             <p>Vencimento em 3 dias úteis. O pedido será confirmado após o pagamento.</p>
             <div class="valor-boleto">
-              <p>Valor total: {{ totalCarrinho | currency:'BRL' }}</p>
+              <p>Valor com desconto: {{ calcularValorComDesconto() | currency:'BRL' }}</p>
+              <p>Economia: {{ calcularEconomia() | currency:'BRL' }}</p>
             </div>
           </div>
         </div>
@@ -135,6 +136,7 @@
       <app-resumo-carrinho
         [totalCarrinho]="calcularValorComDesconto()"
         [mostrarBotoes]="true"
+        [metodoPagamento]="formaPagamentoSelecionada"
         botaoPrincipal="CONTINUAR"
         botaoSecundario="VOLTAR"
         (continuar)="concluirPagamento()"

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { CarrinhoService } from '../../services/carrinho.service';
@@ -31,14 +31,21 @@ export class ConfirmacaoComponent implements OnInit {
   carregando = true;
   erro: string | null = null;
   etapaAtual = 3; // Etapa de confirmação
+  metodoPagamento: string = 'pix'; // Método de pagamento padrão
 
   constructor(
     private carrinhoService: CarrinhoService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      if (params['metodoPagamento']) {
+        this.metodoPagamento = params['metodoPagamento'];
+      }
+    });
     this.carregarDados();
   }
 
