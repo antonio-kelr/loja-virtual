@@ -10,6 +10,7 @@ import { LoginComponent } from './components/login/login.component';
 import { CompleteRegistrationComponent } from './components/complete-registration/complete-registration.component';
 import { AuthGuard } from './guards/auth.guard';
 import { AdminComponent } from './components/admin/admin.component';
+import { ConcluirComponent } from './components/concluir/concluir.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,6 +20,7 @@ export const routes: Routes = [
   { path: 'forma-pagamento', component: PagamentoComponent },
   { path: 'produto/:slug', component: ProdutoDetalhesComponent },
   { path: 'confirmacao', component: ConfirmacaoComponent },
+  { path: 'concluir', component: ConcluirComponent },
   { path: 'cadastro', component: CadastroComponent },
   { path: 'login', component: LoginComponent },
   {

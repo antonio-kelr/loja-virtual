@@ -5,12 +5,175 @@
 
   <div class="concluir-content">
     <div class="mensagem-sucesso">
-      <i class="pi pi-check-circle"></i>
-      <h1>PEDIDO CONCLUÍDO COM SUCESSO!</h1>
-      <p>Obrigado por comprar conosco. Seu pedido foi recebido e está sendo processado.</p>
-      <p>Você receberá um e-mail com os detalhes do seu pedido em breve.</p>
+      <div class="header-sucesso">
+        <i class="pi pi-check-circle"></i>
+        <h1>Pedido realizado com sucesso!</h1>
+        <p>Agora é só realizar o pagamento.</p>
+      </div>
+
+      <div class="pagamento-grid">
+        <div *ngIf="metodoPagamento === 'pix'" class="pagamento-info">
+          <div class="info-header">
+            <h2>Pagamento via PIX</h2>
+          </div>
+
+          <div class="info-content">
+            <div class="qrcode-section">
+              <div class="qrcode-container">
+                <qrcode
+                  [qrdata]="qrCodeValue"
+                  [width]="256"
+                  [errorCorrectionLevel]="'M'"
+                  [allowEmptyString]="true"
+                ></qrcode>
+              </div>
+            </div>
+
+            <div class="instrucoes-section">
+              <div class="instrucoes-pagamento">
+                <h3>Como pagar com PIX:</h3>
+                <div class="passo-a-passo">
+                  <div class="passo">
+                    <div class="passo-icon">
+                      <i class="pi pi-mobile"></i>
+                    </div>
+                    <div class="passo-texto">
+                      <span class="numero">1</span>
+                      <p>Abra o aplicativo do seu banco</p>
+                    </div>
+                  </div>
+
+                  <div class="passo">
+                    <div class="passo-icon">
+                      <i class="pi pi-qrcode"></i>
+                    </div>
+                    <div class="passo-texto">
+                      <span class="numero">2</span>
+                      <p>Escolha a opção "Pagar com PIX"</p>
+                    </div>
+                  </div>
+
+                  <div class="passo">
+                    <div class="passo-icon">
+                      <i class="pi pi-camera"></i>
+                    </div>
+                    <div class="passo-texto">
+                      <span class="numero">3</span>
+                      <p>Aponte a câmera para o QR Code</p>
+                    </div>
+                  </div>
+
+                  <div class="passo">
+                    <div class="passo-icon">
+                      <i class="pi pi-check-circle"></i>
+                    </div>
+                    <div class="passo-texto">
+                      <span class="numero">4</span>
+                      <p>Confirme o valor e finalize o pagamento</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="validade-container">
+                  <i class="pi pi-clock"></i>
+                  <p class="validade">Aproveite! Este código tem validade de 12 horas.</p>
+                </div>
+                <p class="email-notificacao">Ao realizar o pagamento você será informado por e-mail.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="metodoPagamento === 'boleto'" class="pagamento-info">
+          <div class="info-header">
+            <h2>Pagamento via Boleto</h2>
+            <p class="valor-boleto">Valor: {{ valorTotal | currency:'BRL' }}</p>
+          </div>
+
+          <div class="info-content">
+            <div class="boleto-section">
+              <i class="pi pi-file-pdf" style="font-size: 64px; color: #dc3545;"></i>
+              <p>O boleto será enviado para seu e-mail.</p>
+            </div>
+
+            <div class="instrucoes-section">
+              <div class="instrucoes-pagamento">
+                <h3>Como pagar com Boleto:</h3>
+                <div class="passo-a-passo">
+                  <div class="passo">
+                    <div class="passo-icon">
+                      <i class="pi pi-envelope"></i>
+                    </div>
+                    <div class="passo-texto">
+                      <span class="numero">1</span>
+                      <p>Aguarde o boleto no seu e-mail</p>
+                    </div>
+                  </div>
+
+                  <div class="passo">
+                    <div class="passo-icon">
+                      <i class="pi pi-print"></i>
+                    </div>
+                    <div class="passo-texto">
+                      <span class="numero">2</span>
+                      <p>Imprima ou copie o código de barras</p>
+                    </div>
+                  </div>
+
+                  <div class="passo">
+                    <div class="passo-icon">
+                      <i class="pi pi-building"></i>
+                    </div>
+                    <div class="passo-texto">
+                      <span class="numero">3</span>
+                      <p>Pague em qualquer banco ou lotérica</p>
+                    </div>
+                  </div>
+
+                  <div class="passo">
+                    <div class="passo-icon">
+                      <i class="pi pi-save"></i>
+                    </div>
+                    <div class="passo-texto">
+                      <span class="numero">4</span>
+                      <p>Guarde o comprovante</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="validade-container">
+                  <i class="pi pi-clock"></i>
+                  <p class="validade">Aproveite! Este boleto tem validade de 12 horas.</p>
+                </div>
+                <p class="email-notificacao">Ao realizar o pagamento você será informado por e-mail.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="metodoPagamento === 'cartao'" class="pagamento-info">
+          <div class="info-header">
+            <h2>Pagamento via Cartão</h2>
+            <p class="valor-cartao">Valor: {{ valorTotal | currency:'BRL' }}</p>
+          </div>
+
+          <div class="info-content">
+            <div class="cartao-section">
+              <i class="pi pi-credit-card" style="font-size: 64px; color: #0d6efd;"></i>
+              <p>Seu pagamento está sendo processado.</p>
+            </div>
+
+            <div class="instrucoes-section">
+              <div class="instrucoes-pagamento">
+                <p class="email-notificacao">Você receberá um e-mail assim que o pagamento for confirmado.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <button class="btn-voltar" (click)="voltarParaHome()">
-        Voltar para a Página Inicial
+        CONTINUAR NAVEGANDO
       </button>
     </div>
   </div>

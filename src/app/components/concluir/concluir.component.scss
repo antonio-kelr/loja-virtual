@@ -1,7 +1,7 @@
 .concluir-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 20px;
 }
 
 .concluir-content {
@@ -9,50 +9,241 @@
   justify-content: center;
   align-items: center;
   min-height: 60vh;
-  margin-top: 2rem;
 }
 
 .mensagem-sucesso {
-  background: #fff;
-  border-radius: 8px;
-  padding: 3rem;
   text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
+  background: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 1000px;
   width: 100%;
+}
+
+.header-sucesso {
+  margin-bottom: 30px;
 
   i {
-    font-size: 4rem;
-    color: #4caf50;
-    margin-bottom: 1.5rem;
+    font-size: 64px;
+    color: #4CAF50;
+    margin-bottom: 20px;
   }
 
   h1 {
-    font-size: 1.8rem;
+    font-size: 24px;
     color: #333;
-    margin-bottom: 1rem;
+    margin-bottom: 10px;
   }
 
   p {
     color: #666;
-    margin-bottom: 1rem;
-    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+}
+
+.pagamento-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.pagamento-info {
+  background: #f9f9f9;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.info-header {
+  background: var(--cor-primaria);
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h2 {
+    font-size: 18px;
+    margin: 0;
   }
 
-  .btn-voltar {
-    background: #2196f3;
-    color: #fff;
-    border: none;
-    padding: 1rem 2rem;
-    border-radius: 4px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 2rem;
+  .valor-pix, .valor-boleto, .valor-cartao {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+  }
+}
 
-    &:hover {
-      background: #1976d2;
-    }
+.info-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 20px;
+}
+
+.qrcode-section, .boleto-section, .cartao-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+  p {
+    margin-top: 15px;
+    color: #666;
+    text-align: center;
+  }
+}
+
+.qrcode-container {
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.instrucoes-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.instrucoes-pagamento {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+  h3 {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 15px;
+  }
+}
+
+.passo-a-passo {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.passo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateX(5px);
+  }
+}
+
+.passo-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cor-primaria);
+  border-radius: 50%;
+  color: white;
+  font-size: 20px;
+}
+
+.passo-texto {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+
+  .numero {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e9ecef;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: bold;
+    color: #495057;
+  }
+
+  p {
+    margin: 0;
+    color: #495057;
+    font-size: 14px;
+  }
+}
+
+.validade-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+  padding: 15px;
+  background: #dc3545;
+  border-radius: 8px;
+  color: white;
+
+  i {
+    font-size: 24px;
+  }
+
+  .validade {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+  }
+}
+
+.email-notificacao {
+  margin-top: 10px;
+  color: #666;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.btn-voltar {
+  display: inline-block;
+  padding: 12px 24px;
+  background: var(--cor-primaria);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  margin-top: 30px;
+
+  &:hover {
+    background: var(--cor-primaria-escura);
+  }
+}
+
+@media (max-width: 768px) {
+  .info-content {
+    grid-template-columns: 1fr;
+  }
+
+  .mensagem-sucesso {
+    padding: 20px;
+  }
+
+  .passo {
+    padding: 8px;
+  }
+
+  .passo-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
   }
 }

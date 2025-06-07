@@ -92,7 +92,12 @@ export class ConfirmacaoComponent implements OnInit {
     this.carregando = true;
     // Aqui você pode adicionar a lógica para finalizar o pedido no backend
     // Por enquanto, vamos apenas redirecionar para a página de conclusão
-    this.router.navigate(['/concluir']);
+    this.router.navigate(['/concluir'], {
+      queryParams: {
+        metodoPagamento: this.metodoPagamento,
+        valor: this.calcularTotal()
+      }
+    });
   }
 
   voltarParaPagamento(): void {
