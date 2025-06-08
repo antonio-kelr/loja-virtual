@@ -11,6 +11,9 @@ import { CompleteRegistrationComponent } from './components/complete-registratio
 import { AuthGuard } from './guards/auth.guard';
 import { AdminComponent } from './components/admin/admin.component';
 import { ConcluirComponent } from './components/concluir/concluir.component';
+import { MinhaContaComponent } from './components/minha-conta/minha-conta.component';
+import { MeusPedidosComponent } from './components/meus-pedidos/meus-pedidos.component';
+import { MeusDadosComponent } from './components/meus-dados/meus-dados.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -23,6 +26,15 @@ export const routes: Routes = [
   { path: 'concluir', component: ConcluirComponent },
   { path: 'cadastro', component: CadastroComponent },
   { path: 'login', component: LoginComponent },
+  {
+    path: 'minha-conta',
+    component: MinhaContaComponent,
+    canActivate: [AuthGuard],
+    children: [
+      { path: 'dados', component: MeusDadosComponent },
+      { path: 'pedidos', component: MeusPedidosComponent }
+    ]
+  },
   {
     path: 'complete-registration',
     component: CompleteRegistrationComponent,

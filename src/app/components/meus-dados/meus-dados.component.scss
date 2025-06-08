@@ -1,0 +1,59 @@
+.meus-dados {
+  padding: 1rem;
+}
+
+h1 {
+  color: var(--cor-primaria);
+  margin-bottom: 2rem;
+}
+
+.dados-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #666;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+
+    &:focus {
+      outline: none;
+      border-color: var(--cor-primaria);
+      box-shadow: 0 0 0 2px rgba(10, 125, 233, 0.1);
+    }
+  }
+
+  textarea.form-control {
+    min-height: 100px;
+    resize: vertical;
+  }
+}
+
+.btn-salvar {
+  background-color: var(--cor-primaria);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: var(--cor-primaria-escura);
+  }
+}
