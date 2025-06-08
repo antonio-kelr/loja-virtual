@@ -30,7 +30,7 @@
 }
 
 // Estados de Carregamento e Erro
-.carregando, .erro {
+.carregando, .erro, .nao-logado {
   text-align: center;
   padding: 40px 20px;
 
@@ -64,6 +64,28 @@
   }
 
   .btn-tentar-novamente {
+    display: inline-block;
+    padding: 12px 24px;
+    background: var(--cor-primaria);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: var(--cor-primaria-escura);
+    }
+  }
+}
+
+.nao-logado {
+  i {
+    color: var(--cor-primaria);
+  }
+
+  .btn-login {
     display: inline-block;
     padding: 12px 24px;
     background: var(--cor-primaria);

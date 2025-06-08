@@ -7,6 +7,7 @@
 .logo-container {
   display: flex;
   max-width: 1600px;
+
   margin: 0 auto;
   align-items: center;
   justify-content: space-between;
@@ -19,14 +20,10 @@
 .isLogin {
   display: flex;
   align-items: center;
+
   gap: 8px;
   color: white;
 
-  span {
-    font-size: 13px;
-    font-weight: 700;
-
-  }
 
   a {
     color: white;
@@ -41,20 +38,27 @@
   align-items: center;
   list-style: none;
   margin: 0;
+
   padding: 0;
   width: 460px;
 }
 
 .login-opçoes {
   display: flex;
+
+
   align-items: center;
   gap: 8px;
+  color: white;
 }
 
 .login-links {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  gap: 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+
+
 }
 
 .user-profile {

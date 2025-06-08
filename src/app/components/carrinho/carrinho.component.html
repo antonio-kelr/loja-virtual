@@ -35,7 +35,16 @@
       </button>
     </div>
 
-    <div class="carrinho-grid" *ngIf="!carregando && !erro">
+    <!-- Mensagem para usuário não logado -->
+    <div class="nao-logado" *ngIf="!isLoggedIn">
+      <i class="pi pi-lock"></i>
+      <p>Para visualizar seu carrinho, você precisa estar logado.</p>
+      <button class="btn-login" (click)="irParaLogin()">
+        Fazer Login
+      </button>
+    </div>
+
+    <div class="carrinho-grid" *ngIf="!carregando && !erro && isLoggedIn">
       <!-- Lista de Produtos -->
       <div class="lista-produtos">
         <div class="produto-item" *ngFor="let item of carrinho?.itens">

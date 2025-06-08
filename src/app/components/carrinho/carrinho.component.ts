@@ -42,6 +42,7 @@ export class CarrinhoComponent implements OnInit {
   total: number = 0;
   carregando: boolean = true;
   erro: string | null = null;
+  isLoggedIn: boolean = false;
 
   constructor(
     private router: Router,
@@ -53,8 +54,21 @@ export class CarrinhoComponent implements OnInit {
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      this.carregarCarrinho();
+      this.verificarLogin();
+      if (this.isLoggedIn) {
+        this.carregarCarrinho();
+      }
     }
+  }
+
+  verificarLogin(): void {
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
+    this.isLoggedIn = !!(token && userId);
+  }
+
+  irParaLogin(): void {
+    this.router.navigate(['/login']);
   }
 
   carregarCarrinho(): void {
