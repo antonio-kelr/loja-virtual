@@ -1,73 +1,61 @@
 <app-header></app-header>
 
 <div class="conta-container">
-  <div class="sidebar">
-    <nav class="sidebar-nav">
-      <a routerLink="/minha-conta" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-        <i class="pi pi-home"></i>
-        <span class="nav-text">Início</span>
-      </a>
-      <a routerLink="/minha-conta/dados" class="nav-item" routerLinkActive="active">
-        <i class="pi pi-user"></i>
-        <span class="nav-text">Meus Dados</span>
-      </a>
-      <a routerLink="/minha-conta/pedidos" class="nav-item" routerLinkActive="active">
-        <i class="pi pi-shopping-bag"></i>
-        <span class="nav-text">Meus Pedidos</span>
-      </a>
-    </nav>
-  </div>
+  <app-sidebar-user></app-sidebar-user>
 
   <div class="conteudo">
-    <div class="user-header">
-      <div class="user-info">
-        <div class="user-avatar">
-          <img
-            [src]="userProfile?.fotoPerfil || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcQ_eoyu-ek2ju7f-NhDlzLtQXNWg-etAXco7UbW4u7S50sgCImeUex34beKj8Q66dmAw&usqp=CAU'"
-            alt="Foto de perfil"
-            class="profile-image"
-          />
-        </div>
+    <ng-container *ngIf="router.url === '/minha-conta'">
+      <div class="user-header">
+        <div class="user-info">
+          <div class="user-avatar">
+            <img
+              [src]="userProfile?.fotoPerfil || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcQ_eoyu-ek2ju7f-NhDlzLtQXNWg-etAXco7UbW4u7S50sgCImeUex34beKj8Q66dmAw&usqp=CAU'"
+              alt="Foto de perfil"
+              class="profile-image"
+            />
+          </div>
 
-        <div class="user-email">
-          <h1>Bem-vindo, <span class="user-name">{{ userProfile?.nome || 'Usuário' }}</span></h1>
-          <span class="user-email-text">
-            <i class="pi pi-envelope"></i>
-            <span>{{ userProfile?.email || 'email@exemplo.com' }}</span>
-          </span>
-        </div>
-      </div>
-    </div>
-    <div class="atalhos-container-title">
-      <div class="atalhos-container-title-content">
-        <i class="pi pi-th-large"></i>
-        <h2>Atalhos</h2>
-      </div>
-    <div class="atalhos-container">
-      <div class="atalho-card" routerLink="/minha-conta/pedidos">
-        <i class="pi pi-shopping-bag"></i>
-        <div class="atalho-card-content">
-          <h3>Meus Pedidos</h3>
-          <p>Veja históricos e acompanhe suas compras.</p>
+          <div class="user-email">
+            <h1>Bem-vindo, <span class="user-name">{{ userProfile?.nome || 'Usuário' }}</span></h1>
+            <span class="user-email-text">
+              <i class="pi pi-envelope"></i>
+              <span>{{ userProfile?.email || 'email@exemplo.com' }}</span>
+            </span>
+          </div>
         </div>
       </div>
 
-      <div class="atalho-card" routerLink="/minha-conta/dados">
-        <i class="pi pi-user"></i>
-        <div class="atalho-card-content">
-          <h3>Meus Dados</h3>
-          <p>Altere seus dados cadastrados, endereços ou cadastre um novo endereço.</p>
+      <div class="atalhos-container-title">
+        <div class="atalhos-container-title-content">
+          <i class="pi pi-th-large"></i>
+          <h2>Atalhos</h2>
         </div>
       </div>
-      <div class="atalho-card" routerLink="/minha-conta/favoritos">
-        <i class="pi pi-heart"></i>
-        <div class="atalho-card-content">
-          <h3>Favoritos</h3>
-          <p>Consulte sua lista de produtos favoritados.s</p>
+      <div class="atalhos-container">
+        <div class="atalho-card" routerLink="/minha-conta/meus-pedidos">
+          <i class="pi pi-shopping-bag"></i>
+          <div class="atalho-card-content">
+            <h3>Meus Pedidos</h3>
+            <p>Veja históricos e acompanhe suas compras.</p>
+          </div>
+        </div>
+
+        <div class="atalho-card" routerLink="/minha-conta/meus-dados">
+          <i class="pi pi-user"></i>
+          <div class="atalho-card-content">
+            <h3>Meus Dados</h3>
+            <p>Altere seus dados cadastrados, endereços ou cadastre um novo endereço.</p>
+          </div>
+        </div>
+        <div class="atalho-card" routerLink="/minha-conta/favoritos">
+          <i class="pi pi-heart"></i>
+          <div class="atalho-card-content">
+            <h3>Favoritos</h3>
+            <p>Consulte sua lista de produtos favoritados.</p>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+    </ng-container>
 
     <router-outlet></router-outlet>
   </div>

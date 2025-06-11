@@ -1,26 +1,170 @@
-<div class="meus-dados">
-  <h1>Meus Dados</h1>
-  <form class="dados-form">
-    <div class="form-group">
-      <label for="nome">Nome Completo</label>
-      <input type="text" id="nome" class="form-control">
+<div class="meus-dados-container maxWidth">
+  <!-- Estado de Carregamento -->
+  <div class="carregando" *ngIf="carregando">
+    <div class="spinner"></div>
+    <p>Carregando seus dados...</p>
+  </div>
+
+  <!-- Estado de Erro -->
+  <div class="erro" *ngIf="erro">
+    <i class="pi pi-exclamation-triangle"></i>
+    <p>{{ erro }}</p>
+  </div>
+
+  <!-- Formulário -->
+  <form [formGroup]="dadosForm" *ngIf="!carregando && !erro">
+    <div class="form-header">
+      <i class="pi pi-user"></i>
+
+      <h2>Meus Dados</h2>
+    </div>
+    <div class="form-container">
+      <div class="form-grid">
+        <div class="form-header-dados-basicos">
+          <fa-icon [icon]="faFileLines" size="1x" class="icon-dados-basicos"></fa-icon>
+          <h5>Dados básicos</h5>
+        </div>
+
+        <div class="form-group">
+          <label for="nome">Nome Completo</label>
+          <input
+            type="text"
+            id="nome"
+            formControlName="nome"
+            [class.erro]="
+              dadosForm.get('nome')?.invalid && dadosForm.get('nome')?.touched
+            "
+          />
+          <div
+            class="erro-mensagem"
+            *ngIf="
+              dadosForm.get('nome')?.invalid && dadosForm.get('nome')?.touched
+            "
+          >
+            <span *ngIf="dadosForm.get('nome')?.errors?.['required']"
+              >Nome é obrigatório</span
+            >
+            <span *ngIf="dadosForm.get('nome')?.errors?.['minlength']"
+              >Nome deve ter no mínimo 3 caracteres</span
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            [class.erro]="
+              dadosForm.get('email')?.invalid && dadosForm.get('email')?.touched
+            "
+          />
+          <div
+            class="erro-mensagem"
+            *ngIf="
+              dadosForm.get('email')?.invalid && dadosForm.get('email')?.touched
+            "
+          >
+            <span *ngIf="dadosForm.get('email')?.errors?.['required']"
+              >E-mail é obrigatório</span
+            >
+            <span *ngIf="dadosForm.get('email')?.errors?.['email']"
+              >E-mail inválido</span
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="cpf">CPF</label>
+          <input
+            type="text"
+            id="cpf"
+            formControlName="cpf"
+            [class.erro]="
+              dadosForm.get('cpf')?.invalid && dadosForm.get('cpf')?.touched
+            "
+          />
+          <div
+            class="erro-mensagem"
+            *ngIf="
+              dadosForm.get('cpf')?.invalid && dadosForm.get('cpf')?.touched
+            "
+          >
+            <span *ngIf="dadosForm.get('cpf')?.errors?.['required']"
+              >CPF é obrigatório</span
+            >
+            <span *ngIf="dadosForm.get('cpf')?.errors?.['pattern']"
+              >CPF deve conter 11 dígitos</span
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="dataNascimento">Data de Nascimento</label>
+          <input
+            type="date"
+            id="dataNascimento"
+            formControlName="dataNascimento"
+            [class.erro]="
+              dadosForm.get('dataNascimento')?.invalid &&
+              dadosForm.get('dataNascimento')?.touched
+            "
+          />
+          <div
+            class="erro-mensagem"
+            *ngIf="
+              dadosForm.get('dataNascimento')?.invalid &&
+              dadosForm.get('dataNascimento')?.touched
+            "
+          >
+            <span *ngIf="dadosForm.get('dataNascimento')?.errors?.['required']"
+              >Data de nascimento é obrigatória</span
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="genero">Gênero</label>
+          <select
+            id="genero"
+            formControlName="genero"
+            [class.erro]="
+              dadosForm.get('genero')?.invalid &&
+              dadosForm.get('genero')?.touched
+            "
+          >
+            <option value="">Selecione</option>
+            <option *ngFor="let genero of generos" [value]="genero">
+              {{ genero }}
+            </option>
+          </select>
+          <div
+            class="erro-mensagem"
+            *ngIf="
+              dadosForm.get('genero')?.invalid &&
+              dadosForm.get('genero')?.touched
+            "
+          >
+            <span *ngIf="dadosForm.get('genero')?.errors?.['required']"
+              >Gênero é obrigatório</span
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="telefone">Telefone</label>
+          <input type="tel" id="telefone" formControlName="telefone" />
+        </div>
+        <div class="form-actions">
+          <button class="btn-excluir-conta">excluir conta</button>
+          <button class="btn-salvar-alteracoes">salvar alterações</button>
+        </div>
+      </div>
+
+      <app-enderecos></app-enderecos>
+
     </div>
 
-    <div class="form-group">
-      <label for="email">E-mail</label>
-      <input type="email" id="email" class="form-control">
-    </div>
-
-    <div class="form-group">
-      <label for="telefone">Telefone</label>
-      <input type="tel" id="telefone" class="form-control">
-    </div>
-
-    <div class="form-group">
-      <label for="endereco">Endereço</label>
-      <textarea id="endereco" class="form-control"></textarea>
-    </div>
-
-    <button type="submit" class="btn-salvar">Salvar Alterações</button>
   </form>
 </div>

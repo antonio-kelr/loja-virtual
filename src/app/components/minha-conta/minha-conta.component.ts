@@ -1,10 +1,11 @@
 import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
+import { SidebarUserComponent } from '../sidebar-user/sidebar-user.component';
 
 @Component({
   selector: 'app-minha-conta',
@@ -14,7 +15,8 @@ import { FooterComponent } from '../footer/footer.component';
     RouterModule,
     FormsModule,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    SidebarUserComponent
   ],
   templateUrl: './minha-conta.component.html',
   styleUrls: ['./minha-conta.component.scss']
@@ -26,7 +28,9 @@ export class MinhaContaComponent implements OnInit {
     fotoPerfil: ''
   };
 
-  constructor(     private authService: AuthService,
+  constructor(
+    private authService: AuthService,
+    public router: Router
   ) {}
 
   ngOnInit(): void {
@@ -52,7 +56,6 @@ export class MinhaContaComponent implements OnInit {
         }
       }
     });
-
   }
 
   atualizarDados(): void {

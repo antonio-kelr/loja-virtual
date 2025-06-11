@@ -1,0 +1,203 @@
+<div class="form-grid">
+  <div class="form-header-dados-basicos">
+    <fa-icon
+      [icon]="faMapMarkerAlt"
+      size="1x"
+      class="icon-dados-basicos"
+    ></fa-icon>
+    <h5>Endereço</h5>
+  </div>
+
+  <form [formGroup]="enderecoForm">
+    <div class="form-group">
+      <label for="cep">CEP</label>
+      <input
+        type="text"
+        id="cep"
+        formControlName="cep"
+        maxlength="8"
+        [class.erro]="
+          enderecoForm.get('cep')?.invalid && enderecoForm.get('cep')?.touched
+        "
+      />
+      <div
+        class="erro-mensagem"
+        *ngIf="
+          enderecoForm.get('cep')?.touched && enderecoForm.get('cep')?.invalid
+        "
+      >
+        <span *ngIf="enderecoForm.get('cep')?.errors?.['required']"
+          >CEP é obrigatório</span
+        >
+        <span *ngIf="enderecoForm.get('cep')?.errors?.['minlength']"
+          >CEP deve ter 8 dígitos</span
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="identificacao">Identificação</label>
+      <input
+        type="text"
+        id="identificacao"
+        formControlName="identificacao"
+        [class.erro]="
+          enderecoForm.get('identificacao')?.invalid &&
+          enderecoForm.get('identificacao')?.touched
+        "
+      />
+      <div
+        class="erro-mensagem"
+        *ngIf="
+          enderecoForm.get('identificacao')?.touched &&
+          enderecoForm.get('identificacao')?.invalid
+        "
+      >
+        <span *ngIf="enderecoForm.get('identificacao')?.errors?.['required']"
+          >Identificação é obrigatória</span
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="logradouro">Logradouro</label>
+      <input
+        type="text"
+        id="logradouro"
+        formControlName="logradouro"
+        [class.erro]="
+          enderecoForm.get('logradouro')?.invalid &&
+          enderecoForm.get('logradouro')?.touched
+        "
+      />
+      <div
+        class="erro-mensagem"
+        *ngIf="
+          enderecoForm.get('logradouro')?.touched &&
+          enderecoForm.get('logradouro')?.invalid
+        "
+      >
+        <span *ngIf="enderecoForm.get('logradouro')?.errors?.['required']"
+          >Logradouro é obrigatório</span
+        >
+      </div>
+    </div>
+
+    <div class="numero-complemento-grid">
+      <div class="form-group">
+        <label for="numero">Número</label>
+        <input
+          type="text"
+          id="numero"
+          formControlName="numero"
+          [class.erro]="
+            enderecoForm.get('numero')?.invalid &&
+            enderecoForm.get('numero')?.touched
+          "
+        />
+        <div
+          class="erro-mensagem"
+          *ngIf="
+            enderecoForm.get('numero')?.touched &&
+            enderecoForm.get('numero')?.invalid
+          "
+        >
+          <span *ngIf="enderecoForm.get('numero')?.errors?.['required']"
+            >Número é obrigatório</span
+          >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="complemento">Complemento</label>
+        <input type="text" id="complemento" formControlName="complemento" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="referencia">Referência</label>
+      <input type="text" id="referencia" formControlName="referencia" />
+    </div>
+
+    <div class="form-group">
+      <label for="bairro">Bairro</label>
+      <input
+        type="text"
+        id="bairro"
+        formControlName="bairro"
+        [class.erro]="
+          enderecoForm.get('bairro')?.invalid &&
+          enderecoForm.get('bairro')?.touched
+        "
+      />
+      <div
+        class="erro-mensagem"
+        *ngIf="
+          enderecoForm.get('bairro')?.touched &&
+          enderecoForm.get('bairro')?.invalid
+        "
+      >
+        <span *ngIf="enderecoForm.get('bairro')?.errors?.['required']"
+          >Bairro é obrigatório</span
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="cidade">Cidade</label>
+      <input
+        type="text"
+        id="cidade"
+        formControlName="cidade"
+        [class.erro]="
+          enderecoForm.get('cidade')?.invalid &&
+          enderecoForm.get('cidade')?.touched
+        "
+      />
+      <div
+        class="erro-mensagem"
+        *ngIf="
+          enderecoForm.get('cidade')?.touched &&
+          enderecoForm.get('cidade')?.invalid
+        "
+      >
+        <span *ngIf="enderecoForm.get('cidade')?.errors?.['required']"
+          >Cidade é obrigatória</span
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="estado">UF</label>
+      <input
+        type="text"
+        id="estado"
+        formControlName="estado"
+        maxlength="2"
+        [class.erro]="
+          enderecoForm.get('estado')?.invalid &&
+          enderecoForm.get('estado')?.touched
+        "
+      />
+      <div
+        class="erro-mensagem"
+        *ngIf="
+          enderecoForm.get('estado')?.touched &&
+          enderecoForm.get('estado')?.invalid
+        "
+      >
+        <span *ngIf="enderecoForm.get('estado')?.errors?.['required']"
+          >UF é obrigatório</span
+        >
+        <span *ngIf="enderecoForm.get('estado')?.errors?.['minlength']"
+          >UF deve ter 2 letras</span
+        >
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-excluir-conta">excluir endereço</button>
+      <button class="btn-salvar-alteracoes">salvar endereço</button>
+    </div>
+  </form>
+</div>

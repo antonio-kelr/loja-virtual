@@ -31,8 +31,8 @@ export const routes: Routes = [
     component: MinhaContaComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: 'dados', component: MeusDadosComponent },
-      { path: 'pedidos', component: MeusPedidosComponent }
+      { path: 'meus-dados', component: MeusDadosComponent },
+      { path: 'meus-pedidos', component: MeusPedidosComponent }
     ]
   },
   {
