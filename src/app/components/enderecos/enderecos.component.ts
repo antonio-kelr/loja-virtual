@@ -33,6 +33,7 @@ export class EnderecosComponent implements OnInit {
   enderecoForm: any;
   mostrarFormulario = false;
   mostrarFormularioVolta = true;
+  mostrarNovoEndereco = false;
 
   constructor(private enderecoService: EnderecoService, private fb: FormBuilder,   private cdRef: ChangeDetectorRef) {
     this.enderecoForm = this.fb.group({
@@ -43,7 +44,7 @@ export class EnderecosComponent implements OnInit {
       complemento: [''],
       referencia: [''],
       bairro: [{value: '', disabled: true}, Validators.required],
-      tipoEndereco: [{value: '', disabled: true}, Validators.required],
+      tipoEndereco: [{value: '', disabled: true}],
       cidade: [{value: '', disabled: true}, Validators.required],
       estado: [{value: '', disabled: true}, [Validators.required, Validators.minLength(2)]],
     });
@@ -60,24 +61,6 @@ export class EnderecosComponent implements OnInit {
     this.enderecoService.listarEnderecos().subscribe({
       next: (enderecos) => {
         this.enderecos = enderecos;
-        if (enderecos.length > 0) {
-          // Pega o primeiro endereço e preenche o formulário
-          console.log(enderecos);
-
-          const endereco = enderecos[0];
-          this.enderecoForm.patchValue({
-            identificacao: endereco.identificacao || '',
-            cep: endereco.cep,
-            logradouro: endereco.logradouro,
-            numero: endereco.numero,
-            complemento: endereco.complemento || '',
-            referencia: endereco.referencia || '',
-            bairro: endereco.bairro,
-            cidade: endereco.cidade,
-            estado: endereco.estado,
-            tipoEndereco: endereco.tipoEndereco || ''
-          });
-        }
         this.carregando = false;
       },
       error: (error) => {
@@ -85,6 +68,74 @@ export class EnderecosComponent implements OnInit {
         this.carregando = false;
       },
     });
+  }
+
+  editarEndereco(endereco: Endereco): void {
+    console.log(endereco);
+    this.enderecoForm.patchValue({
+
+      identificacao: endereco.identificacao || '',
+      cep: endereco.cep,
+      logradouro: endereco.logradouro,
+      numero: endereco.numero,
+      complemento: endereco.complemento || '',
+      referencia: endereco.referencia || '',
+      bairro: endereco.bairro,
+      cidade: endereco.cidade,
+      estado: endereco.estado,
+      tipoEndereco: endereco.tipoEndereco || ''
+    });
+    this.mostrarFormulario = true;
+    this.mostrarFormularioVolta = false;
+    this.cdRef.detectChanges();
+  }
+
+  toggleNovoEndereco(): void {
+    this.mostrarNovoEndereco = !this.mostrarNovoEndereco;
+    this.mostrarFormularioVolta = !this.mostrarNovoEndereco;
+    if (this.mostrarNovoEndereco) {
+      this.limparFormulario();
+    }
+    this.cdRef.detectChanges();
+  }
+
+  limparFormulario(): void {
+    this.enderecoForm.reset();
+    // Habilitar os campos que estavam desabilitados
+    this.enderecoForm.get('cep').enable();
+    this.enderecoForm.get('logradouro').enable();
+    this.enderecoForm.get('numero').enable();
+    this.enderecoForm.get('bairro').enable();
+    this.enderecoForm.get('cidade').enable();
+    this.enderecoForm.get('estado').enable();
+    this.enderecoForm.get('tipoEndereco').enable();
+  }
+
+  salvarNovoEndereco(): void {
+    if (this.enderecoForm.valid) {
+      const novoEndereco = this.enderecoForm.value;
+      this.enderecoService.criarEndereco(novoEndereco).subscribe({
+        next: (endereco) => {
+          console.log('Endereço criado com sucesso:', endereco);
+          this.mostrarNovoEndereco = false;
+          this.mostrarFormularioVolta = true;
+          this.carregarEnderecos(); // Recarrega a lista de endereços
+          this.cdRef.detectChanges();
+        },
+        error: (error) => {
+          console.error('Erro ao criar endereço:', error);
+          this.erro = 'Erro ao criar endereço. Por favor, tente novamente.';
+        }
+      });
+    } else {
+      console.log('Formulário inválido');
+      Object.keys(this.enderecoForm.controls).forEach(key => {
+        const control = this.enderecoForm.get(key);
+        if (control?.invalid) {
+          console.log(`Campo ${key} inválido:`, control.errors);
+        }
+      });
+    }
   }
 
   toggleFormulario(): void {

@@ -13,6 +13,22 @@ export class EnderecoService {
   constructor(private http: HttpClient) { }
 
   listarEnderecos(): Observable<Endereco[]> {
-    return this.http.get<Endereco[]>(this.apiUrl);
+    const token = localStorage.getItem('token');
+    return this.http.get<Endereco[]>(this.apiUrl, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+
+  criarEndereco(endereco: Omit<Endereco, 'id'>): Observable<Endereco> {
+    const token = localStorage.getItem('token');
+    return this.http.post<Endereco>(this.apiUrl, endereco, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
   }
 }

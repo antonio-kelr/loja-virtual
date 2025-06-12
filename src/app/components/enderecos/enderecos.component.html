@@ -8,31 +8,31 @@
     <h5>Endereços</h5>
   </div>
   <div class="indicador-endereco">
-    <button class="novo-endereco">+
+    <button class="novo-endereco" (click)="toggleNovoEndereco()">+
        cadastrar novo endereço
     </button>
   </div>
 
   <ng-container *ngIf="mostrarFormularioVolta">
-    <div class="inderoco-visualizacao">
+    <div class="inderoco-visualizacao" *ngFor="let endereco of enderecos">
       <div class="inderoco-visualizacao-header">
-        <h6>{{enderecoForm.get('identificacao')?.value}}</h6>
-        <h5>({{enderecoForm.get('tipoEndereco')?.value}})</h5>
+        <h6>{{endereco.identificacao}}</h6>
+        <h5>({{endereco.tipoEndereco}})</h5>
       </div>
-      <p class="logradouro">{{enderecoForm.get('logradouro')?.value}}</p>
-      <p>Número: <span class="numero">{{enderecoForm.get('numero')?.value}} - {{enderecoForm.get('referencia')?.value}}</span> </p>
-      <p class="cep"> CEP {{enderecoForm.get('cep')?.value}}- {{enderecoForm.get('bairro')?.value}} - {{enderecoForm.get('cidade')?.value}} - {{enderecoForm.get('estado')?.value}}</p>
+      <p class="logradouro">{{endereco.logradouro}}</p>
+      <p>Número: <span class="numero">{{endereco.numero}} - {{endereco.referencia}}</span> </p>
+      <p class="cep"> CEP {{endereco.cep}}- {{endereco.bairro}} - {{endereco.cidade}} - {{endereco.estado}}</p>
 
       <div class="butao-editar">
-        <button class="btn-editar" (click)="toggleFormulario()">editar</button>
+        <button class="btn-editar" (click)="editarEndereco(endereco)">editar</button>
       </div>
     </div>
   </ng-container>
 
   <div class="formulario-endereco" *ngIf="!mostrarFormularioVolta">
     <span class="titulo-formulario-container">
-      <i class="pi pi-chevron-left" (click)="toggleFormularioVolta()"></i>
-      <h4>Editar endereço</h4>
+      <i class="pi pi-chevron-left" (click)="mostrarNovoEndereco ? toggleNovoEndereco() : toggleFormularioVolta()"></i>
+      <h4>{{ mostrarNovoEndereco ? 'Novo endereço' : 'Editar endereço' }}</h4>
     </span>
     <form [formGroup]="enderecoForm">
       <div class="form-group cep-group">
@@ -228,8 +228,10 @@
       </div>
 
       <div class="form-actions">
-        <button class="btn-excluir-conta">excluir endereço</button>
-        <button class="btn-salvar-alteracoes">salvar endereço</button>
+        <button class="btn-excluir-conta" *ngIf="!mostrarNovoEndereco">excluir endereço</button>
+        <button class="btn-salvar-alteracoes" (click)="mostrarNovoEndereco ? salvarNovoEndereco() : null">
+          {{ mostrarNovoEndereco ? 'salvar novo endereço' : 'salvar endereço' }}
+        </button>
       </div>
     </form>
   </div>
