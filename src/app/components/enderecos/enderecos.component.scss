@@ -67,6 +67,25 @@
     color: rgb(255, 101, 0);
   }
 }
+.titulo-formulario-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  gap: 8px;
+
+  i {
+    font-size: 0.875rem;
+    color: var(--cor-primaria);
+  }
+
+  h4 {
+    font-size: 0.865rem;
+    text-transform: uppercase;
+    color: rgb(66, 70, 77);
+    font-weight: 700;
+    margin: 0;
+  }
+}
 
 .butao-editar {
   display: flex;

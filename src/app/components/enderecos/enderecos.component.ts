@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EnderecoService } from '../../services/endereco.service';
 import { Endereco } from '../../interfaces/endereco.interface';
@@ -31,8 +31,10 @@ export class EnderecosComponent implements OnInit {
   faMapMarkerAlt = faMapMarkerAlt;
   faLock = faLock;
   enderecoForm: any;
+  mostrarFormulario = false;
+  mostrarFormularioVolta = true;
 
-  constructor(private enderecoService: EnderecoService, private fb: FormBuilder) {
+  constructor(private enderecoService: EnderecoService, private fb: FormBuilder,   private cdRef: ChangeDetectorRef) {
     this.enderecoForm = this.fb.group({
       identificacao: ['', Validators.required],
       cep: [{value: '', disabled: true}, [Validators.required, Validators.minLength(8)]],
@@ -83,5 +85,17 @@ export class EnderecosComponent implements OnInit {
         this.carregando = false;
       },
     });
+  }
+
+  toggleFormulario(): void {
+    this.mostrarFormulario = !this.mostrarFormulario;
+    this.mostrarFormularioVolta = !this.mostrarFormularioVolta;
+    this.cdRef.detectChanges();
+  }
+
+  toggleFormularioVolta(): void {
+    this.mostrarFormularioVolta = !this.mostrarFormularioVolta;
+    this.mostrarFormulario = !this.mostrarFormulario;
+    this.cdRef.detectChanges();
   }
 }
