@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faFileLines } from '@fortawesome/free-solid-svg-icons';
+import { faFileLines, faLock } from '@fortawesome/free-solid-svg-icons';
 import { EnderecosComponent } from "../enderecos/enderecos.component";
 
 @Component({
@@ -19,6 +19,7 @@ export class MeusDadosComponent implements OnInit {
   carregando = true;
   erro: string | null = null;
   faFileLines = faFileLines;
+  faLock = faLock;
 
   constructor(
     private fb: FormBuilder,
@@ -26,9 +27,9 @@ export class MeusDadosComponent implements OnInit {
   ) {
     this.dadosForm = this.fb.group({
       nome: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
-      cpf: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
-      dataNascimento: ['', [Validators.required]],
+      email: [{value: '', disabled: true}, [Validators.required, Validators.email]],
+      cpf: [{value: '', disabled: true}, [Validators.required, Validators.pattern(/^\d{11}$/)]],
+      dataNascimento: [{value: '', disabled: true}, [Validators.required]],
       genero: ['', [Validators.required]],
       telefone: ['']
     });

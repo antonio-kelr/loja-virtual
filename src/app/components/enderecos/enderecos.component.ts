@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { EnderecoService } from '../../services/endereco.service';
 import { Endereco } from '../../interfaces/endereco.interface';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { faMapMarkerAlt, faLock } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { log } from 'console';
@@ -29,19 +29,21 @@ export class EnderecosComponent implements OnInit {
   carregando = true;
   erro: string | null = null;
   faMapMarkerAlt = faMapMarkerAlt;
+  faLock = faLock;
   enderecoForm: any;
 
   constructor(private enderecoService: EnderecoService, private fb: FormBuilder) {
     this.enderecoForm = this.fb.group({
       identificacao: ['', Validators.required],
-      cep: ['', [Validators.required, Validators.minLength(8)]],
-      logradouro: ['', Validators.required],
-      numero: ['', Validators.required],
+      cep: [{value: '', disabled: true}, [Validators.required, Validators.minLength(8)]],
+      logradouro: [{value: '', disabled: true}, Validators.required],
+      numero: [{value: '', disabled: true}, Validators.required],
       complemento: [''],
       referencia: [''],
-      bairro: ['', Validators.required],
-      cidade: ['', Validators.required],
-      estado: ['', [Validators.required, Validators.minLength(2)]],
+      bairro: [{value: '', disabled: true}, Validators.required],
+      tipoEndereco: [{value: '', disabled: true}, Validators.required],
+      cidade: [{value: '', disabled: true}, Validators.required],
+      estado: [{value: '', disabled: true}, [Validators.required, Validators.minLength(2)]],
     });
   }
 
@@ -70,7 +72,8 @@ export class EnderecosComponent implements OnInit {
             referencia: endereco.referencia || '',
             bairro: endereco.bairro,
             cidade: endereco.cidade,
-            estado: endereco.estado
+            estado: endereco.estado,
+            tipoEndereco: endereco.tipoEndereco || ''
           });
         }
         this.carregando = false;

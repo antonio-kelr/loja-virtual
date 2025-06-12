@@ -5,11 +5,30 @@
       size="1x"
       class="icon-dados-basicos"
     ></fa-icon>
-    <h5>Endereço</h5>
+    <h5>Endereços</h5>
+  </div>
+  <div class="indicador-endereco">
+    <button class="novo-endereco">+
+       cadastrar novo endereço
+    </button>
+  </div>
+   <div class="inderoco-visualizacao">
+    <div class="inderoco-visualizacao-header">
+      <h6>{{enderecoForm.get('identificacao')?.value}}</h6>
+      <h5>({{enderecoForm.get('tipoEndereco')?.value}})</h5>
+    </div>
+      <p class="logradouro">{{enderecoForm.get('logradouro')?.value}}</p>
+      <p>Número: <span class="numero">{{enderecoForm.get('numero')?.value}} - {{enderecoForm.get('referencia')?.value}}</span> </p>
+      <p class="cep"> CEP {{enderecoForm.get('cep')?.value}}- {{enderecoForm.get('bairro')?.value}} - {{enderecoForm.get('cidade')?.value}} - {{enderecoForm.get('estado')?.value}}</p>
+
+      <div class="butao-editar">
+        <button class="btn-editar">editar</button>
+      </div>
+
   </div>
 
   <form [formGroup]="enderecoForm">
-    <div class="form-group">
+    <div class="form-group cep-group">
       <label for="cep">CEP</label>
       <input
         type="text"
@@ -20,6 +39,7 @@
           enderecoForm.get('cep')?.invalid && enderecoForm.get('cep')?.touched
         "
       />
+      <fa-icon [icon]="faLock" class="lock-icon"></fa-icon>
       <div
         class="erro-mensagem"
         *ngIf="
@@ -59,7 +79,7 @@
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group logradouro-group">
       <label for="logradouro">Logradouro</label>
       <input
         type="text"
@@ -70,6 +90,7 @@
           enderecoForm.get('logradouro')?.touched
         "
       />
+      <fa-icon [icon]="faLock" class="lock-icon"></fa-icon>
       <div
         class="erro-mensagem"
         *ngIf="
@@ -84,7 +105,7 @@
     </div>
 
     <div class="numero-complemento-grid">
-      <div class="form-group">
+      <div class="form-group numero-group">
         <label for="numero">Número</label>
         <input
           type="text"
@@ -95,6 +116,7 @@
             enderecoForm.get('numero')?.touched
           "
         />
+        <fa-icon [icon]="faLock" class="lock-icon"></fa-icon>
         <div
           class="erro-mensagem"
           *ngIf="
@@ -119,7 +141,7 @@
       <input type="text" id="referencia" formControlName="referencia" />
     </div>
 
-    <div class="form-group">
+    <div class="form-group bairro-group">
       <label for="bairro">Bairro</label>
       <input
         type="text"
@@ -130,6 +152,7 @@
           enderecoForm.get('bairro')?.touched
         "
       />
+      <fa-icon [icon]="faLock" class="lock-icon"></fa-icon>
       <div
         class="erro-mensagem"
         *ngIf="
@@ -143,7 +166,7 @@
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group cidade-group">
       <label for="cidade">Cidade</label>
       <input
         type="text"
@@ -154,6 +177,7 @@
           enderecoForm.get('cidade')?.touched
         "
       />
+      <fa-icon [icon]="faLock" class="lock-icon"></fa-icon>
       <div
         class="erro-mensagem"
         *ngIf="
@@ -167,7 +191,7 @@
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group estado-group">
       <label for="estado">UF</label>
       <input
         type="text"
@@ -179,6 +203,7 @@
           enderecoForm.get('estado')?.touched
         "
       />
+      <fa-icon [icon]="faLock" class="lock-icon"></fa-icon>
       <div
         class="erro-mensagem"
         *ngIf="
