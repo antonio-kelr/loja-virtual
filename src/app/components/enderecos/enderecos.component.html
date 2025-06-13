@@ -229,7 +229,7 @@
 
       <div class="form-actions">
         <button class="btn-excluir-conta" *ngIf="!mostrarNovoEndereco">excluir endereço</button>
-        <button class="btn-salvar-alteracoes" (click)="mostrarNovoEndereco ? salvarNovoEndereco() : null">
+        <button class="btn-salvar-alteracoes" (click)="mostrarNovoEndereco ? salvarNovoEndereco() : salvarEndereco()">
           {{ mostrarNovoEndereco ? 'salvar novo endereço' : 'salvar endereço' }}
         </button>
       </div>

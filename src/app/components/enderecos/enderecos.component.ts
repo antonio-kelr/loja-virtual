@@ -34,6 +34,7 @@ export class EnderecosComponent implements OnInit {
   mostrarFormulario = false;
   mostrarFormularioVolta = true;
   mostrarNovoEndereco = false;
+  enderecoEditando: Endereco | null = null;
 
   constructor(private enderecoService: EnderecoService, private fb: FormBuilder,   private cdRef: ChangeDetectorRef) {
     this.enderecoForm = this.fb.group({
@@ -72,8 +73,8 @@ export class EnderecosComponent implements OnInit {
 
   editarEndereco(endereco: Endereco): void {
     console.log(endereco);
+    this.enderecoEditando = endereco;
     this.enderecoForm.patchValue({
-
       identificacao: endereco.identificacao || '',
       cep: endereco.cep,
       logradouro: endereco.logradouro,
@@ -111,6 +112,38 @@ export class EnderecosComponent implements OnInit {
     this.enderecoForm.get('tipoEndereco').enable();
   }
 
+  salvarEndereco(): void {
+    if (this.enderecoForm.valid && this.enderecoEditando) {
+      const enderecoAtualizado = {
+        cep: this.enderecoForm.get('cep')?.value,
+        logradouro: this.enderecoForm.get('logradouro')?.value,
+        numero: this.enderecoForm.get('numero')?.value,
+        bairro: this.enderecoForm.get('bairro')?.value,
+        complemento: this.enderecoForm.get('complemento')?.value,
+        referencia: this.enderecoForm.get('referencia')?.value,
+        cidade: this.enderecoForm.get('cidade')?.value,
+        estado: this.enderecoForm.get('estado')?.value,
+        tipoEndereco: this.enderecoForm.get('tipoEndereco')?.value
+      };
+
+      console.log('Dados sendo enviados:', enderecoAtualizado);
+
+      this.enderecoService.atualizarEndereco(this.enderecoEditando.id, enderecoAtualizado).subscribe({
+        next: (endereco) => {
+          console.log('Endereço atualizado com sucesso:', endereco);
+          this.mostrarFormulario = false;
+          this.mostrarFormularioVolta = true;
+          this.enderecoEditando = null;
+          this.carregarEnderecos();
+          this.cdRef.detectChanges();
+        },
+        error: (error) => {
+          console.error('Erro ao atualizar endereço:', error);
+          this.erro = 'Erro ao atualizar endereço. Por favor, tente novamente.';
+        }
+      });
+    }
+}
   salvarNovoEndereco(): void {
     if (this.enderecoForm.valid) {
       const novoEndereco = this.enderecoForm.value;

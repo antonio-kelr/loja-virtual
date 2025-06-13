@@ -24,11 +24,20 @@ export class EnderecoService {
 
   criarEndereco(endereco: Omit<Endereco, 'id'>): Observable<Endereco> {
     const token = localStorage.getItem('token');
-    return this.http.post<Endereco>(this.apiUrl, endereco, {
+    return this.http.post<Endereco>(this.apiUrl, { endereco }, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
       }
     });
   }
-}
+
+  atualizarEndereco(id: number, endereco: Partial<Endereco>): Observable<Endereco> {
+    const token = localStorage.getItem('token');
+    return this.http.put<Endereco>(`${this.apiUrl}/${id}`, endereco, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+}}
