@@ -29,12 +29,14 @@
           <h5>Dados básicos</h5>
         </div>
         <div class="button-container">
-          <button class="btn-alterar-email" (click)="abrirModalEmail()">alterar e-mail</button>
+          <button class="btn-alterar-email" (click)="abrirModalEmail()">
+            alterar e-mail
+          </button>
           <button class="btn-alterar-senha">alterar senha</button>
         </div>
 
         <div class="form-group">
-          <label for="nome">Nome Completo</label>
+          <label for="nome">Nome</label>
           <input
             type="text"
             id="nome"
@@ -57,6 +59,7 @@
             >
           </div>
         </div>
+
         <div class="form-group">
           <label for="genero">Gênero</label>
           <select
@@ -87,21 +90,28 @@
 
         <div class="form-group">
           <label for="telefone">Telefone</label>
-          <input type="tel" id="telefone" formControlName="telefone" />
+          <input
+            type="text"
+            id="telefone"
+            formControlName="telefone"
+            [class.erro]="
+              dadosForm.get('telefone')?.invalid &&
+              dadosForm.get('telefone')?.touched
+            "
+          />
         </div>
 
         <div class="form-group email-group">
           <label for="email">E-mail</label>
-            <input
-              type="email"
-              id="email"
-              formControlName="email"
-              [class.erro]="
-                dadosForm.get('email')?.invalid &&
-                dadosForm.get('email')?.touched
-              "
-            />
-            <fa-icon [icon]="faLock" class="lock-icon"></fa-icon>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            [class.erro]="
+              dadosForm.get('email')?.invalid && dadosForm.get('email')?.touched
+            "
+          />
+          <fa-icon [icon]="faLock" class="lock-icon"></fa-icon>
           <div
             class="erro-mensagem"
             *ngIf="
@@ -119,15 +129,15 @@
 
         <div class="form-group cpf-group">
           <label for="cpf">CPF</label>
-            <input
-              type="text"
-              id="cpf"
-              formControlName="cpf"
-              [class.erro]="
-                dadosForm.get('cpf')?.invalid && dadosForm.get('cpf')?.touched
-              "
-            />
-            <fa-icon [icon]="faLock" class="lock-icon"></fa-icon>
+          <input
+            type="text"
+            id="cpf"
+            formControlName="cpf"
+            [class.erro]="
+              dadosForm.get('cpf')?.invalid && dadosForm.get('cpf')?.touched
+            "
+          />
+          <fa-icon [icon]="faLock" class="lock-icon"></fa-icon>
           <div
             class="erro-mensagem"
             *ngIf="
@@ -145,16 +155,16 @@
 
         <div class="form-group data-nascimento-group">
           <label for="dataNascimento">Data de Nascimento</label>
-            <input
-              type="date"
-              id="dataNascimento"
-              formControlName="dataNascimento"
-              [class.erro]="
-                dadosForm.get('dataNascimento')?.invalid &&
-                dadosForm.get('dataNascimento')?.touched
-              "
-            />
-            <fa-icon [icon]="faLock" class="lock-icon"></fa-icon>
+          <input
+            type="date"
+            id="dataNascimento"
+            formControlName="dataNascimento"
+            [class.erro]="
+              dadosForm.get('dataNascimento')?.invalid &&
+              dadosForm.get('dataNascimento')?.touched
+            "
+          />
+          <fa-icon [icon]="faLock" class="lock-icon"></fa-icon>
           <div
             class="erro-mensagem"
             *ngIf="
@@ -182,19 +192,18 @@
 <!-- Modal de Alteração de Email -->
 <p-dialog
   [(visible)]="displayEmailModal"
-  [style]="{width: '750px'}"
+  [style]="{ width: '750px' }"
   [modal]="true"
   [draggable]="false"
   [resizable]="false"
-  (onHide)="fecharModalEmail()">
-
+  (onHide)="fecharModalEmail()"
+>
   <div class="form-header-email">
     <i class="pi pi-envelope"></i>
     <h2>Alterar E-mail</h2>
   </div>
 
   <form [formGroup]="emailForm" class="email-form">
-
     <div class="form-group">
       <label for="novoEmail">Novo E-mail</label>
       <input
@@ -202,10 +211,24 @@
         id="novoEmail"
         pInputText
         formControlName="novoEmail"
-        [class.erro]="emailForm.get('novoEmail')?.invalid && emailForm.get('novoEmail')?.touched">
-      <div class="erro-mensagem" *ngIf="emailForm.get('novoEmail')?.invalid && emailForm.get('novoEmail')?.touched">
-        <span *ngIf="emailForm.get('novoEmail')?.errors?.['required']">Novo e-mail é obrigatório</span>
-        <span *ngIf="emailForm.get('novoEmail')?.errors?.['email']">E-mail inválido</span>
+        [class.erro]="
+          emailForm.get('novoEmail')?.invalid &&
+          emailForm.get('novoEmail')?.touched
+        "
+      />
+      <div
+        class="erro-mensagem"
+        *ngIf="
+          emailForm.get('novoEmail')?.invalid &&
+          emailForm.get('novoEmail')?.touched
+        "
+      >
+        <span *ngIf="emailForm.get('novoEmail')?.errors?.['required']"
+          >Novo e-mail é obrigatório</span
+        >
+        <span *ngIf="emailForm.get('novoEmail')?.errors?.['email']"
+          >E-mail inválido</span
+        >
       </div>
     </div>
 
@@ -217,7 +240,11 @@
         pInputText
         formControlName="emailAtual"
         [readonly]="true"
-        [class.erro]="emailForm.get('emailAtual')?.invalid && emailForm.get('emailAtual')?.touched">
+        [class.erro]="
+          emailForm.get('emailAtual')?.invalid &&
+          emailForm.get('emailAtual')?.touched
+        "
+      />
     </div>
 
     <div class="form-group">
@@ -227,12 +254,23 @@
         id="senhaAtual"
         pInputText
         formControlName="senhaAtual"
-        [class.erro]="emailForm.get('senhaAtual')?.invalid && emailForm.get('senhaAtual')?.touched">
-      <div class="erro-mensagem" *ngIf="emailForm.get('senhaAtual')?.invalid && emailForm.get('senhaAtual')?.touched">
-        <span *ngIf="emailForm.get('senhaAtual')?.errors?.['required']">Senha é obrigatória</span>
+        [class.erro]="
+          emailForm.get('senhaAtual')?.invalid &&
+          emailForm.get('senhaAtual')?.touched
+        "
+      />
+      <div
+        class="erro-mensagem"
+        *ngIf="
+          emailForm.get('senhaAtual')?.invalid &&
+          emailForm.get('senhaAtual')?.touched
+        "
+      >
+        <span *ngIf="emailForm.get('senhaAtual')?.errors?.['required']"
+          >Senha é obrigatória</span
+        >
       </div>
     </div>
-
   </form>
 
   <ng-template pTemplate="footer">
@@ -241,15 +279,43 @@
         pButton
         label="Cancelar"
         class="p-button-text"
-        (click)="fecharModalEmail()">
-      </button>
+        (click)="fecharModalEmail()"
+      ></button>
       <button
         pButton
         label="confirmar"
         class="p-button-primary"
         [disabled]="emailForm.invalid"
-        (click)="alterarEmail()">
-      </button>
+        (click)="alterarEmail()"
+      ></button>
     </div>
   </ng-template>
+</p-dialog>
+<p-dialog
+  [(visible)]="codigoEnviado"
+  [style]="{ width: '550px' }"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  (onHide)="fecharModalEmail()"
+>
+  <div class="codigo-confirmacao">
+    <div class="codigo-confirmacao-header">
+      <i class="pi pi-envelope"></i>
+      <h2>Confirme o código de confirmação enviado para seu <span>e-mail</span> </h2>
+    </div>
+    <p-inputotp [(ngModel)]="codigo">
+      <ng-template #input let-token let-events="events">
+        <input
+          class="custom-otp-input"
+          (input)="events.input($event)"
+          (keydown)="events.keydown($event)"
+          type="text"
+          [attr.value]="token"
+          [maxLength]="1"
+        />
+      </ng-template>
+    </p-inputotp>
+    <button class="btn-confirmar-codigo" (click)="confirmarCodigo()">confirmar</button>
+  </div>
 </p-dialog>

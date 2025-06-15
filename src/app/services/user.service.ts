@@ -38,6 +38,22 @@ export class UserService {
     });
   }
 
+  solicitarTrocaEmail(emailAtual: string, senhaAtual: string, novoEmail: string): Observable<{ mensagem: string }> {
+    return this.http.post<{ mensagem: string }>(`${this.apiUrl}/solicitar-troca-email`, { emailAtual, senhaAtual, novoEmail }, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
+
+  confirmarTrocaEmail(novoEmail: string, codigo: string): Observable<{ mensagem: string }> {
+    return this.http.post<{ mensagem: string }>(`${this.apiUrl}/confirmar-troca-email`, { novoEmail, codigo }, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
+
   updateUserProfile(profile: UserProfile): Observable<UserProfile> {
     if (!isPlatformBrowser(this.platformId)) {
       return new Observable<UserProfile>(subscriber => {
