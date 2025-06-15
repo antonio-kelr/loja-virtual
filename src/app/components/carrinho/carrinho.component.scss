@@ -385,127 +385,78 @@
   }
 }
 
-:host ::ng-deep {
-  .p-dialog {
+::ng-deep .p-dialog {
+  background: white !important;
+  border: none !important;
 
-      .p-dialog-title {
-        font-weight: 600;
-        font-size: 1.2rem;
-      }
 
-      .p-dialog-header-icon {
-        color: white;
-        &:hover {
-          background-color: rgba(255, 255, 255, 0.1);
-        }
-      }
-    }
-
-    .p-dialog-content {
-      padding: 2rem;
-      font-size: 1.1rem;
-      color: #333;
-    }
-
-    .p-dialog-footer {
-      padding: 1.5rem;
-      border-top: 1px solid #eee;
-    }
-  }
-
-::ng-deep .p-dialog-footer{
-  justify-content: center !important;
-  padding: 1rem !important;
-  gap: 2rem !important;
-}
-::ng-deep .p-dialog-header{
-  display: block !important;
-}
-::ng-deep .p-dialog .p-button{
-  background: var(--cor-primaria) !important;
-  color: white !important;
-}
-::ng-deep .p-confirmdialog .p-dialog-content{
-  text-align: center !important;
-  display: block !important;
-  padding: 1rem !important;
 }
 ::ng-deep .p-dialog-header {
-  text-align: center !important;
+  font-size: 1.25rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1.875rem !important;
+  font-weight: 700 !important;
+  color: rgb(66, 70, 77) !important;
+
 }
 
 ::ng-deep .p-button-text.p-button-secondary {
   display: none !important;
 }
-
-::ng-deep .p-confirmdialog .p-dialog-footer button:first-child {
-  background: transparent !important;
-  border: 3px solid #f50707 !important;
-
-  color: var(--cor-primaria) !important;
-  border: 2px solid var(--cor-primaria) !important;
-
-  &:hover {
-    background: rgba(var(--cor-primaria-rgb), 0.1) !important;
+::ng-deep .p-dialog-content {
+}
+::ng-deep .dialog-content {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  gap: 10px !important;
+  i {
+    font-size: 1.5rem;
+    color: #e60b0b !important;
+  }
+  p {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    margin-top: 0.5rem;
+    color: rgb(86, 92, 105);
   }
 }
 
-::ng-deep .p-confirmdialog .p-dialog-footer button:last-child {
-  background: var(--cor-primaria) !important;
-  border: 3px solid #f50707 !important;
-
-  color: white !important;
-  border: none !important;
-
-  &:hover {
-    background: var(--cor-primaria-escura) !important;
+::ng-deep .p-dialog-footer {
+  gap: 10px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 10px !important;
+  .p-button-text {
+    font-size: 0.875rem;
+    border: 1px solid var(--cor-primaria) !important;
+    width: 100%;
+    color: var(--cor-primaria) !important;
   }
+  .p-button-primary {
+    font-size: 0.875rem;
+    background: var(--cor-primaria) !important;
+    color: white !important;
+    width: 100%;
+  }
+
+}
+::ng-deep .dialog-footer {
+  width: 100%;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 10px !important;
 }
 
-:host ::ng-deep {
-  .custom-steps {
-    .p-steps {
-      .p-steps-item {
-        .p-steps-number {
-          display: none !important;
-        }
 
-        .p-steps-title {
-          font-size: 0.85rem;
-          font-weight: 600;
-          color: #666;
-          margin-top: 0.5rem;
-        }
 
-        &.p-highlight {
-          .p-steps-title {
-            color: var(--cor-primaria);
-            font-weight: 700;
-          }
-
-          .p-steps-icon {
-            color: var(--cor-primaria);
-            font-size: 1.4rem;
-          }
-        }
-
-        .p-steps-icon {
-          color: #666;
-          font-size: 1.2rem;
-          margin: 0;
-          width: auto;
-          height: auto;
-          background: none;
-          border: none;
-        }
-      }
-
-      .p-steps-connector {
-        margin: 0 0.5rem;
-      }
-    }
-  }
-}
 
 .steps-container {
   max-width: 1200px;

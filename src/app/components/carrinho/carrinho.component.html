@@ -4,12 +4,27 @@
 <!-- Toast para mensagens -->
 <p-toast position="top-right"></p-toast>
 
-<p-confirmDialog
-  [style]="{width: '550px'}"
-  position="center"
+<p-dialog
+  [(visible)]="displayEmailModal"
+  [modal]="true"
   [draggable]="false"
->
-</p-confirmDialog>
+  [resizable]="false"
+  [closable]="true"
+  [closeOnEscape]="true"
+  [style]="{width: '550px'}"
+  header="REMOVER PRODUTO"
+  (onHide)="displayEmailModal = false">
+  <div class="dialog-content">
+    <i class="pi pi-exclamation-triangle"></i>
+    <p>Você tem certeza que deseja remover este produto do carrinho?</p>
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="dialog-footer">
+      <button pButton label="NÃO" class="p-button-text" (click)="displayEmailModal = false"></button>
+      <button pButton label="SIM" class="p-button-primary" (click)="confirmarRemocao()"></button>
+    </div>
+  </ng-template>
+</p-dialog>
 
 <app-checkout-steps [etapaAtual]="1"></app-checkout-steps>
 

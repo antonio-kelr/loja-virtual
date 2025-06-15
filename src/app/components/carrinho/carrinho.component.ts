@@ -6,10 +6,10 @@ import { FooterComponent } from '../footer/footer.component';
 import { Carrinho, ItemCarrinho } from '../../interfaces/carrinho.interface';
 import { Router } from '@angular/router';
 import { CarrinhoService } from '../../services/carrinho.service';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
+import { DialogModule } from 'primeng/dialog';
 import { MessageService } from 'primeng/api';
 import { NavComponent } from "../nav/nav.component";
 import { CheckoutStepsComponent } from '../checkout-steps/checkout-steps.component';
@@ -22,7 +22,7 @@ import { ResumoCarrinhoComponent } from '../resumo-carrinho/resumo-carrinho.comp
     CommonModule,
     FontAwesomeModule,
     FooterComponent,
-    ConfirmDialogModule,
+    DialogModule,
     ButtonModule,
     ToastModule,
     NavComponent,
@@ -43,6 +43,8 @@ export class CarrinhoComponent implements OnInit {
   carregando: boolean = true;
   erro: string | null = null;
   isLoggedIn: boolean = false;
+  displayEmailModal = false;
+  itemParaRemover: ItemCarrinho | null = null;
 
   constructor(
     private router: Router,
@@ -103,48 +105,45 @@ export class CarrinhoComponent implements OnInit {
    * @param item Item a ser removido do carrinho
    */
   removerItem(item: ItemCarrinho): void {
-    if (!this.carrinho) return;
+    this.displayEmailModal = true;
+    this.itemParaRemover = item;
+  }
 
-    console.log('Item a ser removido:', item);
-    console.log('ID do item:', item.id);
-    console.log('ID do produto:', item.produtoId);
+  confirmarRemocao(): void {
+    if (!this.carrinho || !this.itemParaRemover) return;
 
-    this.confirmationService.confirm({
-      message: `Você tem certeza que deseja remover este produto do carrinho?`,
-      header: 'REMOVER PRODUTO',
-      acceptLabel: 'SIM',
-      rejectLabel: 'NÃO',
-      accept: () => {
-        this.carregando = true;
-        this.erro = null;
+    this.carregando = true;
+    this.erro = null;
 
-        this.carrinhoService.removerProdutoDoCarrinho(item.produtoId).subscribe({
-          next: () => {
-            console.log('Produto removido com sucesso');
-            // Atualiza o carrinho local removendo o item
-            this.carrinho!.itens = this.carrinho!.itens.filter(i => i.id !== item.id);
-            this.calcularTotal();
-            this.carregando = false;
+    this.carrinhoService.removerProdutoDoCarrinho(this.itemParaRemover.produtoId).subscribe({
+      next: () => {
+        console.log('Produto removido com sucesso');
+        // Atualiza o carrinho local removendo o item
+        this.carrinho!.itens = this.carrinho!.itens.filter(i => i.id !== this.itemParaRemover!.id);
+        this.calcularTotal();
+        this.carregando = false;
+        this.displayEmailModal = false;
+        this.itemParaRemover = null;
 
-            // Mostra mensagem de sucesso
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Sucesso',
-              detail: 'Produto removido do carrinho com sucesso!'
-            });
-          },
-          error: (error) => {
-            console.error('Erro ao remover produto:', error);
-            this.erro = 'Erro ao remover o produto do carrinho. Tente novamente.';
-            this.carregando = false;
+        // Mostra mensagem de sucesso
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Sucesso',
+          detail: 'Produto removido do carrinho com sucesso!'
+        });
+      },
+      error: (error) => {
+        console.error('Erro ao remover produto:', error);
+        this.erro = 'Erro ao remover o produto do carrinho. Tente novamente.';
+        this.carregando = false;
+        this.displayEmailModal = false;
+        this.itemParaRemover = null;
 
-            // Mostra mensagem de erro
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Erro',
-              detail: 'Erro ao remover o produto do carrinho. Tente novamente.'
-            });
-          }
+        // Mostra mensagem de erro
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Erro ao remover o produto do carrinho. Tente novamente.'
         });
       }
     });
