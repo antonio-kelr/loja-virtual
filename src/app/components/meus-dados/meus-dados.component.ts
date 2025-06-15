@@ -10,6 +10,8 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputOtpModule } from 'primeng/inputotp';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-meus-dados',
@@ -23,8 +25,10 @@ import { InputOtpModule } from 'primeng/inputotp';
     DialogModule,
     ButtonModule,
     InputTextModule,
-    InputOtpModule
+    InputOtpModule,
+    ToastModule
   ],
+  providers: [MessageService],
   templateUrl: './meus-dados.component.html',
   styleUrls: ['./meus-dados.component.scss']
 })
@@ -38,13 +42,15 @@ export class MeusDadosComponent implements OnInit {
   faFileLines = faFileLines;
   faLock = faLock;
   displayEmailModal = false;
+  displayCodigoModal = false;
   codigo: string = '';
   codigoEnviado = false;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private userServiceTrocaEmail: UserService
+    private userServiceTrocaEmail: UserService,
+    private messageService: MessageService
   ) {
     this.dadosForm = this.fb.group({
       nome: ['', [Validators.required, Validators.minLength(3)]],
@@ -122,28 +128,15 @@ export class MeusDadosComponent implements OnInit {
     });
   }
 
-  confirmarCodigo(): void {
-    if (!this.codigo || this.codigo.length !== 6) {
-      this.erro = 'Por favor, insira o código de verificação completo.';
-      return;
-    }
-
-    this.userServiceTrocaEmail.confirmarTrocaEmail(
-      this.emailForm.value.novoEmail,
-      this.codigo
-    ).subscribe({
-      next: (response: { mensagem: string }) => {
-        this.sucesso = response.mensagem;
-        this.codigo = '';
-        this.emailForm.reset();
-      },
-      error: (error: any) => {
-        this.erro = error.error?.mensagem || 'Erro ao confirmar código. Tente novamente.';
-      }
-    });
-  }
-
   abrirModalEmail(): void {
+    // Pega o email atual do formulário principal
+    const emailAtual = this.dadosForm.get('email')?.value;
+
+    // Preenche o formulário de email com o email atual
+    this.emailForm.patchValue({
+      emailAtual: emailAtual
+    });
+
     this.displayEmailModal = true;
   }
 
@@ -160,8 +153,10 @@ export class MeusDadosComponent implements OnInit {
     if (this.emailForm.valid) {
       const { novoEmail, emailAtual, senhaAtual } = this.emailForm.value;
 
-      this.userServiceTrocaEmail.solicitarTrocaEmail(novoEmail, emailAtual, senhaAtual).subscribe({
+      this.userServiceTrocaEmail.solicitarTrocaEmail(emailAtual, senhaAtual, novoEmail).subscribe({
         next: () => {
+          this.displayEmailModal = false;
+          this.displayCodigoModal = true;
           this.codigoEnviado = true;
           this.erro = '';
           this.sucesso = 'Código de confirmação enviado para seu e-mail';
@@ -172,6 +167,42 @@ export class MeusDadosComponent implements OnInit {
         }
       });
     }
+  }
+
+  fecharModalCodigo(): void {
+    this.displayCodigoModal = false;
+    this.codigo = '';
+    this.erro = '';
+    this.sucesso = '';
+  }
+
+  confirmarCodigo(): void {
+    if (!this.codigo || this.codigo.length !== 6) {
+      this.erro = 'Por favor, insira o código de verificação completo.';
+      return;
+    }
+
+    this.userServiceTrocaEmail.confirmarTrocaEmail(this.codigo).subscribe({
+      next: (response: { mensagem: string }) => {
+        this.codigo = '';
+        this.emailForm.reset();
+        this.codigoEnviado = false;
+        this.displayCodigoModal = false;
+        window.location.reload();
+
+
+        // Mostra mensagem de sucesso usando Toast
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Sucesso',
+          detail: 'Seu e-mail foi alterado com sucesso!',
+          life: 5000
+        });
+      },
+      error: (error: any) => {
+        this.erro = error.error?.mensagem || 'Erro ao confirmar código. Tente novamente.';
+      }
+    });
   }
 
 }

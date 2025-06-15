@@ -1,4 +1,7 @@
 <div class="meus-dados-container maxWidth">
+  <!-- Toast para mensagens -->
+  <p-toast></p-toast>
+
   <!-- Estado de Carregamento -->
   <div class="carregando" *ngIf="carregando">
     <div class="spinner"></div>
@@ -183,7 +186,7 @@
           <button class="btn-salvar-alteracoes">salvar alterações</button>
         </div>
       </div>
-
+de
       <app-enderecos></app-enderecos>
     </div>
   </form>
@@ -292,19 +295,32 @@
   </ng-template>
 </p-dialog>
 <p-dialog
-  [(visible)]="codigoEnviado"
+  [(visible)]="displayCodigoModal"
   [style]="{ width: '550px' }"
   [modal]="true"
   [draggable]="false"
   [resizable]="false"
-  (onHide)="fecharModalEmail()"
+  (onHide)="fecharModalCodigo()"
 >
   <div class="codigo-confirmacao">
     <div class="codigo-confirmacao-header">
       <i class="pi pi-envelope"></i>
-      <h2>Confirme o código de confirmação enviado para seu <span>e-mail</span> </h2>
+      <h2>Confirme o código de confirmação enviado para seu <span>e-mail</span></h2>
     </div>
-    <p-inputotp [(ngModel)]="codigo">
+
+    <!-- Mensagem de Sucesso -->
+    <div class="mensagem-sucesso" *ngIf="sucesso">
+      <i class="pi pi-check-circle"></i>
+      <p>{{ sucesso }}</p>
+    </div>
+
+    <!-- Mensagem de Erro -->
+    <div class="mensagem-erro" *ngIf="erro">
+      <i class="pi pi-exclamation-triangle"></i>
+      <p>{{ erro }}</p>
+    </div>
+
+    <p-inputotp [(ngModel)]="codigo" [length]="6">
       <ng-template #input let-token let-events="events">
         <input
           class="custom-otp-input"

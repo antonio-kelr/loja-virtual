@@ -355,6 +355,8 @@
       border-radius: 4px;
       background-color: #fff;
       transition: border-color 0.2s;
+      color: #666;
+      ;
 
       &:focus {
         outline: none;
@@ -412,4 +414,42 @@
   }
 
 
+}
+
+.mensagem-sucesso {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #d4edda;
+  color: #155724;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+
+  i {
+    font-size: 1.2rem;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.mensagem-erro {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+
+  i {
+    font-size: 1.2rem;
+  }
+
+  p {
+    margin: 0;
+  }
 }

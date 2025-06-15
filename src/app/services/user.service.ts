@@ -46,8 +46,8 @@ export class UserService {
     });
   }
 
-  confirmarTrocaEmail(novoEmail: string, codigo: string): Observable<{ mensagem: string }> {
-    return this.http.post<{ mensagem: string }>(`${this.apiUrl}/confirmar-troca-email`, { novoEmail, codigo }, {
+  confirmarTrocaEmail(codigo: string): Observable<{ mensagem: string }> {
+    return this.http.post<{ mensagem: string }>(`${this.apiUrl}/confirmar-troca-email`, { codigo }, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
