@@ -55,18 +55,6 @@ export class AuthService {
     }
   }
 
-  private async redirecionarAposLogin(userId: number) {
-    const cadastroCompleto = await this.verificarCadastroCompleto(userId);
-
-    if (!cadastroCompleto) {
-      console.log('Cadastro incompleto, redirecionando para completar...');
-      this.router.navigate(['/complete-registration']);
-    } else {
-      console.log('Cadastro completo, redirecionando para home...');
-      this.router.navigate(['/']);
-    }
-  }
-
   async loginWithGoogle() {
     try {
       const provider = new GoogleAuthProvider();
@@ -113,6 +101,16 @@ export class AuthService {
     }
   }
 
+  private enviarDadosGoogle(idToken: string) {
+    const payload = { token: idToken };
+
+    return this.http.post<{token: string, message: string, userId: number}>(this.apiUrl, payload, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+  }
+
   async loginWithEmailAndPassword(email: string, senha: string) {
     try {
       const loginData = {
@@ -151,37 +149,13 @@ export class AuthService {
     }
   }
 
-  enviarDadosGoogle(idToken: string): Observable<{token: string, message: string, userId: number}> {
-    console.log('Enviando ID Token (JWT) para o backend:', idToken);
-    const payload = { token: idToken };
-
-    return this.http.post<{token: string, message: string, userId: number}>(this.apiUrl, payload, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      }
-    }).pipe(
-      tap({
-        next: (response) => {
-          console.log('Resposta do servidor:', response);
-        },
-        error: (error) => {
-          console.error('Erro detalhado:', {
-            status: error.status,
-            statusText: error.statusText,
-            error: error.error,
-            headers: error.headers,
-            url: error.url
-          });
-
-          if (error.error instanceof ErrorEvent) {
-            console.error('Erro do cliente:', error.error.message);
-          } else {
-            console.error('Erro do servidor:', error.error);
-          }
-        }
-      })
-    );
+  private async redirecionarAposLogin(userId: number) {
+    const cadastroCompleto = await this.verificarCadastroCompleto(userId);
+    if (!cadastroCompleto) {
+      this.router.navigate(['/complete-registration']);
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 
   logout() {

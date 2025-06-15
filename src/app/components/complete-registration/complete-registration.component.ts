@@ -33,8 +33,23 @@ export class CompleteRegistrationComponent {
       cpf: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
       dataNascimento: ['', Validators.required],
       genero: ['', Validators.required],
-      telefone: ['', [Validators.required, Validators.pattern(/^\(\d{2}\)\s\d{5}-\d{4}$/)]]
+      telefone: ['', [Validators.required, Validators.pattern(/^\(\d{2}\)\s\d{5}-\d{4}$/)]],
+      senha: ['', [Validators.required, Validators.minLength(6)]],
+      confirmarSenha: ['', [Validators.required]]
+    }, {
+      validators: this.senhasIguaisValidator
     });
+  }
+
+  senhasIguaisValidator(form: FormGroup) {
+    const senha = form.get('senha')?.value;
+    const confirmarSenha = form.get('confirmarSenha')?.value;
+
+    if (senha !== confirmarSenha) {
+      form.get('confirmarSenha')?.setErrors({ senhasDiferentes: true });
+      return { senhasDiferentes: true };
+    }
+    return null;
   }
 
   onSubmit(): void {
@@ -68,7 +83,8 @@ export class CompleteRegistrationComponent {
             cpf: this.registrationForm.get('cpf')?.value,
             dataNascimento: dataNascimento,
             genero: this.registrationForm.get('genero')?.value,
-            telefone: telefone
+            telefone: telefone,
+            senha: this.registrationForm.get('senha')?.value
           };
 
           console.log('Dados a serem enviados:', updatedProfile);

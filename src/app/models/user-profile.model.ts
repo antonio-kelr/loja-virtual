@@ -9,4 +9,5 @@ export interface UserProfile {
   telefone: string;
   ativo: boolean;
   role: string;
+  senha: string;
 }

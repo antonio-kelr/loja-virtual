@@ -19,6 +19,8 @@ export class CadastroComponent {
   cadastroForm: FormGroup;
   generos = ['Homem', 'Mulher'];
   isLoading = false;
+  loading = false;
+  error: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -49,18 +51,19 @@ export class CadastroComponent {
 
   async loginComGoogle() {
     try {
-      this.isLoading = true;
-      const user = await this.authService.loginWithGoogle();
-      console.log('Dados do usuário Google:', {
-        nome: user.displayName,
-        email: user.email,
-        foto: user.photoURL,
-        uid: user.uid
-      });
-    } catch (error) {
-      console.error('Erro ao fazer login com Google:', error);
+      this.loading = true;
+      this.error = null;
+
+      const profile = await this.authService.loginWithGoogle();
+      console.log('Login com Google bem-sucedido:', profile);
+
+      // Redirecionar para completar o cadastro
+      this.router.navigate(['/complete-registration']);
+    } catch (error: any) {
+      console.error('Erro no login com Google:', error);
+      this.error = error.message || 'Erro ao fazer login com Google';
     } finally {
-      this.isLoading = false;
+      this.loading = false;
     }
   }
 

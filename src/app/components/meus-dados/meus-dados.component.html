@@ -29,7 +29,7 @@
           <h5>Dados básicos</h5>
         </div>
         <div class="button-container">
-          <button class="btn-alterar-email">alterar e-mail</button>
+          <button class="btn-alterar-email" (click)="abrirModalEmail()">alterar e-mail</button>
           <button class="btn-alterar-senha">alterar senha</button>
         </div>
 
@@ -178,3 +178,72 @@
     </div>
   </form>
 </div>
+
+<!-- Modal de Alteração de Email -->
+<p-dialog
+  header="Alterar E-mail"
+  [(visible)]="displayEmailModal"
+  [style]="{width: '450px'}"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  (onHide)="fecharModalEmail()">
+
+  <form [formGroup]="emailForm" class="email-form">
+    <div class="form-group">
+      <label for="emailAtual">E-mail Atual</label>
+      <input
+        type="email"
+        id="emailAtual"
+        pInputText
+        formControlName="emailAtual"
+        [readonly]="true"
+        [class.erro]="emailForm.get('emailAtual')?.invalid && emailForm.get('emailAtual')?.touched">
+    </div>
+
+    <div class="form-group">
+      <label for="senhaAtual">Senha Atual</label>
+      <input
+        type="password"
+        id="senhaAtual"
+        pInputText
+        formControlName="senhaAtual"
+        [class.erro]="emailForm.get('senhaAtual')?.invalid && emailForm.get('senhaAtual')?.touched">
+      <div class="erro-mensagem" *ngIf="emailForm.get('senhaAtual')?.invalid && emailForm.get('senhaAtual')?.touched">
+        <span *ngIf="emailForm.get('senhaAtual')?.errors?.['required']">Senha é obrigatória</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="novoEmail">Novo E-mail</label>
+      <input
+        type="email"
+        id="novoEmail"
+        pInputText
+        formControlName="novoEmail"
+        [class.erro]="emailForm.get('novoEmail')?.invalid && emailForm.get('novoEmail')?.touched">
+      <div class="erro-mensagem" *ngIf="emailForm.get('novoEmail')?.invalid && emailForm.get('novoEmail')?.touched">
+        <span *ngIf="emailForm.get('novoEmail')?.errors?.['required']">Novo e-mail é obrigatório</span>
+        <span *ngIf="emailForm.get('novoEmail')?.errors?.['email']">E-mail inválido</span>
+      </div>
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <div class="dialog-footer">
+      <button
+        pButton
+        label="Cancelar"
+        class="p-button-text"
+        (click)="fecharModalEmail()">
+      </button>
+      <button
+        pButton
+        label="Alterar"
+        class="p-button-primary"
+        [disabled]="emailForm.invalid"
+        (click)="alterarEmail()">
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>

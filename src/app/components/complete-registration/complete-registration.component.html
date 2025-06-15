@@ -77,20 +77,54 @@
               </div>
             </div>
 
+            <div class="mb-4">
+              <label for="senha" class="form-label fw-bold">Senha</label>
+              <input
+                type="password"
+                class="form-control form-control-lg"
+                id="senha"
+                formControlName="senha"
+                placeholder="Digite sua senha"
+                [ngClass]="{'is-invalid': registrationForm.get('senha')?.invalid && registrationForm.get('senha')?.touched}"
+              >
+              <div class="invalid-feedback" *ngIf="registrationForm.get('senha')?.errors?.['required']">
+                Senha é obrigatória
+              </div>
+              <div class="invalid-feedback" *ngIf="registrationForm.get('senha')?.errors?.['minlength']">
+                A senha deve ter no mínimo 6 caracteres
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label for="confirmarSenha" class="form-label fw-bold">Confirmar Senha</label>
+              <input
+                type="password"
+                class="form-control form-control-lg"
+                id="confirmarSenha"
+                formControlName="confirmarSenha"
+                placeholder="Confirme sua senha"
+                [ngClass]="{'is-invalid': registrationForm.get('confirmarSenha')?.invalid && registrationForm.get('confirmarSenha')?.touched}"
+              >
+              <div class="invalid-feedback" *ngIf="registrationForm.get('confirmarSenha')?.errors?.['required']">
+                Confirmação de senha é obrigatória
+              </div>
+              <div class="invalid-feedback" *ngIf="registrationForm.get('confirmarSenha')?.errors?.['senhasDiferentes']">
+                As senhas não coincidem
+              </div>
+            </div>
+
             <div class="alert alert-danger" *ngIf="error">
               {{ error }}
             </div>
 
-            <div class="d-grid gap-2">
-              <button
-                type="submit"
-                class="btn btn-primary btn-lg"
-                [disabled]="registrationForm.invalid || loading"
-              >
-                <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                {{ loading ? 'Salvando...' : 'Completar Cadastro' }}
-              </button>
-            </div>
+            <button
+              type="submit"
+              class="btn btn-primary btn-lg w-100"
+              [disabled]="registrationForm.invalid || loading"
+            >
+              <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+              {{ loading ? 'Salvando...' : 'Completar Cadastro' }}
+            </button>
           </form>
         </div>
       </div>
