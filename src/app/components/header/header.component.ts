@@ -47,11 +47,6 @@ export class HeaderComponent implements OnInit {
       this.qtdItensCarrinho = itens.length;
     });
 
-    // Verificar se está no navegador antes de acessar localStorage
-    if (isPlatformBrowser(this.platformId)) {
-      this.checkLoginStatus();
-    }
-
     // Observar mudanças no estado do usuário
     this.authService.user$.subscribe(user => {
       this.isLoggedIn = !!user;
@@ -61,19 +56,6 @@ export class HeaderComponent implements OnInit {
         this.userProfile = null;
       }
     });
-  }
-
-  private checkLoginStatus() {
-    const token = localStorage.getItem('token');
-    const userId = localStorage.getItem('userId');
-
-    if (token && userId) {
-      this.isLoggedIn = true;
-      this.loadUserProfile();
-    } else {
-      this.isLoggedIn = false;
-      this.userProfile = null;
-    }
   }
 
   private loadUserProfile() {
@@ -102,7 +84,6 @@ export class HeaderComponent implements OnInit {
         console.error('Erro ao carregar perfil:', error);
         this.userProfile = null;
         this.isLoggedIn = false;
-        // Se houver erro de autenticação, limpar os dados do localStorage
         if (error.status === 401) {
           localStorage.removeItem('token');
           localStorage.removeItem('userId');
@@ -111,14 +92,14 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  irParaCarrinho() {
-    this.router.navigate(['/carrinho']);
-  }
-
   logout() {
     this.authService.logout();
     this.userProfile = null;
     this.isLoggedIn = false;
     this.router.navigate(['/']);
+  }
+
+  irParaCarrinho() {
+    this.router.navigate(['/carrinho']);
   }
 }

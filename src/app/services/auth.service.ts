@@ -28,9 +28,45 @@ export class AuthService {
     private userService: UserService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
-    auth.onAuthStateChanged((user) => {
-      this.userSubject.next(user);
-    });
+    this.initializeAuthState();
+  }
+
+  private initializeAuthState() {
+    if (isPlatformBrowser(this.platformId)) {
+      // Verifica o estado do Firebase Auth
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          this.userSubject.next(user);
+        } else {
+          // Se não houver usuário no Firebase, verifica o token no localStorage
+          const token = localStorage.getItem('token');
+          const userId = localStorage.getItem('userId');
+          if (token && userId) {
+            // Se houver token e userId, tenta carregar o perfil
+            this.getUserProfile().subscribe({
+              next: (profile) => {
+                // Cria um objeto User mínimo para manter a compatibilidade
+                const minimalUser = {
+                  uid: userId,
+                  email: profile.email,
+                  displayName: profile.nome,
+                  photoURL: profile.fotoPerfil
+                } as User;
+                this.userSubject.next(minimalUser);
+              },
+              error: () => {
+                // Se houver erro, limpa o localStorage
+                localStorage.removeItem('token');
+                localStorage.removeItem('userId');
+                this.userSubject.next(null);
+              }
+            });
+          } else {
+            this.userSubject.next(null);
+          }
+        }
+      });
+    }
   }
 
   getUserProfile(): Observable<UserProfile> {
