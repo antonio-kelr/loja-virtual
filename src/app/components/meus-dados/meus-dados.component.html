@@ -35,7 +35,7 @@
           <button class="btn-alterar-email" (click)="abrirModalEmail()">
             alterar e-mail
           </button>
-          <button class="btn-alterar-senha">alterar senha</button>
+          <button class="btn-alterar-senha" (click)="abrirModalSenha()">alterar senha</button>
         </div>
 
         <div class="form-group">
@@ -183,10 +183,10 @@
 
         <div class="form-actions">
           <button class="btn-excluir-conta">excluir conta</button>
-          <button class="btn-salvar-alteracoes">salvar alterações</button>
+          <button class="btn-salvar-alteracoes" (click)="salvarDadosUsuario()">salvar alterações</button>
         </div>
       </div>
-de
+
       <app-enderecos></app-enderecos>
     </div>
   </form>
@@ -288,12 +288,12 @@ de
         pButton
         label="confirmar"
         class="p-button-primary"
-        [disabled]="emailForm.invalid"
         (click)="alterarEmail()"
       ></button>
     </div>
   </ng-template>
 </p-dialog>
+<!-- Modal de Confirmação de Código -->
 <p-dialog
   [(visible)]="displayCodigoModal"
   [style]="{ width: '550px' }"
@@ -334,4 +334,115 @@ de
     </p-inputotp>
     <button class="btn-confirmar-codigo" (click)="confirmarCodigo()">confirmar</button>
   </div>
+</p-dialog>
+
+<!-- Modal de Alteração de Senha -->
+<p-dialog
+  [(visible)]="displaySenhaModal"
+  [style]="{ width: '750px' }"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  (onHide)="fecharModalEmail()"
+>
+  <div class="form-header-email">
+    <i class="pi pi-lock"></i>
+    <h2>Alterar Senha</h2>
+  </div>
+
+  <form [formGroup]="senhaForm" class="email-form">
+    <div class="form-group">
+      <label for="novoEmail">Digite sua senha atual</label>
+      <input
+        type="password"
+        id="senhaAtual"
+        pInputText
+        formControlName="senhaAtual"
+        [class.erro]="
+          senhaForm.get('senhaAtual')?.invalid &&
+          senhaForm.get('senhaAtual')?.touched
+        "
+      />
+      <div
+        class="erro-mensagem"
+        *ngIf="
+          senhaForm.get('senhaAtual')?.invalid &&
+          senhaForm.get('senhaAtual')?.touched
+        "
+      >
+        <span *ngIf="senhaForm.get('senhaAtual')?.errors?.['required']"
+          >Senha atual é obrigatória</span
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="novaSenha">Digite sua nova senha</label>
+      <input
+        type="password"
+        id="novaSenha"
+        pInputText
+        formControlName="novaSenha"
+        [class.erro]="
+          senhaForm.get('novaSenha')?.invalid &&
+          senhaForm.get('novaSenha')?.touched
+        "
+      />
+      <div
+        class="erro-mensagem"
+        *ngIf="
+          senhaForm.get('novaSenha')?.invalid &&
+          senhaForm.get('novaSenha')?.touched
+        "
+      >
+        <span *ngIf="senhaForm.get('novaSenha')?.errors?.['required']"
+          >Nova senha é obrigatória</span
+        >
+        <span *ngIf="senhaForm.get('novaSenha')?.errors?.['minlength']"
+          >A senha deve ter no mínimo 6 caracteres</span
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="confirmarNovaSenha">Confirme sua nova senha</label>
+      <input
+        type="password"
+        id="confirmarNovaSenha"
+        pInputText
+        formControlName="confirmarNovaSenha"
+        [class.erro]="
+          senhaForm.get('confirmarNovaSenha')?.value &&
+          senhaForm.get('novaSenha')?.value !== senhaForm.get('confirmarNovaSenha')?.value
+        "
+      />
+      <div
+        class="erro-mensagem"
+        *ngIf="
+          senhaForm.get('confirmarNovaSenha')?.value &&
+          senhaForm.get('novaSenha')?.value !== senhaForm.get('confirmarNovaSenha')?.value
+        "
+      >
+        <span>As senhas não coincidem</span>
+      </div>
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <div class="dialog-footer">
+      <button
+        pButton
+        label="Cancelar"
+        class="p-button-text"
+        (click)="fecharModalSenha()"
+      ></button>
+      <button
+        pButton
+        label="confirmar"
+        class="p-button-primary"
+        [disabled]="!camposSenhaPreenchidos()"
+        (click)="alterarSenha()"
+      ></button>
+    </div>
+  </ng-template>
 </p-dialog>

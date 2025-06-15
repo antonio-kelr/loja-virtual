@@ -85,4 +85,18 @@ export class UserService {
            user.genero !== null &&
            user.telefone !== null;
   }
+
+  trocarSenha(senhaAtual: string, novaSenha: string, confirmarNovaSenha: string): Observable<{ mensagem: string }> {
+    const dadosSenha = {
+      senhaAtual: senhaAtual,
+      novaSenha: novaSenha,
+      confirmarNovaSenha: confirmarNovaSenha
+    };
+
+    return this.http.post<{ mensagem: string }>(`${this.apiUrl}/trocar-senha`, dadosSenha, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
 }
