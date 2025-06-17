@@ -1,0 +1,122 @@
+.favoritos-container {
+  padding: 20px;
+  font-family: sans-serif;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.favoritos-header {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  color: #333;
+
+  i {
+    font-size: 1.5rem;
+    color: var(--cor-primaria);
+    padding: 0px;
+    margin: 0px;
+  }
+
+  h2 {
+    text-transform: uppercase;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #333;
+  }
+}
+
+// .favoritos-grid {
+//   border: 1px solid #eb0303;
+// }
+
+.favorito-item {
+  width: 100%;
+    padding: 1.5rem;
+    background: rgb(255, 255, 255);
+    border-radius: 0.125rem;
+    transition: width 1s;
+    box-shadow: rgba(40, 41, 61, 0.08) 0px 0px 1px, rgba(96, 97, 112, 0.16) 0px 0.5px 2px;
+}
+.favorito-item-content {
+  display: flex;
+  // justify-content: space-between;
+  align-items: center;
+
+  img {
+    max-height: 100%;
+    object-fit: contain;
+    margin: auto 0px;
+    width: 6.6875rem;
+  }
+
+  h1 {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 600;
+    color: rgb(66, 70, 77);
+    word-break: break-word;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+  }
+}
+
+.favorito-content {
+  display: flex;
+  gap: 10px;
+  border-right: 2px solid #dee0e4;
+  padding-right: 20px;
+  margin-right: 20px;
+}
+
+.favorito-item-price {
+  display: flex;
+
+  .price {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 10rem;
+
+    h1 {
+      font-size: 1.5rem;
+      line-height: 2.125rem;
+      font-weight: 700;
+      color: var(--cor-primaria);
+
+    }
+    p {
+      font-size: 0.875rem;
+    line-height: 1.125rem;
+    font-weight: 400;
+    color: rgb(127, 133, 141);
+    }
+  }
+}
+.favorito-item-button {
+  text-align: end;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  i {
+    font-size: 1.4rem;
+    color: var(--cor-primaria);
+
+  }
+}
+
+.favorito-item-button button {
+  display: flex;
+  align-items: center;
+  background: var(--cor-primaria) ;
+ border-radius: 3px;
+  text-transform: uppercase;
+  gap: 10px;
+  border: none;
+  padding: 10px 25px;
+}

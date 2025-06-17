@@ -1,0 +1,39 @@
+<div class="favoritos-container">
+  <div class="favoritos-header">
+    <i class="pi pi-heart"></i>
+    <h2>Favoritos</h2>
+  </div>
+
+  <div class="favoritos-grid" *ngIf="favoritos.length > 0">
+    <div class="favorito-item" *ngFor="let favorito of favoritos">
+      <div class="favorito-item-content">
+        <div class="favorito-content">
+          <img
+            [src]="favorito.produto.imagens[0].url"
+            alt="Imagem do produto"
+          />
+          <h1>{{ favorito.produto.descricao }}</h1>
+        </div>
+
+        <div class="favorito-item-price">
+          <div class="price">
+            <span class="favorito-item-price">{{
+              favorito.produto.precoAntigo | currency : "BRL"
+            }}</span>
+            <h1>{{ favorito.produto.preco | currency : "BRL" }}</h1>
+            <p>avista no pix</p>
+          </div>
+
+          <div class="favorito-item-button">
+            <i class="pi pi-heart"></i>
+            <button class="pi pi-shopping-cart">comprar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sem-favoritos" *ngIf="favoritos.length === 0">
+      <p>Você ainda não tem itens favoritos.</p>
+    </div>
+  </div>
+</div>
