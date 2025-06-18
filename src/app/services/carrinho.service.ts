@@ -80,7 +80,7 @@ export class CarrinhoService {
     return this.carrinhoSubject.value.length;
   }
 
-  adicionarAoCarrinho(produtoId: any): Observable<any> {
+  adicionarAoCarrinho(produtoId: any, quantidade: number = 1): Observable<any> {
     console.log('Tentando adicionar produto ao carrinho:', produtoId);
 
     if (!isPlatformBrowser(this.platformId)) {
@@ -103,7 +103,7 @@ export class CarrinhoService {
     // Criando o objeto no formato que o servidor espera
     const produtoCarrinho = {
       produtoId: produtoId,
-      quantidade: 1
+      quantidade: quantidade
     };
 
     console.log('Fazendo requisição para:', `${this.apiUrl}/add-produto`);

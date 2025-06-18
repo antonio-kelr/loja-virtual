@@ -8,8 +8,15 @@
         [alt]="produto.descricao"
         class="w-full rounded-border produto-imagem"
       />
-      <div class="icon-carrinho" (click)="adicionarAoCarrinho($event)">
-        <fa-icon [icon]="faCartPlus" class="icon"></fa-icon>
+      <div class="opçes-butoes">
+        <div class="icon-favorito" (click)="adicionarAoCarrinho($event)">
+          <i class="pi pi-heart icon"></i>
+
+        </div>
+
+        <div class="icon-carrinho" (click)="adicionarAoCarrinho($event)">
+          <fa-icon [icon]="faCartPlus" class="icon"></fa-icon>
+        </div>
       </div>
     </div>
   </div>

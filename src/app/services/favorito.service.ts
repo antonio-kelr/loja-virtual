@@ -17,4 +17,14 @@ export class FavoritoService {
 
     return this.http.get(this.apiUrl, { headers });
   }
+
+  postFavorito(produtoId: number): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+    const body = { produtoId };
+    return this.http.post(this.apiUrl, body, { headers });
+  }
 }

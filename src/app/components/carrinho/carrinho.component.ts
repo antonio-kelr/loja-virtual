@@ -93,10 +93,27 @@ export class CarrinhoComponent implements OnInit {
   }
 
   atualizarQuantidade(item: ItemCarrinho, incremento: number): void {
+    console.log(`produtoId`, item.carrinhoId);
+    console.log(`quantidade`, item.quantidade);
+
     const novaQuantidade = item.quantidade + incremento;
+    console.log(`quantidade 2`, novaQuantidade);
+
     if (novaQuantidade > 0) {
+      console.log(`quantidade 3`, novaQuantidade);
+
+      // 👉 Aqui você atualiza a quantidade no objeto que o Angular está renderizando
       item.quantidade = novaQuantidade;
-      this.calcularTotal();
+
+      // 👉 Se quiser futuramente chamar o backend pra persistir, descomente o trecho abaixo:
+
+      this.carrinhoService.adicionarAoCarrinho(item.produtoId, novaQuantidade).subscribe({
+        next: () => this.carregarCarrinho(),
+        error: (error) => {
+          console.error('Erro ao atualizar quantidade:', error);
+        }
+      });
+
     }
   }
 

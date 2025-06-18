@@ -1,6 +1,7 @@
 .p_item_componet {
   background: #FFFFFF;
   transition: all 0.3s ease;
+   padding: 10px 10px !important;
   cursor: pointer;
 
   &:hover {
@@ -12,6 +13,7 @@
 .nameCard {
   font-size: 0.875rem;
   line-height: 1.25rem;
+
   font-weight: 600;
   margin-top: 0.5rem;
   color: rgb(66, 70, 77);
@@ -38,6 +40,7 @@
 
 .op_payment, span {
   padding-top: 2px;
+
   font-size: .75rem;
 }
 
@@ -54,6 +57,7 @@
   align-items: center;
   border-radius: 8px;
   padding: 9px;
+
   cursor: pointer;
   transition: all 0.3s ease;
   width: 100%;
@@ -73,28 +77,6 @@
   }
 }
 
-.btn-add-carrinho {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid var(--cor-primaria);
-  color: var(--cor-primaria);
-  border-radius: 8px;
-  padding: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  background-color: white;
-  font-size: 14px;
-
-  .icon {
-    margin-right: 8px;
-  }
-
-  &:hover {
-    background-color: rgba(255, 101, 0, 0.1);
-  }
-}
-
 .p_item_componet .icon {
   display: none;
 }
@@ -106,12 +88,46 @@
 
 .relative {
   position: relative;
+  padding-top: 15px;
 }
 
-.icon-carrinho {
+.opçes-butoes {
   position: absolute;
   top: 0px;
-  right: 0px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 13px;
+}
+
+.icon-favorito{
+  background: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+
+  .icon {
+    color: var(--cor-primaria);
+    font-size: 16px;
+  }
+
+  &:hover {
+    background: var(--cor-primaria);
+    .icon {
+      color: white;
+    }
+  }
+}
+.icon-carrinho {
   background: white;
   width: 32px;
   height: 32px;
@@ -142,12 +158,18 @@
   opacity: 1;
   transform: translateY(0);
 }
+.p_item_componet:hover .icon-favorito {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 .produto-imagem {
-  height: 180px !important;
-  width: auto !important;
+  height: 150px !important;
+  width: 100% !important;
   max-width: 100%;
   object-fit: contain;
+  margin: 0 auto !important;
+
   padding: 15px;
   background: white;
   border-radius: 8px;
