@@ -117,8 +117,8 @@
             <div class="dropdown-menu">
               <ul>
                 <li><a [routerLink]="['/minha-conta']">Minha Conta</a></li>
-                <li><a [routerLink]="['/meus-pedidos']">Meus Pedidos</a></li>
-                <li><a [routerLink]="['/meus-pedidos']">Meus Dados</a></li>
+                <li><a [routerLink]="['minha-conta/meus-pedidos']">Meus Pedidos</a></li>
+                <li><a [routerLink]="['minha-conta/meus-dados']">Meus Dados</a></li>
                 <li><a (click)="logout()" style="cursor: pointer;">Sair</a></li>
               </ul>
             </div>
@@ -128,6 +128,7 @@
       <div class="icons">
         <fa-icon
           [icon]="faHeart"
+          (click)="irParaFavorito()"
           style="font-size: 20px; color: white"
         ></fa-icon>
         <div class="carrinho-icon" (click)="irParaCarrinho()">

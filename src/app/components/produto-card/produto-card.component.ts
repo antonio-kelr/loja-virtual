@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { CarrinhoService } from '../../services/carrinho.service';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { FavoritoService } from '../../services/favorito.service';
 
 @Component({
   selector: 'app-produto-card',
@@ -23,7 +24,8 @@ export class ProdutoCardComponent {
   constructor(
     private router: Router,
     private carrinhoService: CarrinhoService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private favoritoService: FavoritoService
   ) {}
 
   get precoParcelado(): number {
@@ -72,6 +74,37 @@ export class ProdutoCardComponent {
           severity: 'error',
           summary: 'Erro',
           detail: 'Não foi possível adicionar o produto ao carrinho.'
+        });
+      }
+    });
+  }
+
+  adicionarAosFavoritos(event: Event) {
+    event.stopPropagation();
+    const token = localStorage.getItem('token');
+    if (!token) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Atenção',
+        detail: 'Você precisa estar logado para adicionar produtos aos favoritos.'
+      });
+      return;
+    }
+    this.favoritoService.postFavorito(this.produto.id).subscribe({
+      next: (response) => {
+        console.log('Produto adicionado com sucesso:', response);
+
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Sucesso',
+          detail: 'Produto adicionado aos favoritos!'
+        });
+      },
+      error: (erro) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Não foi possível adicionar o produto aos favoritos.'
         });
       }
     });

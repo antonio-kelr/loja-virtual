@@ -9,7 +9,7 @@
       <div class="favorito-item-content">
         <div class="favorito-content">
           <img
-            [src]="favorito.produto.imagens[0].url"
+            [src]="favorito.produto.imagens[0]?.url"
             alt="Imagem do produto"
           />
           <h1>{{ favorito.produto.descricao }}</h1>
