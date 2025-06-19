@@ -236,3 +236,261 @@
     }
   }
 }
+
+// Estilos do cartão visual
+.cartao-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 20px;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cartao-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.cartao {
+  width: 400px;
+  height: 250px;
+  perspective: 1000px;
+  position: relative;
+}
+
+.cartao-frente,
+.cartao-traseira {
+  width: 100%;
+  height: 100%;
+
+  border-radius: 15px;
+  padding: 20px;
+  box-sizing: border-box;
+  position: absolute;
+  backface-visibility: hidden;
+  transition: transform 0.6s;
+}
+
+.cartao-frente {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+
+  transform: rotateY(0deg);
+}
+
+.cartao-traseira {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  transform: rotateY(180deg);
+}
+
+.cartao:hover .cartao-frente {
+  transform: rotateY(-180deg);
+}
+
+.cartao:hover .cartao-traseira {
+  transform: rotateY(0deg);
+}
+
+// Tipos de cartão
+.cartao-visa .cartao-frente,
+.cartao-visa .cartao-traseira {
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+}
+
+.cartao-mastercard .cartao-frente,
+.cartao-mastercard .cartao-traseira {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.cartao-amex .cartao-frente,
+.cartao-amex .cartao-traseira {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.cartao-generic .cartao-frente,
+.cartao-generic .cartao-traseira {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.cartao-header {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.chip img{
+  width: 50px;
+}
+
+.tipo-cartao {
+  img {
+    height: 30px;
+    width: auto;
+  }
+}
+
+.numero-cartao {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  margin-bottom: 30px;
+  font-family: 'Courier New', monospace;
+}
+
+.cartao-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.nome-cartao span {
+  max-width: 280px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.nome-cartao,
+.validade {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  .label {
+    font-size: 0.7rem;
+    opacity: 0.8;
+    text-transform: uppercase;
+  }
+
+  .valor {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+}
+
+.faixa-magnetica {
+  width: 100%;
+  height: 40px;
+  background: #333;
+  margin-bottom: 20px;
+  border-radius: 4px;
+}
+
+.cvv-area {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+
+  .cvv-label {
+    font-size: 0.7rem;
+    opacity: 0.8;
+    text-transform: uppercase;
+  }
+
+  .cvv-valor {
+    font-size: 0.9rem;
+    font-weight: 600;
+    background: white;
+    color: #333;
+    padding: 5px 10px;
+    border-radius: 4px;
+    min-width: 50px;
+    text-align: center;
+  }
+}
+
+.formulario-cartao {
+  .form-group {
+    margin-bottom: 20px;
+    position: relative;
+
+    label {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: #666;
+      background: white;
+      padding: 0 4px;
+      transition: all 0.3s ease;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #333;
+      transition: all 0.3s ease;
+      background: white;
+
+      &:focus {
+        outline: none;
+        border-color: var(--cor-primaria);
+        box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+      }
+
+      &:focus + label,
+      &:not(:placeholder-shown) + label {
+        top: 0;
+        transform: translateY(-50%) scale(0.85);
+        color: var(--cor-primaria);
+        font-weight: 600;
+      }
+    }
+
+    // Para inputs que já têm valor inicial
+    &.has-value label {
+      top: 0;
+      transform: translateY(-50%) scale(0.85);
+      color: var(--cor-primaria);
+      font-weight: 600;
+    }
+
+    // Estado de erro
+    &.error {
+      input {
+        border-color: #f44336;
+
+        &:focus {
+          border-color: #f44336;
+          box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.1);
+        }
+      }
+
+      label {
+        color: #f44336;
+      }
+    }
+
+    // Mensagem de erro
+    .error-message {
+      color: #f44336;
+      font-size: 12px;
+      margin-top: 5px;
+      font-weight: 500;
+    }
+  }
+
+  .form-row {
+    display: flex;
+    gap: 15px;
+
+    .half {
+      flex: 1;
+    }
+  }
+}

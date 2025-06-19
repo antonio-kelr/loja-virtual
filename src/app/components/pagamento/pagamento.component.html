@@ -11,13 +11,32 @@
       </div>
 
       <div class="formas-pagamento">
-        <div class="forma-pagamento" [class.selecionada]="formaPagamentoSelecionada === 'pix'" (click)="formaPagamentoSelecionada = 'pix'">
+        <div
+          class="forma-pagamento"
+          [class.selecionada]="formaPagamentoSelecionada === 'pix'"
+          (click)="formaPagamentoSelecionada = 'pix'"
+        >
           <div class="selector">
-            <div class="radio-inner" *ngIf="formaPagamentoSelecionada === 'pix'"></div>
+            <div
+              class="radio-inner"
+              *ngIf="formaPagamentoSelecionada === 'pix'"
+            ></div>
           </div>
           <div class="forma-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polygon
+                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+              ></polygon>
             </svg>
           </div>
           <div class="forma-info">
@@ -26,12 +45,29 @@
           </div>
         </div>
 
-        <div class="forma-pagamento" [class.selecionada]="formaPagamentoSelecionada === 'cartao'" (click)="formaPagamentoSelecionada = 'cartao'">
+        <div
+          class="forma-pagamento"
+          [class.selecionada]="formaPagamentoSelecionada === 'cartao'"
+          (click)="formaPagamentoSelecionada = 'cartao'"
+        >
           <div class="selector">
-            <div class="radio-inner" *ngIf="formaPagamentoSelecionada === 'cartao'"></div>
+            <div
+              class="radio-inner"
+              *ngIf="formaPagamentoSelecionada === 'cartao'"
+            ></div>
           </div>
           <div class="forma-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
               <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
               <line x1="1" y1="10" x2="23" y2="10"></line>
             </svg>
@@ -42,14 +78,33 @@
           </div>
         </div>
 
-        <div class="forma-pagamento" [class.selecionada]="formaPagamentoSelecionada === 'boleto'" (click)="formaPagamentoSelecionada = 'boleto'">
+        <div
+          class="forma-pagamento"
+          [class.selecionada]="formaPagamentoSelecionada === 'boleto'"
+          (click)="formaPagamentoSelecionada = 'boleto'"
+        >
           <div class="selector">
-            <div class="radio-inner" *ngIf="formaPagamentoSelecionada === 'boleto'"></div>
+            <div
+              class="radio-inner"
+              *ngIf="formaPagamentoSelecionada === 'boleto'"
+            ></div>
           </div>
           <div class="forma-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
               <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline>
-              <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path>
+              <path
+                d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"
+              ></path>
             </svg>
           </div>
           <div class="forma-info">
@@ -68,68 +123,225 @@
             <p>Após a confirmação, você receberá um QR Code para pagamento.</p>
             <p>O pagamento via PIX é processado instantaneamente.</p>
             <div class="valor-pix">
-              <p>Valor com desconto: {{ calcularValorComDesconto() | currency:'BRL' }}</p>
-              <p>Economia: {{ calcularEconomia() | currency:'BRL' }}</p>
+              <p>
+                Valor com desconto:
+                {{ calcularValorComDesconto() | currency : "BRL" }}
+              </p>
+              <p>Economia: {{ calcularEconomia() | currency : "BRL" }}</p>
             </div>
           </div>
         </div>
 
-        <div *ngIf="formaPagamentoSelecionada === 'cartao'" class="cartao-detalhes">
+        <div
+          *ngIf="formaPagamentoSelecionada === 'cartao'"
+          class="cartao-detalhes"
+        >
           <div class="detalhes-header">
             <h3>Detalhes do Cartão de Crédito</h3>
           </div>
-          <div class="detalhes-content">
-            <div class="form-group">
-              <label for="numero-cartao">Número do Cartão</label>
-              <input type="text" id="numero-cartao" placeholder="0000 0000 0000 0000">
-            </div>
-            <div class="form-row">
-              <div class="form-group half">
-                <label for="validade">Validade</label>
-                <input type="text" id="validade" placeholder="MM/AA">
+          <div class="cartao-container">
+            <!-- Cartão Visual -->
+            <div class="cartao-visual">
+              <div class="cartao" [class]="'cartao-' + getTipoCartao()">
+                <div class="cartao-frente">
+                  <div class="cartao-header">
+                    <div class="chip">
+                      <img
+                        src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9Ijc2IiB2aWV3Qm94PSIwIDAgMTAwIDc2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj48ZGVmcz48bGluZWFyR3JhZGllbnQgeDE9IjEwMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSIgaWQ9ImEiPjxzdG9wIHN0b3AtY29sb3I9IiNGM0QwOEYiIG9mZnNldD0iMCUiLz48c3RvcCBzdG9wLWNvbG9yPSIjRkFENzY2IiBvZmZzZXQ9IjEwMCUiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cGF0aCBkPSJNOTIuNzI3IDc1LjQ1NWgtODUuNDU1Yy00IDAtNy4yNzMtMy4yNzMtNy4yNzMtNy4yNzN2LTYwLjkwOWMwLTQgMy4yNzMtNy4yNzMgNy4yNzMtNy4yNzNoODUuNDU1YzQgMCA3LjI3MyAzLjI3MyA3LjI3MyA3LjI3M3Y2MC45MDljMCA0LTMuMjczIDcuMjczLTcuMjczIDcuMjczIiBmaWxsPSJ1cmwoI2EpIi8+PHBhdGggZD0iTTcyLjEyMyAyOC40ODVoMjcuODc4di0xLjgxOGgtMjkuNjQ4Yy0uOTY1IDAtMS44MzIuNjAxLTIuMTcyIDEuNTA0LTIuMjg3IDYuMDcyLTIuNDMzIDEyLjU5NC0uNDM4IDE5Ljg0Mi40NTUgMS42NTQuNDM1IDMuNC0uMSA1LjAzLTIuMDM2IDYuMTk1LTcuNzc5IDE5Ljk4OC0xOC41NTEgMTkuOTg4LTExLjAwOCAwLTE2LjA5Ni0xNS42OTktMTcuMzM0LTIxLjk1Mi0uMTU1LS43ODQtLjEyMi0xLjU5Mi4xMDctMi4zNTcgMS42OTUtNS42NDggMi4wOTQtMTAuNjQtLjAxNi0xOS41OS0uMjA1LS44Ny0uMTgyLTEuNzgzLjA0OC0yLjY0NiA0LjQ4LTE2Ljc1NSAxMi44ODItMjAuMTQ3IDEyLjk2NS0yMC4xNzkuMzU2LS4xMzIuNTkzLS40NzIuNTkzLS44NTJ2LTUuNDU1aC0xLjgxOHYzLjc3NmMwIC42NS0uMzMyIDEuMjUyLS44ODQgMS41OTYtMi44MDMgMS43NDItOC45MDQgNi45MzYtMTIuNTU3IDIwLjQ1Ni0uMTguNjY4LS43ODEgMS4xMzYtMS40NzMgMS4xMzNsLTI4LjcyMi0uMTM5djEuODE4bDI3LjQxNi4xMzNjMS40NjguMDA3IDIuNzM1IDEuMDQxIDMuMDM3IDIuNDc4IDEuNDE2IDYuNzQxIDEuMjE5IDExLjAzOS4wODIgMTUuNDU4LS4zMTYgMS4yMy0xLjQyIDIuMDk2LTIuNjkgMi4xMDlsLTI3Ljg0NC4yN3YxLjgxOWwyOC42MDUtLjI3OGMuNjkzLS4wMDcgMS4yOTYuNDczIDEuNDM1IDEuMTUyIDEuNDQyIDcuMDQxIDYuODg3IDIzLjA3IDE5LjA1IDIzLjA3IDYuMzY4IDAgMTIuMDYyLTQuMjUgMTYuNDY3LTEyLjI5IDIuNjQ0LTQuODI4IDQuMDY3LTkuNTkxIDQuNTQxLTExLjM0NmgyOS45MDF2LTEuODE4aC0yOC4wMTZjLTEuMTU4IDAtMi4xODMtLjc3Mi0yLjQ4OS0xLjg4OS0xLjY5Mi02LjE2NC0xLjc2MS0xMS43NTUtLjItMTYuOTU5LjM3MS0xLjIzNSAxLjUzOC0yLjA2MSAyLjgyNy0yLjA2MXptLTE3LjE1LTIxLjkxNGMuMDQ1LjAyMiA0LjUxOSAyLjMyMiA5LjI1MyAxMC4wNDEuMTcyLjI4LjQ3LjQzNC43NzYuNDM0LjE5OCAwIC4zOTktLjA2NC41NzEtLjIwMi4zNjUtLjI5Mi40MTYtLjgzNy4xNzItMS4yMzUtMy41Ny01LjgwNS03LjAyNC04LjcxLTguNzc5LTkuOTMxLS40My0uMjk5LS42OC0uNzkyLS42OC0xLjMxNXYtNC4zNjNoLTEuODE4djUuNzU4YzAgLjM0NS4xOTUuNjU5LjUwMi44MTN6IiBmaWxsPSIjMEMwMjAwIi8+PC9zdmc+"
+                        alt=""
+                      />
+                    </div>
+                    <div class="tipo-cartao">
+                      <img
+                        *ngIf="getTipoCartao() === 'visa'"
+                        src="assets/img/visa.png"
+                        alt="Visa"
+                      />
+                      <img
+                        *ngIf="getTipoCartao() === 'mastercard'"
+                        src="assets/img/mastercard.png"
+                        alt="Mastercard"
+                      />
+                      <img
+                        *ngIf="getTipoCartao() === 'amex'"
+                        src="assets/img/amex.png"
+                        alt="American Express"
+                      />
+                    </div>
+                  </div>
+                  <div class="numero-cartao">
+                    {{ numeroCartao || "0000 0000 0000 0000" }}
+                    <!-- Debug: {{ numeroCartao }} -->
+                  </div>
+                  <div class="cartao-footer">
+                    <div class="nome-cartao">
+                      <span class="label">NOME DO TITULAR</span>
+                      <span class="valor">{{ nomeCartao || "SEU NOME" }}</span>
+                      <!-- Debug: {{ nomeCartao }} -->
+                    </div>
+                    <div class="validade">
+                      <span class="label">VALIDADE</span>
+                      <span class="valor">{{ validadeCartao || "MM/AA" }}</span>
+                      <!-- Debug: {{ validadeCartao }} -->
+                    </div>
+                  </div>
+                </div>
+                <div class="cartao-traseira">
+                  <div class="faixa-magnetica"></div>
+                  <div class="cvv-area">
+                    <span class="cvv-label">CVV</span>
+                    <span class="cvv-valor">{{ cvvCartao || "123" }}</span>
+                  </div>
+                </div>
               </div>
-              <div class="form-group half">
-                <label for="cvv">CVV</label>
-                <input type="text" id="cvv" placeholder="123">
+            </div>
+
+            <!-- Formulário -->
+            <div class="formulario-cartao">
+              <div class="form-group" [class.has-value]="numeroCartao" [class.error]="!numeroCartaoValido && numeroCartao">
+                <input
+                  type="text"
+                  id="numero-cartao"
+                  placeholder=" "
+                  [(ngModel)]="numeroCartao"
+                  (input)="formatarNumeroCartao($event)"
+                  maxlength="19">
+                <label for="numero-cartao">Número do Cartão*</label>
+                <div class="error-message" *ngIf="!numeroCartaoValido && numeroCartao">
+                  Número do cartão inválido
+                </div>
               </div>
-            </div>
-            <div class="form-group">
-              <label for="nome-cartao">Nome no Cartão</label>
-              <input type="text" id="nome-cartao" placeholder="Como está no cartão">
-            </div>
-            <div class="form-group">
-              <label for="parcelas">Parcelas</label>
-              <select id="parcelas">
-                <option value="1">1x de {{ totalCarrinho | currency:'BRL' }}</option>
-                <option value="2">2x de {{ totalCarrinho / 2 | currency:'BRL' }}</option>
-                <option value="3">3x de {{ totalCarrinho / 3 | currency:'BRL' }}</option>
-                <option value="4">4x de {{ totalCarrinho / 4 | currency:'BRL' }}</option>
-                <option value="5">5x de {{ totalCarrinho / 5 | currency:'BRL' }}</option>
-                <option value="6">6x de {{ totalCarrinho / 6 | currency:'BRL' }}</option>
-                <option value="7">7x de {{ totalCarrinho / 7 | currency:'BRL' }}</option>
-                <option value="8">8x de {{ totalCarrinho / 8 | currency:'BRL' }}</option>
-                <option value="9">9x de {{ totalCarrinho / 9 | currency:'BRL' }}</option>
-                <option value="10">10x de {{ totalCarrinho / 10 | currency:'BRL' }}</option>
-              </select>
+              <div class="form-group" [class.has-value]="nomeCartao" [class.error]="!nomeCartaoValido && nomeCartao">
+                <input
+                  type="text"
+                  id="nome-cartao"
+                  placeholder=" "
+                  [(ngModel)]="nomeCartao"
+                  (input)="atualizarNomeCartao($event)">
+                <label for="nome-cartao">Nome no Cartão*</label>
+                <div class="error-message" *ngIf="!nomeCartaoValido && nomeCartao">
+                  Nome deve ter pelo menos 3 caracteres
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group half" [class.has-value]="validadeCartao" [class.error]="!validadeCartaoValida && validadeCartao">
+                  <input
+                    type="text"
+                    id="validade"
+                    placeholder=" "
+                    [(ngModel)]="validadeCartao"
+                    (input)="formatarValidade($event)"
+                    maxlength="5">
+                  <label for="validade">Validade*</label>
+                  <div class="error-message" *ngIf="!validadeCartaoValida && validadeCartao">
+                    Data de validade inválida
+                  </div>
+                </div>
+                <div class="form-group half" [class.has-value]="cvvCartao" [class.error]="!cvvCartaoValido && cvvCartao">
+                  <input
+                    type="text"
+                    id="cvv"
+                    placeholder=" "
+                    [(ngModel)]="cvvCartao"
+                    (input)="formatarCVV($event)"
+                    maxlength="4">
+                  <label for="cvv">CVV*</label>
+                  <div class="error-message" *ngIf="!cvvCartaoValido && cvvCartao">
+                    CVV inválido
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group half" [class.has-value]="cpfCartao" [class.error]="!cpfCartaoValido && cpfCartao">
+                  <input
+                    type="text"
+                    id="cpf"
+                    placeholder=" "
+                    [(ngModel)]="cpfCartao"
+                    (input)="formatarCPF($event)"
+                    maxlength="14">
+                  <label for="cpf">CPF*</label>
+                  <div class="error-message" *ngIf="!cpfCartaoValido && cpfCartao">
+                    CPF inválido
+                  </div>
+                </div>
+                <div class="form-group half" [class.has-value]="dataNascimento" [class.error]="!dataNascimentoValida && dataNascimento">
+                  <input
+                    type="text"
+                    id="data-nascimento"
+                    placeholder=" "
+                    [(ngModel)]="dataNascimento"
+                    (input)="formatarDataNascimento($event)"
+                    maxlength="10">
+                  <label for="data-nascimento">Data de Nascimento*</label>
+                  <div class="error-message" *ngIf="!dataNascimentoValida && dataNascimento">
+                    Data de nascimento inválida (mínimo 18 anos)
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="parcelas">Parcelas</label>
+                <select id="parcelas">
+                  <option value="1">
+                    1x de {{ totalCarrinho | currency : "BRL" }}
+                  </option>
+                  <option value="2">
+                    2x de {{ totalCarrinho / 2 | currency : "BRL" }}
+                  </option>
+                  <option value="3">
+                    3x de {{ totalCarrinho / 3 | currency : "BRL" }}
+                  </option>
+                  <option value="4">
+                    4x de {{ totalCarrinho / 4 | currency : "BRL" }}
+                  </option>
+                  <option value="5">
+                    5x de {{ totalCarrinho / 5 | currency : "BRL" }}
+                  </option>
+                  <option value="6">
+                    6x de {{ totalCarrinho / 6 | currency : "BRL" }}
+                  </option>
+                  <option value="7">
+                    7x de {{ totalCarrinho / 7 | currency : "BRL" }}
+                  </option>
+                  <option value="8">
+                    8x de {{ totalCarrinho / 8 | currency : "BRL" }}
+                  </option>
+                  <option value="9">
+                    9x de {{ totalCarrinho / 9 | currency : "BRL" }}
+                  </option>
+                  <option value="10">
+                    10x de {{ totalCarrinho / 10 | currency : "BRL" }}
+                  </option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
 
-        <div *ngIf="formaPagamentoSelecionada === 'boleto'" class="boleto-detalhes">
+        <div
+          *ngIf="formaPagamentoSelecionada === 'boleto'"
+          class="boleto-detalhes"
+        >
           <div class="detalhes-header">
             <h3>Detalhes do Pagamento com Boleto</h3>
           </div>
           <div class="detalhes-content">
             <p>O boleto será gerado após a finalização do pedido.</p>
-            <p>Vencimento em 3 dias úteis. O pedido será confirmado após o pagamento.</p>
+            <p>
+              Vencimento em 3 dias úteis. O pedido será confirmado após o
+              pagamento.
+            </p>
             <div class="valor-boleto">
-              <p>Valor com desconto: {{ calcularValorComDesconto() | currency:'BRL' }}</p>
-              <p>Economia: {{ calcularEconomia() | currency:'BRL' }}</p>
+              <p>
+                Valor com desconto:
+                {{ calcularValorComDesconto() | currency : "BRL" }}
+              </p>
+              <p>Economia: {{ calcularEconomia() | currency : "BRL" }}</p>
             </div>
           </div>
         </div>
       </div>
-
     </div>
 
     <div class="resumo-sidebar">
@@ -140,7 +352,8 @@
         botaoPrincipal="CONTINUAR"
         botaoSecundario="VOLTAR"
         (continuar)="concluirPagamento()"
-        (voltarAtras)="voltarAoCarrinho()">
+        (voltarAtras)="voltarAoCarrinho()"
+      >
       </app-resumo-carrinho>
     </div>
   </div>
