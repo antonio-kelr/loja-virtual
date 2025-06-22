@@ -67,27 +67,36 @@
           </div>
 
           <div class="produto-info">
+            <p class="produto-nome">{{ item.produto.nome }}</p>
             <h3 class="produto-nome">{{ item.produto.descricao }}</h3>
-            <div class="produto-preco">R$ {{ item.precoUnitario | number:'1.2-2' }}</div>
           </div>
 
           <div class="produto-quantidade">
-            <button class="btn-quantidade" (click)="atualizarQuantidade(item, -1)" [disabled]="carregando">
-              <fa-icon [icon]="faMinus"></fa-icon>
+            <span>Quant</span>
+            <div class="controle-quantidade">
+
+              <button class="btn-quantidade" (click)="atualizarQuantidade(item, -1)" [disabled]="carregando">
+                <i class="pi pi-angle-left"></i>
+              </button>
+              <span class="quantidade">{{ item.quantidade }}</span>
+              <button class="btn-quantidade" (click)="atualizarQuantidade(item, 1)" [disabled]="carregando">
+                <i class="pi pi-angle-right"></i>
+
+              </button>
+            </div>
+
+
+            <button class="btn-remover" (click)="removerItem(item)" [disabled]="carregando" [title]="'Remover ' + item.produto.nome">
+              <fa-icon [icon]="faTrash" [class.removendo]="carregando" class="icon-remover"></fa-icon>
+              <span>remover</span>
             </button>
-            <span class="quantidade">{{ item.quantidade }}</span>
-            <button class="btn-quantidade" (click)="atualizarQuantidade(item, 1)" [disabled]="carregando">
-              <fa-icon [icon]="faPlus"></fa-icon>
-            </button>
+
           </div>
 
           <div class="produto-subtotal">
             R$ {{ (item.precoUnitario * item.quantidade) | number:'1.2-2' }}
           </div>
 
-          <button class="btn-remover" (click)="removerItem(item)" [disabled]="carregando" [title]="'Remover ' + item.produto.nome">
-            <fa-icon [icon]="faTrash" [class.removendo]="carregando"></fa-icon>
-          </button>
         </div>
 
         <div class="carrinho-vazio" *ngIf="!carrinho?.itens?.length">
