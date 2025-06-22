@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import { HeaderComponent } from '../header/header.component';
@@ -9,6 +9,7 @@ import { ProdutoService } from '../../services/produto.service';
 import { Produto } from '../../interfaces/produto.interface';
 import { ProdutoImagem } from '../../interfaces/produto.interface';
 import { ProdutoCardComponent } from '../produto-card/produto-card.component';
+import { log } from 'console';
 
 @Component({
   selector: 'app-produto-detalhes',
@@ -39,7 +40,8 @@ export class ProdutoDetalhesComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private produtoService: ProdutoService
+    private produtoService: ProdutoService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -66,6 +68,18 @@ export class ProdutoDetalhesComponent implements OnInit {
         console.error('Erro ao carregar produto:', erro);
       }
     });
+  }
+
+  selecionarProduto(slug?: string) {
+    if (!slug) {
+      console.warn('Slug inválido:', slug);
+      return;
+    }
+    this.router.navigate(['/produto', slug]);
+
+    console.warn('Slug aqui:', slug);
+
+
   }
 
   carregarProdutosRelacionados(categoriaId: number): void {

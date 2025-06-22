@@ -70,7 +70,7 @@
           </button>
           <div class="slider-container">
             <div class="slider-produtos" [style.transform]="'translateX(' + posicaoSlider + 'px)'">
-              <div class="produto-relacionado" *ngFor="let produto of produtosRelacionados">
+              <div class="produto-relacionado" *ngFor="let produto of produtosRelacionados" (click)="selecionarProduto(produto.slug)">
                 <div class="imagem-produto">
                   <img [src]="produto.imagens?.[0]?.url || 'https://via.placeholder.com/200'" [alt]="produto.nome">
                 </div>

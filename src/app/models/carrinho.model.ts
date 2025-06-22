@@ -2,7 +2,7 @@ export interface Produto {
   id: number;
   nome: string;
   preco: number;
-  imagens?: { url: string }[];
+  imagens?: { url: string, nome:string }[];
 }
 
 export interface ItemCarrinho {

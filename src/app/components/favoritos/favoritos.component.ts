@@ -1,16 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FavoritoService } from '../../services/favorito.service';
 import { CommonModule } from '@angular/common';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-favoritos',
   templateUrl: './favoritos.component.html',
   styleUrls: ['./favoritos.component.scss'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule,FontAwesomeModule]
 })
 export class FavoritosComponent implements OnInit {
   favoritos: any[] = [];
+  faHeart = faHeart
 
   constructor(private favoritoService: FavoritoService) { }
 

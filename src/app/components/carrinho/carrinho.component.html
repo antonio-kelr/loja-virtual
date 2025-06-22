@@ -63,7 +63,7 @@
       <div class="lista-produtos">
         <div class="produto-item" *ngFor="let item of carrinho?.itens">
           <div class="produto-imagem">
-            <img [src]="item.produto.imagens?.[0]?.url" [alt]="item.produto.nome">
+            <img [src]="item.produto.imagens?.[0]?.url">
           </div>
 
           <div class="produto-info">

@@ -357,6 +357,7 @@
 
 .produto-nao-encontrado {
   text-align: center;
+
   padding: 50px 20px;
   max-width: 800px;
   margin: 0 auto;
@@ -391,10 +392,13 @@
 
 .produtos-relacionados {
   margin-top: 30px;
+
   padding: 20px 0;
+
 
   .titulo-secao {
     font-size: 1rem;
+
     font-weight: 600;
     color: #333;
     margin-bottom: 15px;
@@ -412,6 +416,8 @@
   .slider-wrapper {
     position: relative;
     display: flex;
+
+
     align-items: center;
     gap: 10px;
     width: 520px;
@@ -420,17 +426,21 @@
   .slider-container {
     position: relative;
     overflow: hidden;
-    width: 464px; // 520px - (2 * 28px das setas) - (2 * 10px dos gaps)
+    width: 464px;
   }
 
   .slider-produtos {
     display: flex;
+
+
     gap: 10px;
     transition: transform 0.5s ease;
   }
 
   .btn-slider {
     width: 28px;
+
+
     height: 28px;
     border-radius: 50%;
     border: 1px solid var(--cor-primaria);
@@ -458,11 +468,7 @@
   .produto-relacionado {
     flex: 0 0 120px;
     cursor: pointer;
-    transition: transform 0.2s ease;
 
-    &:hover {
-      transform: translateY(-3px);
-    }
 
     .imagem-produto {
       width: 100%;
@@ -471,7 +477,6 @@
       overflow: hidden;
       background-color: #fff;
       margin-bottom: 6px;
-      border: 1px solid #eee;
 
       img {
         width: 100%;
@@ -482,8 +487,8 @@
     }
 
     .preco-produto {
-      font-size: 0.9rem;
-      font-weight: 600;
+      font-size: 1rem;
+      font-weight: 700;
       color: var(--cor-primaria);
       text-align: center;
     }

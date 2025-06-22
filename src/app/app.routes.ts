@@ -34,7 +34,7 @@ export const routes: Routes = [
     children: [
       { path: 'meus-dados', component: MeusDadosComponent },
       { path: 'meus-pedidos', component: MeusPedidosComponent },
-      { path: 'favoritos', component: FavoritosComponent }
+      { path: 'meus-favoritos', component: FavoritosComponent }
     ]
   },
   {

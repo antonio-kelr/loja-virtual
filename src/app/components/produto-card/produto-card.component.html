@@ -2,7 +2,8 @@
   <div class="mb-4">
     <div class="relative mx-auto">
       <img
-        src="https://images8.kabum.com.br/produtos/fotos/320908/gabinete-gamer-rise-mode-galaxy-glass-lateral-em-vidro-temperado-preto-rm-ga-gg-fb_1657738212_g.jpg"
+        src={{produto.imagens}}
+        [src]="produto.imagens?.[0]?.url" [alt]="produto.imagens.nome"
         [alt]="produto.descricao"
         class="w-full rounded-border produto-imagem"
       />

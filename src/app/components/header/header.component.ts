@@ -103,6 +103,6 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/carrinho']);
   }
   irParaFavorito() {
-    this.router.navigate(['minha-conta/favoritos']);
+    this.router.navigate(['minha-conta/meus-favoritos']);
   }
 }

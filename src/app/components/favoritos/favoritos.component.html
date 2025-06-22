@@ -1,6 +1,7 @@
 <div class="favoritos-container">
   <div class="favoritos-header">
-    <i class="pi pi-heart"></i>
+    <fa-icon [icon]="faHeart" class="icone-coracao"></fa-icon>
+
     <h2>Favoritos</h2>
   </div>
 
@@ -12,20 +13,23 @@
             [src]="favorito.produto.imagens[0]?.url"
             alt="Imagem do produto"
           />
-          <h1>{{ favorito.produto.descricao }}</h1>
+          <div class="favorito-desc">
+            <h1>{{ favorito.produto.descricao }}</h1>
+          </div>
         </div>
 
         <div class="favorito-item-price">
           <div class="price">
-            <span class="favorito-item-price">{{
+            <span class="favorito-item-price precoAntigo">{{
               favorito.produto.precoAntigo | currency : "BRL"
             }}</span>
             <h1>{{ favorito.produto.preco | currency : "BRL" }}</h1>
-            <p>avista no pix</p>
+            <p>À vista no Pix</p>
           </div>
 
           <div class="favorito-item-button">
-            <i class="pi pi-heart"></i>
+            <fa-icon [icon]="faHeart" class="icone-coracao"></fa-icon>
+
             <button class="pi pi-shopping-cart">comprar</button>
           </div>
         </div>
