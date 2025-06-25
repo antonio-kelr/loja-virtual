@@ -30,10 +30,10 @@
 
 <div class="carrinho-container">
   <div class="carrinho-content">
-    <h1 class="titulo-carrinho">
+    <!-- <h1 class="titulo-carrinho">
       <i class="pi pi-shopping-bag"></i>
       PRODUTO E SERVIÇO
-    </h1>
+    </h1> -->
 
     <!-- <div class="carregando" *ngIf="carregando">
       <div class="spinner"></div>
@@ -61,6 +61,19 @@
     <div class="carrinho-grid" *ngIf="!carregando && !erro && isLoggedIn">
       <!-- Lista de Produtos -->
       <div class="lista-produtos">
+        <div class="titulo-carrinho-header">
+          <h1 class="titulo-carrinho">
+            <i class="pi pi-shopping-bag"></i>
+            PRODUTO E SERVIÇO
+
+          </h1>
+
+          <button>
+            <fa-icon [icon]="faTrash" [class.removendo]="carregando" class="icon-remover"></fa-icon>
+
+            remover todos os produtos</button>
+        </div>
+
         <div class="produto-item" *ngFor="let item of carrinho?.itens">
           <div class="produto-imagem">
             <img [src]="item.produto.imagens?.[0]?.url">

@@ -100,16 +100,47 @@
     </div>
 
     <!-- Resumo do Carrinho -->
+    <div class="carrinho-resumo">
       <app-resumo-carrinho
-        [totalCarrinho]="calcularTotal()"
-        [mostrarBotoes]="true"
-        [metodoPagamento]="metodoPagamento"
-        botaoPrincipal="FINALIZAR"
-        botaoSecundario="VOLTAR"
-        (continuar)="finalizarPedido()"
-        (voltarAtras)="voltarParaPagamento()"
+      [totalCarrinho]="calcularTotal()"
+      [mostrarBotoes]="true"
+      [metodoPagamento]="metodoPagamento"
+      botaoPrincipal="FINALIZAR"
+      botaoSecundario="VOLTAR"
+      (continuar)="finalizarPedido()"
+      (voltarAtras)="voltarParaPagamento()"
       >
-      </app-resumo-carrinho>
+     </app-resumo-carrinho>
+       <div class="definir-endereco">
+         <h2>Selecione seu endereço</h2>
+         <div class="enderecos-opcoes" *ngIf="enderecos.length > 0">
+           <div
+             *ngFor="let endereco of enderecos; let i = index"
+             class="endereco-opcao"
+           >
+             <input
+               type="radio"
+               [id]="'endereco-' + i"
+               name="enderecoSelecionado"
+               [value]="endereco.id"
+               [checked]="enderecoSelecionado?.id === endereco.id"
+               (change)="selecionarEndereco(endereco)"
+             >
+             <label [for]="'endereco-' + i" class="endereco-label">
+               <div class="endereco-info">
+                 <span class="logradouro">{{ endereco.logradouro }}, {{ endereco.numero }}</span>
+                 <span class="referencia" *ngIf="endereco.referencia">{{ endereco.referencia }}</span>
+               </div>
+             </label>
+           </div>
+         </div>
+         <div class="sem-enderecos" *ngIf="enderecos.length === 0">
+           <p>Nenhum endereço cadastrado.</p>
+         </div>
+       </div>
+
+    </div>
+
   </div>
 </div>
 

@@ -5,30 +5,26 @@
   text-transform: uppercase;
 }
 
-.carrinho-resumo {
-  flex: 1 1 20%;
+.resumo-card {
+  padding: 10px 20px;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-  .resumo-conteudo {
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    padding: 20px;
+   h2 {
+    font-size: 1rem;
+    font-weight: bolder;
+   }
 
-    h2 {
-      margin-top: 0;
-      margin-bottom: 20px;
-      color: #333;
-      font-size: 16px;
-      font-weight: 700;
-      text-align: left;
-    }
-  }
 }
 
+
 .resumo-linha {
+
+
+
   display: flex;
   justify-content: space-between;
-  padding: 10px 0;
+  padding: 10px 5px;
   border-bottom: 1px solid #eee;
 
   span:first-child {
@@ -100,6 +96,10 @@
 .acoes-resumo {
   margin-top: 20px;
   display: flex;
+  background: white;
+  padding: 2rem 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.267);
+
   flex-direction: column;
   gap: 10px;
 
