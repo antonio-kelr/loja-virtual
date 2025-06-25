@@ -1,0 +1,27 @@
+<div class="usuarios-container">
+  <h2>Lista de Usuários</h2>
+  <div *ngIf="loading">Carregando usuários...</div>
+  <div *ngIf="erro">{{ erro }}</div>
+  <div *ngIf="!loading && !erro">
+    <div class="usuarios-header">
+      <span>Nome</span>
+      <span>E-mail</span>
+      <span>Data de Cadastro</span>
+      <span>Status</span>
+      <span>Tipo</span>
+      <span>Açoes</span>
+    </div>
+    <div *ngFor="let usuario of usuarios" class="usuario-item">
+      <span>{{ usuario.nome }}</span>
+      <span>{{ usuario.email }}</span>
+      <span>{{ usuario.dataNascimento | date:'dd/MM/yyyy' }}</span>
+      <span>{{ usuario.ativo ? 'Ativo' : 'Inativo' }}</span>
+      <span>{{ usuario.role }}</span>
+      <span>
+        <button (click)="deletarUsuario(usuario.idUser)" class="btn-delete">Deletar</button>
+
+      </span>
+
+    </div>
+  </div>
+</div>

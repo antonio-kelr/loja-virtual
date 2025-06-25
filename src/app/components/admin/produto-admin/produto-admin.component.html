@@ -1,0 +1,45 @@
+<div class="card">
+  <p-table
+      [value]="produtos"
+      [paginator]="true"
+      [rows]="10"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} produtos"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      styleClass="p-datatable-striped">
+      <ng-template pTemplate="caption">
+          <div class="table-header">
+              <h2 class="m-0">Gerenciar Produtos</h2>
+              <button pButton pRipple label="Novo Produto" icon="pi pi-plus"></button>
+          </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+          <tr>
+              <th style="width: 5rem">Imagem</th>
+              <th pSortableColumn="nome">Nome <p-sortIcon field="nome"></p-sortIcon></th>
+              <th>Descrição</th>
+              <th pSortableColumn="preco">Preço <p-sortIcon field="preco"></p-sortIcon></th>
+              <th style="width: 8rem">Ações</th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-produto>
+          <tr>
+              <td class="produt-img">
+                <img [src]="produto.imagens?.[0]?.url || 'https://via.placeholder.com/50'" [alt]="produto.nome" class="product-image" />
+              </td>
+              <td class="product-name">{{ produto.nome }}</td>
+              <td class="product-description" [title]="produto.descricao">{{ produto.descricao }}</td>
+              <td>{{ produto.preco | currency: 'BRL' }}</td>
+              <td>
+                <div class="actions">
+                  <button pButton pRipple icon="pi pi-pencil" class="btn-edit">edit</button>
+                  <button pButton pRipple icon="pi pi-trash" class="btn-delete">excluir</button>
+                </div>
+              </td>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+          Total de {{produtos?.length || 0}} produtos.
+      </ng-template>
+  </p-table>
+</div>

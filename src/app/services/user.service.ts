@@ -99,4 +99,20 @@ export class UserService {
       }
     });
   }
+
+  getAllUsers(): Observable<UserProfile[]> {
+    return this.http.get<UserProfile[]>(`${this.apiUrl}`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
+
+  deleteUser(idUser: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${idUser}`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
 }

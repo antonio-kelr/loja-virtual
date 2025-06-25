@@ -15,6 +15,8 @@ import { MinhaContaComponent } from './components/minha-conta/minha-conta.compon
 import { MeusPedidosComponent } from './components/meus-pedidos/meus-pedidos.component';
 import { MeusDadosComponent } from './components/meus-dados/meus-dados.component';
 import { FavoritosComponent } from './components/favoritos/favoritos.component';
+import { ProdutoAdminComponent } from './components/admin/produto-admin/produto-admin.component';
+import { UsuarioAdminComponent } from './components/admin/usuarioAdmin/usuario-admin.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -47,7 +49,8 @@ export const routes: Routes = [
     component: AdminComponent,
     canActivate: [AuthGuard],
     children: [
-      // Aqui serão adicionadas as rotas filhas do painel administrativo
+      { path: 'produtos', component: ProdutoAdminComponent },
+      { path: 'usuarios', component: UsuarioAdminComponent }
     ]
   }
 ];
