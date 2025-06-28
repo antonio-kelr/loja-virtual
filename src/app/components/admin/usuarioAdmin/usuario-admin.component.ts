@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../../services/user.service';
 import { UserProfile } from '../../../models/user-profile.model';
@@ -15,33 +15,75 @@ export class UsuarioAdminComponent implements OnInit {
   loading = true;
   erro = '';
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    private cdr: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
+    console.log('Iniciando carregamento de usuários...');
     this.carregarUsuarios();
   }
 
   carregarUsuarios(): void {
     this.loading = true;
+    this.erro = '';
+
+    console.log('Carregando usuários...');
     this.userService.getAllUsers().subscribe({
       next: (users) => {
-        this.usuarios = users;
+        console.log('Usuários carregados com sucesso:', users);
+        console.log('Quantidade de usuários:', users?.length);
+        this.usuarios = users || [];
         this.loading = false;
+
+        // Forçar detecção de mudanças
+        this.cdr.detectChanges();
+        console.log('Detecção de mudanças forçada para usuários');
+
+        // Verificar se a view foi atualizada
+        setTimeout(() => {
+          console.log('Verificação após 100ms:');
+          console.log('Usuários na view:', this.usuarios.length);
+          console.log('Primeiro usuário na view:', this.usuarios[0]?.nome);
+        }, 100);
       },
       error: (err) => {
-        this.erro = 'Erro ao carregar usuários';
+        console.error('Erro ao carregar usuários:', err);
+        this.erro = 'Erro ao carregar usuários. Verifique sua conexão.';
         this.loading = false;
+        this.cdr.detectChanges();
       }
     });
   }
 
+  recarregarUsuarios(): void {
+    console.log('Recarregando usuários...');
+    this.carregarUsuarios();
+  }
+
+  forcarCarregamento(): void {
+    console.log('Forçando carregamento de usuários...');
+    this.loading = true;
+    this.erro = '';
+
+    // Pequeno delay para garantir que a UI seja atualizada
+    setTimeout(() => {
+      this.carregarUsuarios();
+    }, 100);
+  }
+
   deletarUsuario(idUser: string): void {
     if (confirm('Tem certeza que deseja deletar este usuário?')) {
+      console.log('Deletando usuário:', idUser);
       this.userService.deleteUser(idUser).subscribe({
         next: () => {
+          console.log('Usuário deletado com sucesso');
           this.usuarios = this.usuarios.filter(u => u.idUser !== idUser);
+          this.cdr.detectChanges();
         },
-        error: () => {
+        error: (err) => {
+          console.error('Erro ao deletar usuário:', err);
           alert('Erro ao deletar usuário.');
         }
       });
