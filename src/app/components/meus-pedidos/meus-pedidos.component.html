@@ -1,7 +1,37 @@
-<div class="meus-pedidos">
-  <h1>Meus Pedidos</h1>
-  <div class="pedidos-lista">
-    <!-- Aqui será implementada a lista de pedidos -->
-    <p>Nenhum pedido encontrado.</p>
+<div class="pedidos-container">
+  <div class="meus-pedidos-header">
+    <i class="pi pi-shopping-bag"></i>
+    <h2>Meus Pedidos</h2>
+
+  </div>
+
+  <div *ngIf="pedidos.length === 0" class="sem-pedidos">
+    Nenhum pedido encontrado.
+  </div>
+
+  <div *ngFor="let pedido of pedidos" class="pedido-bloco">
+    <div class="pedido-info">
+        <span>Pedido: #{{ pedido.id }}</span> -
+        <span class="data">{{ pedido.dataPedido | date: 'dd/MM/yyyy' }}</span>
+    </div>
+    <div class="pedido-status">
+
+      {{ pedido.status }}
+
+    </div>
+
+    <div class="itens-container">
+      <div *ngFor="let item of pedido.itens" class="item">
+        <img [src]="item.produto.imagens?.[0]?.url">
+        <div class="item-detalhes">
+          <p class="descricao">{{ item.produto?.descricao }}</p>
+          <div>
+            <span>Quantidade: {{ item.quantidade }}</span>
+            <span>Preço: R$ {{ item.produto?.preco | number: '1.2-2' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>

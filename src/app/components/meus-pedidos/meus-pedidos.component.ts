@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PedidoService } from '../../services/pedido.service';
 
 @Component({
   selector: 'app-meus-pedidos',
@@ -11,15 +12,26 @@ import { CommonModule } from '@angular/common';
 export class MeusPedidosComponent implements OnInit {
   pedidos: any[] = [];
 
-  constructor() {}
+  constructor(private pedidoService: PedidoService) {}
 
   ngOnInit(): void {
-    // Aqui será implementada a lógica para carregar os pedidos
     this.carregarPedidos();
   }
 
   carregarPedidos(): void {
-    // Implementar lógica para carregar pedidos do usuário
-    console.log('Carregando pedidos...');
+    const userId = Number(localStorage.getItem('userId'));
+    if (!userId) {
+      console.warn('Usuário não está logado.');
+      return;
+    }
+    this.pedidoService.getPedidos(userId).subscribe({
+      next: (pedidos) => {
+        this.pedidos = pedidos;
+        console.log('Pedidos carregados:', pedidos);
+      },
+      error: (err) => {
+        console.error('Erro ao carregar pedidos:', err);
+      }
+    });
   }
 }
