@@ -1,6 +1,11 @@
 <app-header></app-header>
 
-<div class="produto-detalhes-container" *ngIf="produto">
+<!-- Snippet de carregamento -->
+<div class="carregando-container" *ngIf="carregando">
+    <div class="spinner"></div>
+</div>
+
+<div class="produto-detalhes-container" *ngIf="produto && !carregando">
   <h1 class="produto-titulo principal">{{ produto.nome }}</h1>
 
   <div class="produto-grid">
@@ -133,7 +138,7 @@
   </div>
 </div>
 
-<div class="produto-nao-encontrado" *ngIf="!produto">
+<div class="produto-nao-encontrado" *ngIf="!produto && !carregando">
   <h2>Produto não encontrado</h2>
   <p>Desculpe, não conseguimos encontrar o produto que você está procurando.</p>
   <a routerLink="/" class="btn-voltar-home">Voltar para a página inicial</a>

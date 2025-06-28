@@ -6,10 +6,8 @@ import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { ProdutoService } from '../../services/produto.service';
-import { Produto } from '../../interfaces/produto.interface';
-import { ProdutoImagem } from '../../interfaces/produto.interface';
+import { Produto, ProdutoImagem } from '../../interfaces/produto.interface';
 import { ProdutoCardComponent } from '../produto-card/produto-card.component';
-import { log } from 'console';
 
 @Component({
   selector: 'app-produto-detalhes',
@@ -29,12 +27,13 @@ export class ProdutoDetalhesComponent implements OnInit {
   faCartPlus = faCartPlus;
 
   produto: Produto | null = null;
+  carregando: boolean = true;
   imagemPrincipal: ProdutoImagem | null = null;
   quantidadeSelecionada: number = 1;
   tabAtiva: string = 'descricao';
   produtosRelacionados: Produto[] = [];
   posicaoSlider: number = 0;
-  larguraProduto: number = 130; // 120px do produto + 10px do gap
+  larguraProduto: number = 130;
   produtosPorSlide: number = 4;
   slideAtual: number = 0;
 
@@ -42,12 +41,11 @@ export class ProdutoDetalhesComponent implements OnInit {
     private route: ActivatedRoute,
     private produtoService: ProdutoService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const produtoSlug = params['slug'];
-
       if (produtoSlug) {
         this.carregarProduto(produtoSlug);
       }
@@ -55,31 +53,33 @@ export class ProdutoDetalhesComponent implements OnInit {
   }
 
   carregarProduto(slug: string): void {
+    this.carregando = true;
     this.produtoService.getProdutoPorSlug(slug).subscribe({
       next: (produto) => {
-        console.log('Produto carregado:', produto);
         this.produto = produto;
         if (produto.imagens && produto.imagens.length > 0) {
           this.imagemPrincipal = produto.imagens[0];
         }
         this.carregarProdutosRelacionados(produto.categoriaId);
+        this.carregando = false;
       },
       error: (erro) => {
         console.error('Erro ao carregar produto:', erro);
+        this.produto = null;
+        this.carregando = false;
       }
     });
   }
 
-  selecionarProduto(slug?: string) {
+  selecionarProduto(slug?: string): void {
     if (!slug) {
       console.warn('Slug inválido:', slug);
       return;
     }
-    this.router.navigate(['/produto', slug]);
 
-    console.warn('Slug aqui:', slug);
-
-
+    // Recarrega o novo produto no mesmo componente sem mudar de rota
+    this.carregarProduto(slug);
+    this.router.navigateByUrl(`/produto/${slug}`, { skipLocationChange: false });
   }
 
   carregarProdutosRelacionados(categoriaId: number): void {

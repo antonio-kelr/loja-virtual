@@ -43,7 +43,6 @@ export class MinhaContaComponent implements OnInit {
     console.log('Carregando dados do usuário...');
     this.authService.getUserProfile().subscribe({
       next: (profile) => {
-        console.log('Perfil carregado:', profile);
         this.userProfile = profile;
       },
       error: (error) => {

@@ -76,7 +76,6 @@ export class HeaderComponent implements OnInit {
     console.log('Carregando perfil do usuário...');
     this.authService.getUserProfile().subscribe({
       next: (profile) => {
-        console.log('Perfil carregado:', profile);
         this.userProfile = profile;
         this.isLoggedIn = true;
       },
