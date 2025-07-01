@@ -17,6 +17,23 @@
 
 }
 
+.resumo-titulo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  h2 {
+    font-size: 1rem;
+    font-weight: bolder;
+    margin: 0;
+  }
+
+  .resumo-icon {
+    color: var(--cor-primaria);
+    font-size: 1rem;
+  }
+}
+
 
 .resumo-linha {
 

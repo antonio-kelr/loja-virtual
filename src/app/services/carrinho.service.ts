@@ -148,8 +148,21 @@ export class CarrinhoService {
     console.log('Funcionalidade de carrinho temporariamente desabilitada');
   }
 
-  limparCarrinho(): void {
-    console.log('Funcionalidade de carrinho temporariamente desabilitada');
+  limparCarrinho(carrinhoId: number): Observable<any> {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return new Observable<any>(subscriber => {
+        subscriber.next({});
+        subscriber.complete();
+      });
+    }
+
+    return this.http.delete<any>(`${this.apiUrl}/limpar/${carrinhoId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
   }
 
   calcularTotal(): number {

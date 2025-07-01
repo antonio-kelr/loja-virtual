@@ -6,9 +6,16 @@
   </div>
 
   <div *ngIf="pedidos.length === 0" class="sem-pedidos">
-    Nenhum pedido encontrado.
-  </div>
+    <fa-icon [icon]="faceFrown"></fa-icon>
+    <h2>Você ainda não fez nenhum pedido.</h2>
+    <p>Assim que fizer, eles aparecerão aqui.</p>
+    <button
 
+    routerLink="/"
+  >
+    Ver produtos
+  </button>
+  </div>
   <div *ngFor="let pedido of pedidos" class="pedido-bloco">
     <div class="pedido-info">
         <span>Pedido: #{{ pedido.id }}</span> -

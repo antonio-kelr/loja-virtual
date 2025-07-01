@@ -6,6 +6,7 @@ import { FooterComponent } from '../footer/footer.component';
 import { CheckoutStepsComponent } from '../checkout-steps/checkout-steps.component';
 import { QRCodeComponent } from 'angularx-qrcode';
 import { PedidoService } from '../../services/pedido.service';
+import { CarrinhoService } from '../../services/carrinho.service';
 
 @Component({
   selector: 'app-concluir',
@@ -28,8 +29,14 @@ export class ConcluirComponent implements OnInit {
   enderecoId: number | null = null;
   itensCarrinho: any[] = [];
   userId: number | null = null; // <- Adicione isso!
+  carrinhoId: number | null = null;
 
-  constructor(private router: Router, private route: ActivatedRoute, private  pedidoService:PedidoService) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private pedidoService: PedidoService,
+    private carrinhoService: CarrinhoService
+  ) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
@@ -56,13 +63,20 @@ export class ConcluirComponent implements OnInit {
         }
       }
 
+      if (params['carrinhoId']) {
+        this.carrinhoId = Number(params['carrinhoId']);
+        console.log('carrinhoId:', this.carrinhoId);
+      }
+
       // CORRIGIDO: Salva o ID do usuário na propriedade da classe
       const userId = localStorage.getItem('userId');
       if (userId) {
         this.userId = Number(userId);
         console.log('ID do usuário:', this.userId);
       } else {
-        console.warn('Usuário não está logado ou o ID não foi salvo no localStorage.');
+        console.warn(
+          'Usuário não está logado ou o ID não foi salvo no localStorage.'
+        );
       }
 
       // Verifica se tudo está pronto para enviar o pedido
@@ -81,10 +95,18 @@ export class ConcluirComponent implements OnInit {
           },
           error: (err) => {
             console.error('Erro ao criar pedido:', err);
-          }
+          },
         });
       }
     });
+
+    if (this.carrinhoId) {
+      this.carrinhoService.limparCarrinho(this.carrinhoId).subscribe({
+        next: () => {
+          console.log('Carrinho limpo com sucesso.');
+        },
+      });
+    }
   }
 
   private gerarQRCodePix(): void {

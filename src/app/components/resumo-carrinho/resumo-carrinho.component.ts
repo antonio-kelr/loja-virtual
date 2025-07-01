@@ -1,11 +1,13 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CarrinhoService } from '../../services/carrinho.service';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-resumo-carrinho',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FontAwesomeModule],
   templateUrl: './resumo-carrinho.component.html',
   styleUrls: ['./resumo-carrinho.component.scss']
 })
@@ -22,6 +24,7 @@ export class ResumoCarrinhoComponent implements OnInit {
   itensCarrinho: any[] = [];
   subtotal: number = 0;
   total: number = 0;
+  clipboardList = faClipboardList;
 
   constructor(private carrinhoService: CarrinhoService) {}
 
