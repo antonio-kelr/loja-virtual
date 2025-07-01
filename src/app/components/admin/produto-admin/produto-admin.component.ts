@@ -8,11 +8,28 @@ import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
+import { DialogModule } from 'primeng/dialog';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-produto-admin',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, RippleModule, DropdownModule, FormsModule],
+  imports: [
+    CommonModule,
+    TableModule,
+    ButtonModule,
+    RippleModule,
+    DropdownModule,
+    FormsModule,
+    DialogModule,
+    InputTextModule,
+    InputNumberModule,
+    ToastModule
+  ],
+  providers: [MessageService],
   templateUrl: './produto-admin.component.html',
   styleUrls: ['./produto-admin.component.scss']
 })
@@ -23,10 +40,23 @@ export class ProdutoAdminComponent implements OnInit {
   categoriaSelecionada: Categoria | null = null;
   carregando: boolean = true;
 
+  // Modal de criação
+  mostrarModalCriar: boolean = false;
+  produtoNovo: any = {
+    nome: '',
+    descricao: '',
+    preco: 0,
+    precoAntigo: 0,
+    categoriaId: null,
+    slug: ''
+  };
+  salvando: boolean = false;
+
   constructor(
     private produtoService: ProdutoService,
     private categoriaService: CategoriaService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -79,6 +109,99 @@ export class ProdutoAdminComponent implements OnInit {
         this.cdr.detectChanges();
       }
     });
+  }
+
+  abrirModalCriar(): void {
+    this.produtoNovo = {
+      nome: '',
+      descricao: '',
+      preco: 0,
+      precoAntigo: 0,
+      categoriaId: null,
+      slug: ''
+    };
+    this.mostrarModalCriar = true;
+  }
+
+  fecharModalCriar(): void {
+    this.mostrarModalCriar = false;
+    this.salvando = false;
+  }
+
+
+  criarProduto(): void {
+    if (!this.validarFormulario()) {
+      return;
+    }
+
+    this.salvando = true;
+
+
+    console.log('novo produto',this.produtoNovo);
+
+    // this.produtoService.criarProduto(this.produtoNovo).subscribe({
+    //   next: (produtoCriado) => {
+    //     console.log('Produto criado com sucesso:', produtoCriado);
+    //     this.produtos.push(produtoCriado);
+    //     this.produtosFiltrados = [...this.produtos];
+    //     this.fecharModalCriar();
+    //     this.messageService.add({
+    //       severity: 'success',
+    //       summary: 'Sucesso',
+    //       detail: 'Produto criado com sucesso!'
+    //     });
+    //     this.cdr.detectChanges();
+    //   },
+    //   error: (erro) => {
+    //     console.error('Erro ao criar produto:', erro);
+    //     this.salvando = false;
+    //     this.messageService.add({
+    //       severity: 'error',
+    //       summary: 'Erro',
+    //       detail: 'Erro ao criar produto. Tente novamente.'
+    //     });
+    //   }
+    // });
+  }
+
+  validarFormulario(): boolean {
+    if (!this.produtoNovo.nome || this.produtoNovo.nome.trim() === '') {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Atenção',
+        detail: 'Nome do produto é obrigatório'
+      });
+      return false;
+    }
+
+    if (!this.produtoNovo.descricao || this.produtoNovo.descricao.trim() === '') {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Atenção',
+        detail: 'Descrição do produto é obrigatória'
+      });
+      return false;
+    }
+
+    if (!this.produtoNovo.preco || this.produtoNovo.preco <= 0) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Atenção',
+        detail: 'Preço deve ser maior que zero'
+      });
+      return false;
+    }
+
+    if (!this.produtoNovo.categoriaId) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Atenção',
+        detail: 'Categoria é obrigatória'
+      });
+      return false;
+    }
+
+    return true;
   }
 
   filtrarPorCategoria(): void {

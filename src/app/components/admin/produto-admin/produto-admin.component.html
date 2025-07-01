@@ -36,7 +36,7 @@
       <ng-template pTemplate="caption">
           <div class="table-header">
               <h2 class="m-0">Gerenciar Produtos</h2>
-              <button pButton pRipple label="Novo Produto" icon="pi pi-plus"></button>
+              <button pButton pRipple label="Novo Produto" icon="pi pi-plus" (click)="abrirModalCriar()"></button>
           </div>
       </ng-template>
       <ng-template pTemplate="header">
@@ -76,3 +76,105 @@
       </ng-template>
   </p-table>
 </div>
+
+<!-- Modal de Criação de Produto -->
+<p-dialog
+  header="Criar Novo Produto"
+  [(visible)]="mostrarModalCriar"
+  [modal]="true"
+  [style]="{width: '50vw'}"
+  [draggable]="false"
+  [resizable]="false">
+
+  <div class="form-container">
+    <div class="form-group">
+      <label for="nome">Nome do Produto *</label>
+      <input
+        id="nome"
+        pInputText
+        type="text"
+        [(ngModel)]="produtoNovo.nome"
+        placeholder="Digite o nome do produto"
+        class="w-full" />
+    </div>
+
+    <div class="form-group">
+      <label for="descricao">Descrição *</label>
+      <textarea
+        id="descricao"
+        pInputText
+        [(ngModel)]="produtoNovo.descricao"
+        placeholder="Digite a descrição do produto"
+        rows="4"
+        class="w-full"></textarea>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="preco">Preço *</label>
+        <p-inputNumber
+          id="preco"
+          [(ngModel)]="produtoNovo.preco"
+          mode="currency"
+          currency="BRL"
+          locale="pt-BR"
+          placeholder="0,00"
+          class="w-full" />
+      </div>
+
+      <div class="form-group">
+        <label for="precoAntigo">Preço Antigo</label>
+        <p-inputNumber
+          id="precoAntigo"
+          [(ngModel)]="produtoNovo.precoAntigo"
+          mode="currency"
+          currency="BRL"
+          locale="pt-BR"
+          placeholder="0,00"
+          class="w-full" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="categoria">Categoria *</label>
+      <p-dropdown
+        id="categoria"
+        [options]="categorias"
+        [(ngModel)]="produtoNovo.categoriaId"
+        optionLabel="nome"
+        optionValue="id"
+        placeholder="Selecione uma categoria"
+        [appendTo]="'body'"
+        [autoZIndex]="true"
+        [baseZIndex]="1000"
+        class="w-full">
+      </p-dropdown>
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="dialog-footer">
+      <button
+        pButton
+        pRipple
+        label="Cancelar"
+        icon="pi pi-times"
+        class="p-button-text"
+        (click)="fecharModalCriar()"
+        [disabled]="salvando">
+      </button>
+      <button
+        pButton
+        pRipple
+        label="Criar Produto"
+        icon="pi pi-check"
+        (click)="criarProduto()"
+        [loading]="salvando"
+        [disabled]="salvando">
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<!-- Toast para mensagens -->
+<p-toast></p-toast>

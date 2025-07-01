@@ -57,10 +57,10 @@ export class UsuarioAdminComponent implements OnInit {
     });
   }
 
-  recarregarUsuarios(): void {
-    console.log('Recarregando usuários...');
-    this.carregarUsuarios();
-  }
+  // recarregarUsuarios(): void {
+  //   console.log('Recarregando usuários...');
+  //   this.carregarUsuarios();
+  // }
 
   forcarCarregamento(): void {
     console.log('Forçando carregamento de usuários...');
