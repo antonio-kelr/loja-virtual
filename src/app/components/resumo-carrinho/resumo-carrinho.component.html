@@ -8,7 +8,7 @@
 
       <div class="resumo-linha">
         <span>Subtotal</span>
-        <span>{{ (subtotal || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</span>
+        <span>{{ (totalCarrinho || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</span>
       </div>
 
       <div class="resumo-linha">
@@ -18,20 +18,20 @@
 
       <div class="resumo-linha prazo">
         <span>Total a prazo:</span>
-        <span>{{ (total || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</span>
+        <span>{{ (totalCarrinho || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</span>
       </div>
 
       <div class="resumo-linha parcelas">
         <span></span>
         <span>(em até <strong>10x</strong> de
-          {{ ((total || 0) / 10).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }} sem juros)
+          {{ ((totalCarrinho || 0) / 10).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }} sem juros)
         </span>
       </div>
 
       <div class="resumo-linha total">
         <span>Valor à vista no<br> <strong class="pix-destaque">{{ metodoPagamento | uppercase }}:</strong></span>
         <span class="valor-pix">
-          {{ ((total || 0) * calcularDesconto()).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}
+          {{ ((totalCarrinho || 0) * calcularDesconto()).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}
         </span>
       </div>
     </div>

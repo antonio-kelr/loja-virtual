@@ -94,7 +94,6 @@
               <span class="quantidade">{{ item.quantidade }}</span>
               <button class="btn-quantidade" (click)="atualizarQuantidade(item, 1)" [disabled]="carregando">
                 <i class="pi pi-angle-right"></i>
-
               </button>
             </div>
 
@@ -133,5 +132,11 @@
     </div>
   </div>
 </div>
+
+<ng-container *ngIf="spinnerQuantidade !== null">
+  <div class="overlay-spinner">
+    <div class="spinner"></div>
+  </div>
+</ng-container>
 
 <app-footer></app-footer>

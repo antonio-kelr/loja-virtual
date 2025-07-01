@@ -11,7 +11,7 @@ import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './resumo-carrinho.component.html',
   styleUrls: ['./resumo-carrinho.component.scss']
 })
-export class ResumoCarrinhoComponent implements OnInit {
+export class ResumoCarrinhoComponent  {
   @Input() totalCarrinho: number = 0;
   @Input() mostrarBotoes: boolean = true;
   @Input() botaoPrincipal: string = 'Finalizar Compra';
@@ -28,24 +28,7 @@ export class ResumoCarrinhoComponent implements OnInit {
 
   constructor(private carrinhoService: CarrinhoService) {}
 
-  ngOnInit(): void {
-    this.carregarCarrinho();
-  }
 
-  carregarCarrinho(): void {
-    this.carrinhoService.buscarCarrinhoDoServidor().subscribe({
-      next: (response) => {
-        console.log('Resposta do carrinho:', response);
-        this.itensCarrinho = response.itens || [];
-        this.calcularTotais();
-      },
-      error: (error) => {
-        console.error('Erro ao carregar carrinho:', error);
-        this.subtotal = 0;
-        this.total = 0;
-      }
-    });
-  }
 
   calcularTotais(): void {
     try {

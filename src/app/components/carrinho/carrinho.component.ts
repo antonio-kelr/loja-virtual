@@ -45,6 +45,7 @@ export class CarrinhoComponent implements OnInit {
   isLoggedIn: boolean = false;
   displayEmailModal = false;
   itemParaRemover: ItemCarrinho | null = null;
+  spinnerQuantidade: number | null = null;
 
   constructor(
     private router: Router,
@@ -102,10 +103,13 @@ export class CarrinhoComponent implements OnInit {
     if (novaQuantidade > 0) {
       console.log(`quantidade 3`, novaQuantidade);
 
-      // 👉 Aqui você atualiza a quantidade no objeto que o Angular está renderizando
       item.quantidade = novaQuantidade;
 
-      // 👉 Se quiser futuramente chamar o backend pra persistir, descomente o trecho abaixo:
+      // Mostra o spinner para este item
+      this.spinnerQuantidade = item.id;
+      setTimeout(() => {
+        this.spinnerQuantidade = null;
+      }, 1000);
 
       this.carrinhoService.adicionarAoCarrinho(item.produtoId, novaQuantidade).subscribe({
         next: () => this.carregarCarrinho(),
@@ -113,7 +117,6 @@ export class CarrinhoComponent implements OnInit {
           console.error('Erro ao atualizar quantidade:', error);
         }
       });
-
     }
   }
 
