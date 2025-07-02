@@ -30,6 +30,7 @@ export class HeaderComponent implements OnInit {
   qtdFavoritos: number = 0;
   userProfile: UserProfile | null = null;
   isLoggedIn = false;
+  favoritos: any[] = []; // Array para armazenar os favoritos
 
   getPrimeiroNome(): string {
     if (!this.userProfile?.nome) return '';
@@ -90,6 +91,7 @@ export class HeaderComponent implements OnInit {
     this.favoritoService.getFavoritos().subscribe({
       next: (favoritos) => {
         if (favoritos && Array.isArray(favoritos)) {
+          this.favoritos = favoritos;
           this.qtdFavoritos = favoritos.length;
         }
       },
@@ -98,6 +100,37 @@ export class HeaderComponent implements OnInit {
         this.qtdFavoritos = 0;
       }
     });
+  }
+
+  toggleFavorito(produtoId: number) {
+    // Verifica se o produto já está nos favoritos
+    const isFavorito = this.favoritos.some(fav => fav.produtoId === produtoId);
+
+    if (isFavorito) {
+      // Remove dos favoritos
+      this.favoritoService.deletetFavorito(produtoId).subscribe({
+        next: () => {
+          console.log('Produto removido dos favoritos');
+        },
+        error: (error) => {
+          console.error('Erro ao remover dos favoritos:', error);
+        }
+      });
+    } else {
+      // Adiciona aos favoritos
+      this.favoritoService.postFavorito(produtoId).subscribe({
+        next: () => {
+          console.log('Produto adicionado aos favoritos');
+        },
+        error: (error) => {
+          console.error('Erro ao adicionar aos favoritos:', error);
+        }
+      });
+    }
+  }
+
+  isFavorito(produtoId: number): boolean {
+    return this.favoritos.some(fav => fav.produtoId === produtoId);
   }
 
   private loadUserProfile() {

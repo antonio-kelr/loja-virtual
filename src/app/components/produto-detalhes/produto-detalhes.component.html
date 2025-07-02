@@ -54,12 +54,12 @@
 
       <!-- Botões de ação -->
       <div class="botoes-acao">
-        <button class="btn-comprar">
+        <button class="btn-comprar" (click)="adicionarOuComprarProduto($event, true)">
           <i class="pi pi-shopping-cart"></i>
           Comprar
         </button>
-        <button class="btn-adicionar-carrinho">
-          <fa-icon [icon]="faCartPlus"></fa-icon>
+        <button class="btn-adicionar-carrinho" (click)="adicionarOuComprarProduto($event, false)">
+          <fa-icon [icon]="faCartPlus"  ></fa-icon>
         </button>
       </div>
 

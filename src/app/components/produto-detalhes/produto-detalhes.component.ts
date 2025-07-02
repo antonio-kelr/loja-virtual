@@ -8,6 +8,8 @@ import { FooterComponent } from '../footer/footer.component';
 import { ProdutoService } from '../../services/produto.service';
 import { Produto, ProdutoImagem } from '../../interfaces/produto.interface';
 import { ProdutoCardComponent } from '../produto-card/produto-card.component';
+import { CarrinhoService } from '../../services/carrinho.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-produto-detalhes',
@@ -40,6 +42,10 @@ export class ProdutoDetalhesComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private produtoService: ProdutoService,
+    private carrinhoService: CarrinhoService,
+    private messageService: MessageService,
+
+
     private router: Router
   ) {}
 
@@ -95,6 +101,57 @@ export class ProdutoDetalhesComponent implements OnInit {
       }
     });
   }
+
+  adicionarOuComprarProduto(event: Event, comprar: boolean = false) {
+    event.stopPropagation();
+
+    console.log('Produto a ser adicionado:', this.produto?.id);
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.log('Usuário não está logado');
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Atenção',
+        detail: 'Você precisa estar logado para adicionar produtos ao carrinho.'
+      });
+      return;
+    }
+
+    this.carrinhoService.adicionarAoCarrinho(this.produto?.id).subscribe({
+      next: (response) => {
+        console.log('Produto adicionado com sucesso:', response);
+
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Sucesso',
+          detail: comprar ? 'Produto enviado para o carrinho!' : 'Produto adicionado ao carrinho!'
+        });
+
+        // ✅ Se o objetivo for comprar, redireciona para o carrinho
+        if (comprar) {
+          this.router.navigate(['/carrinho']); // ou outra rota que você usa
+        }
+      },
+      error: (erro) => {
+        console.error('Erro detalhado ao adicionar ao carrinho:', {
+          status: erro.status,
+          statusText: erro.statusText,
+          url: erro.url,
+          error: erro.error,
+          message: erro.message
+        });
+
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Não foi possível adicionar o produto ao carrinho.'
+        });
+      }
+    });
+  }
+
+
 
   slideAnterior(): void {
     if (this.slideAtual > 0) {

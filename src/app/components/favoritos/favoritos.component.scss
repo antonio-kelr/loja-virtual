@@ -9,6 +9,12 @@
   font-size: 1.5rem;
   color: var(--cor-primaria);
 }
+.icone-coracao-butao {
+
+  font-size: 1.5rem;
+  color: var(--cor-primaria);
+  cursor: pointer;
+}
 
 
 .favoritos-header {
@@ -18,11 +24,6 @@
   margin-bottom: 20px;
   color: #333;
 
-  .icone-coracao {
-
-    font-size: 1.5rem;
-    color: var(--cor-primaria);
-  }
 
   h2 {
     padding: 0px;

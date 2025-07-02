@@ -28,7 +28,11 @@
           </div>
 
           <div class="favorito-item-button">
-            <fa-icon [icon]="faHeart" class="icone-coracao"></fa-icon>
+            <fa-icon
+              [icon]="faHeart"
+              class="icone-coracao-butao"
+              (click)="deletetFavorito(favorito)"
+            ></fa-icon>
 
             <button class="pi pi-shopping-cart">comprar</button>
           </div>

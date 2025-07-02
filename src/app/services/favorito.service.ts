@@ -44,6 +44,21 @@ export class FavoritoService {
     );
   }
 
+  deletetFavorito(produtoId: number): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    console.log('Removendo favorito. Token:', token, 'ProdutoId:', produtoId);
+    // Aqui, só passa o headers, sem body
+    return this.http.delete(`${this.apiUrl}/${produtoId}`, { headers }).pipe(
+      tap(() => {
+        // Recarrega os favoritos após remover
+        this.getFavoritos().subscribe();
+      })
+    );
+  }
+
   atualizarFavoritos(favoritos: any[]): void {
     this.favoritosSubject.next(favoritos);
   }
