@@ -188,6 +188,32 @@ export class CarrinhoComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
+  limparCarrinho(): void {
+    if (!this.carrinho) return;
+
+    this.carregando = true;
+    this.carrinhoService.limparCarrinho().subscribe({
+      next: () => {
+        console.log('Carrinho limpo com sucesso');
+        this.carregarCarrinho(); // Recarrega o carrinho vazio
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Sucesso',
+          detail: 'Todos os produtos foram removidos do carrinho!'
+        });
+      },
+      error: (error) => {
+        console.error('Erro ao limpar carrinho:', error);
+        this.carregando = false;
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Erro ao remover produtos do carrinho. Tente novamente.'
+        });
+      }
+    });
+  }
+
   isBrowser(): boolean {
     return isPlatformBrowser(this.platformId);
   }

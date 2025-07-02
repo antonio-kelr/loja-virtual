@@ -4,6 +4,7 @@
 <!-- Toast para mensagens -->
 <p-toast position="top-right"></p-toast>
 
+<!-- Modal de confirmação de remoção -->
 <p-dialog
   [(visible)]="displayEmailModal"
   [modal]="true"
@@ -26,7 +27,7 @@
   </ng-template>
 </p-dialog>
 
-<app-checkout-steps [etapaAtual]="1"></app-checkout-steps>
+<app-checkout-steps *ngIf="carrinho?.itens?.length" [etapaAtual]="1"></app-checkout-steps>
 
 <div class="carrinho-container">
   <div class="carrinho-content">
@@ -49,81 +50,83 @@
       </button>
     </div>
 
-    <div class="carrinho-grid" *ngIf="!carregando && !erro && isLoggedIn">
-      <!-- Lista de Produtos -->
-      <div class="lista-produtos">
-        <div class="titulo-carrinho-header">
-          <h1 class="titulo-carrinho">
-            <i class="pi pi-shopping-bag"></i>
-            PRODUTO E SERVIÇO
+    <!-- Exibe conteúdo apenas se logado, sem erro e não está carregando -->
+    <ng-container *ngIf="!carregando && !erro && isLoggedIn">
 
-          </h1>
+      <!-- Carrinho vazio -->
+      <div class="carrinho-vazio" *ngIf="!carrinho?.itens?.length">
+        <i class="pi pi-shopping-bag"></i>
+        <p>Seu carrinho está vazio</p>
+        <button class="btn-continuar-comprando" (click)="continuarComprando()">
+          Continuar Comprando
+        </button>
+      </div>
 
-          <button>
-            <fa-icon [icon]="faTrash" [class.removendo]="carregando" class="icon-remover"></fa-icon>
+      <!-- Carrinho com produtos -->
+      <div class="carrinho-grid" *ngIf="carrinho?.itens?.length">
+        <!-- Lista de Produtos -->
+        <div class="lista-produtos">
+          <div class="titulo-carrinho-header">
+            <h1 class="titulo-carrinho">
+              <i class="pi pi-shopping-bag"></i>
+              PRODUTO E SERVIÇO
+            </h1>
 
-            remover todos os produtos</button>
-        </div>
-
-        <div class="produto-item" *ngFor="let item of carrinho?.itens">
-          <div class="produto-imagem">
-            <img [src]="item.produto.imagens?.[0]?.url">
+            <button (click)="limparCarrinho()">
+              <fa-icon [icon]="faTrash" [class.removendo]="carregando" class="icon-remover"></fa-icon>
+              remover todos os produtos
+            </button>
           </div>
 
-          <div class="produto-info">
-            <p class="produto-nome">{{ item.produto.nome }}</p>
-            <h3 class="produto-nome">{{ item.produto.descricao }}</h3>
-          </div>
+          <div class="produto-item" *ngFor="let item of carrinho?.itens">
+            <div class="produto-imagem">
+              <img [src]="item.produto.imagens?.[0]?.url">
+            </div>
 
-          <div class="produto-quantidade">
-            <span>Quant</span>
-            <div class="controle-quantidade">
+            <div class="produto-info">
+              <p class="produto-nome">{{ item.produto.nome }}</p>
+              <h3 class="produto-nome">{{ item.produto.descricao }}</h3>
+            </div>
 
-              <button class="btn-quantidade" (click)="atualizarQuantidade(item, -1)" [disabled]="carregando">
-                <i class="pi pi-angle-left"></i>
-              </button>
-              <span class="quantidade">{{ item.quantidade }}</span>
-              <button class="btn-quantidade" (click)="atualizarQuantidade(item, 1)" [disabled]="carregando">
-                <i class="pi pi-angle-right"></i>
+            <div class="produto-quantidade">
+              <span>Quant</span>
+              <div class="controle-quantidade">
+                <button class="btn-quantidade" (click)="atualizarQuantidade(item, -1)" [disabled]="carregando">
+                  <i class="pi pi-angle-left"></i>
+                </button>
+                <span class="quantidade">{{ item.quantidade }}</span>
+                <button class="btn-quantidade" (click)="atualizarQuantidade(item, 1)" [disabled]="carregando">
+                  <i class="pi pi-angle-right"></i>
+                </button>
+              </div>
+
+              <button class="btn-remover" (click)="removerItem(item)" [disabled]="carregando" [title]="'Remover ' + item.produto.nome">
+                <fa-icon [icon]="faTrash" [class.removendo]="carregando" class="icon-remover"></fa-icon>
+                <span>remover</span>
               </button>
             </div>
 
-
-            <button class="btn-remover" (click)="removerItem(item)" [disabled]="carregando" [title]="'Remover ' + item.produto.nome">
-              <fa-icon [icon]="faTrash" [class.removendo]="carregando" class="icon-remover"></fa-icon>
-              <span>remover</span>
-            </button>
-
+            <div class="produto-subtotal">
+              R$ {{ (item.precoUnitario * item.quantidade) | number:'1.2-2' }}
+            </div>
           </div>
-
-          <div class="produto-subtotal">
-            R$ {{ (item.precoUnitario * item.quantidade) | number:'1.2-2' }}
-          </div>
-
         </div>
 
-        <div class="carrinho-vazio" *ngIf="!carrinho?.itens?.length">
-          <i class="pi pi-shopping-bag"></i>
-          <p>Seu carrinho está vazio</p>
-          <button class="btn-continuar-comprando" (click)="continuarComprando()">
-            Continuar Comprando
-          </button>
-        </div>
+        <!-- Resumo do Pedido -->
+        <app-resumo-carrinho
+          [totalCarrinho]="total"
+          [metodoPagamento]="'pix'"
+          [botaoPrincipal]="'Ir para o pagamento'"
+          [botaoSecundario]="'Continuar comprando'"
+          (continuar)="finalizarCompra()"
+          (voltarAtras)="continuarComprando()"
+        ></app-resumo-carrinho>
       </div>
-
-      <!-- Resumo do Pedido -->
-      <app-resumo-carrinho
-        [totalCarrinho]="total"
-        [metodoPagamento]="'pix'"
-        [botaoPrincipal]="'Ir para o pagamento'"
-        [botaoSecundario]="'Continuar comprando'"
-        (continuar)="finalizarCompra()"
-        (voltarAtras)="continuarComprando()"
-      ></app-resumo-carrinho>
-    </div>
+    </ng-container>
   </div>
 </div>
 
+<!-- Spinner -->
 <ng-container *ngIf="spinnerQuantidade !== null">
   <div class="overlay-spinner">
     <div class="spinner"></div>
