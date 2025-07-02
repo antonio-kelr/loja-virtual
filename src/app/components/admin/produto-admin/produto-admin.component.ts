@@ -139,29 +139,29 @@ export class ProdutoAdminComponent implements OnInit {
 
     console.log('novo produto',this.produtoNovo);
 
-    // this.produtoService.criarProduto(this.produtoNovo).subscribe({
-    //   next: (produtoCriado) => {
-    //     console.log('Produto criado com sucesso:', produtoCriado);
-    //     this.produtos.push(produtoCriado);
-    //     this.produtosFiltrados = [...this.produtos];
-    //     this.fecharModalCriar();
-    //     this.messageService.add({
-    //       severity: 'success',
-    //       summary: 'Sucesso',
-    //       detail: 'Produto criado com sucesso!'
-    //     });
-    //     this.cdr.detectChanges();
-    //   },
-    //   error: (erro) => {
-    //     console.error('Erro ao criar produto:', erro);
-    //     this.salvando = false;
-    //     this.messageService.add({
-    //       severity: 'error',
-    //       summary: 'Erro',
-    //       detail: 'Erro ao criar produto. Tente novamente.'
-    //     });
-    //   }
-    // });
+    this.produtoService.criarProduto(this.produtoNovo).subscribe({
+      next: (produtoCriado) => {
+        console.log('Produto criado com sucesso:', produtoCriado);
+        this.produtos.push(produtoCriado);
+        this.produtosFiltrados = [...this.produtos];
+        this.fecharModalCriar();
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Sucesso',
+          detail: 'Produto criado com sucesso!'
+        });
+        this.cdr.detectChanges();
+      },
+      error: (erro) => {
+        console.error('Erro ao criar produto:', erro);
+        this.salvando = false;
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Erro ao criar produto. Tente novamente.'
+        });
+      }
+    });
   }
 
   validarFormulario(): boolean {

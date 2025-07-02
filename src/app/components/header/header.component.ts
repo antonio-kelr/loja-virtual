@@ -148,7 +148,6 @@ export class HeaderComponent implements OnInit {
       return;
     }
 
-    console.log('Carregando perfil do usuário...');
     this.authService.getUserProfile().subscribe({
       next: (profile) => {
         this.userProfile = profile;

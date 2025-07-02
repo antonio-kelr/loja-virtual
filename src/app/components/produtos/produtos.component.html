@@ -6,7 +6,13 @@
       Celulares
     </h2>
     <div class="card maxWidth">
-      <p-carousel [value]="celulares" [numVisible]="5" [numScroll]="1" [showIndicators]="false" [responsiveOptions]="responsiveOptions">
+      <p-carousel
+        [value]="celulares"
+        [numVisible]="5"
+        [numScroll]="1"
+        [showIndicators]="false"
+        [responsiveOptions]="responsiveOptions"
+      >
         <ng-template let-produto pTemplate="item">
           <app-produto-card [produto]="produto"></app-produto-card>
         </ng-template>
@@ -21,7 +27,13 @@
       Notebooks
     </h2>
     <div class="card maxWidth">
-      <p-carousel [value]="notebooks" [numVisible]="5" [numScroll]="1" [showIndicators]="false" [responsiveOptions]="responsiveOptions">
+      <p-carousel
+        [value]="notebooks"
+        [numVisible]="5"
+        [numScroll]="1"
+        [showIndicators]="false"
+        [responsiveOptions]="responsiveOptions"
+      >
         <ng-template let-produto pTemplate="item">
           <app-produto-card [produto]="produto"></app-produto-card>
         </ng-template>
@@ -36,7 +48,13 @@
       Monitores
     </h2>
     <div class="card maxWidth">
-      <p-carousel [value]="monitores" [numVisible]="5" [numScroll]="1" [showIndicators]="false" [responsiveOptions]="responsiveOptions">
+      <p-carousel
+        [value]="monitores"
+        [numVisible]="5"
+        [numScroll]="1"
+        [showIndicators]="false"
+        [responsiveOptions]="responsiveOptions"
+      >
         <ng-template let-produto pTemplate="item">
           <app-produto-card [produto]="produto"></app-produto-card>
         </ng-template>
