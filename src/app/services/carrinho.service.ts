@@ -10,6 +10,8 @@ import { tap } from 'rxjs/operators';
 export class CarrinhoService {
   private carrinhoSubject = new BehaviorSubject<any[]>([]);
   carrinho$ = this.carrinhoSubject.asObservable();
+  private totalCarrinhoSubject = new BehaviorSubject<number>(0);
+  totalCarrinho$ = this.totalCarrinhoSubject.asObservable();
   private apiUrl = 'http://localhost:5299/api/carrinho';
 
   constructor(
@@ -41,7 +43,14 @@ export class CarrinhoService {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
       }
-    });
+    }).pipe(
+      tap(response => {
+        // Atualiza o total do carrinho quando buscar do servidor
+        if (response && response.total) {
+          this.totalCarrinhoSubject.next(response.total);
+        }
+      })
+    );
   }
 
   /**
@@ -148,7 +157,7 @@ export class CarrinhoService {
     console.log('Funcionalidade de carrinho temporariamente desabilitada');
   }
 
-  limparCarrinho(carrinhoId: number): Observable<any> {
+  limparCarrinho(): Observable<any> {
     const token = localStorage.getItem('token');
     if (!token) {
       return new Observable<any>(subscriber => {
@@ -157,15 +166,22 @@ export class CarrinhoService {
       });
     }
 
-    return this.http.delete<any>(`${this.apiUrl}/limpar/${carrinhoId}`, {
+    return this.http.delete<any>(`${this.apiUrl}/limpar`, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
       }
     });
   }
-
   calcularTotal(): number {
     return 0;
+  }
+
+  atualizarTotalCarrinho(total: number): void {
+    this.totalCarrinhoSubject.next(total);
+  }
+
+  getTotalCarrinho(): Observable<number> {
+    return this.totalCarrinho$;
   }
 }

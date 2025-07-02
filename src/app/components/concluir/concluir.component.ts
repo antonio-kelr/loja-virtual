@@ -101,12 +101,17 @@ export class ConcluirComponent implements OnInit {
     });
 
     if (this.carrinhoId) {
-      this.carrinhoService.limparCarrinho(this.carrinhoId).subscribe({
+      this.carrinhoService.limparCarrinho().subscribe({
         next: () => {
           console.log('Carrinho limpo com sucesso.');
         },
+        error: (err) => {
+          console.error('Erro ao limpar carrinho:', err);
+        }
       });
     }
+
+
   }
 
   private gerarQRCodePix(): void {

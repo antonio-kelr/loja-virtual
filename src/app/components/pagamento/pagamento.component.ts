@@ -53,13 +53,22 @@ export class PagamentoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Usa o total do serviço compartilhado
+    this.carrinhoService.getTotalCarrinho().subscribe(total => {
+      if (total > 0) {
+        this.totalCarrinho = total;
+      }
+    });
+
+    // Carrega o carrinho apenas para garantir dados atualizados
     this.carregarCarrinho();
   }
 
   carregarCarrinho(): void {
     this.carrinhoService.buscarCarrinhoDoServidor().subscribe({
       next: (carrinho: Carrinho) => {
-        this.totalCarrinho = carrinho.total;
+        // O total já é atualizado automaticamente pelo serviço
+        console.log('Carrinho carregado:', carrinho);
       },
       error: (error) => {
         console.error('Erro ao carregar carrinho:', error);

@@ -174,6 +174,9 @@ export class CarrinhoComponent implements OnInit {
       this.total = this.carrinho.itens.reduce((acc, item) => {
         return acc + (item.precoUnitario * item.quantidade);
       }, 0);
+
+      // Atualiza o total no serviço para compartilhar com outros componentes
+      this.carrinhoService.atualizarTotalCarrinho(this.total);
     }
   }
 
