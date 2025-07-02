@@ -49,6 +49,10 @@ export class CarrinhoService {
         if (response && response.total) {
           this.totalCarrinhoSubject.next(response.total);
         }
+        // Atualiza os itens do carrinho quando buscar do servidor
+        if (response && response.itens) {
+          this.carrinhoSubject.next(response.itens);
+        }
       })
     );
   }

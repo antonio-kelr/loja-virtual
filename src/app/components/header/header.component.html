@@ -127,11 +127,15 @@
         </ng-container>
       </div>
       <div class="icons">
-        <fa-icon
-          [icon]="faHeart"
-          (click)="irParaFavorito()"
-          style="font-size: 20px; color: white"
-        ></fa-icon>
+        <div class="favorito-icon" (click)="irParaFavorito()">
+          <fa-icon
+            [icon]="faHeart"
+            style="font-size: 20px; color: white"
+          ></fa-icon>
+          <span class="contador-favorito" *ngIf="qtdFavoritos > 0">{{
+            qtdFavoritos
+          }}</span>
+        </div>
         <div class="carrinho-icon" (click)="irParaCarrinho()">
           <fa-icon
             [icon]="faShoppingCart"

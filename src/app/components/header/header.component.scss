@@ -94,16 +94,15 @@
   gap: 15px;
 }
 
+
+
+.favorito-icon,
 .carrinho-icon {
   position: relative;
   cursor: pointer;
-  transition: transform 0.2s ease;
 
-  &:hover {
-    transform: scale(1.1);
-  }
 }
-
+.contador-favorito ,
 .contador-carrinho {
   position: absolute;
   top: -8px;

@@ -7,6 +7,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faShoppingCart, faHeart, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { MegaMenuComponent } from "../mega-menu/mega-menu.component";
 import { CarrinhoService } from '../../services/carrinho.service';
+import { FavoritoService } from '../../services/favorito.service';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -26,6 +27,7 @@ export class HeaderComponent implements OnInit {
   faHeart = faHeart;
   faChevronDown = faChevronDown;
   qtdItensCarrinho: number = 0;
+  qtdFavoritos: number = 0;
   userProfile: UserProfile | null = null;
   isLoggedIn = false;
 
@@ -36,6 +38,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private carrinhoService: CarrinhoService,
+    private favoritoService: FavoritoService,
     private router: Router,
     private authService: AuthService,
     @Inject(PLATFORM_ID) private platformId: Object
@@ -47,13 +50,52 @@ export class HeaderComponent implements OnInit {
       this.qtdItensCarrinho = itens.length;
     });
 
+    // Inscreve-se para receber atualizações dos favoritos
+    this.favoritoService.getQuantidadeFavoritos().subscribe(quantidade => {
+      this.qtdFavoritos = quantidade;
+    });
+
     // Observar mudanças no estado do usuário
     this.authService.user$.subscribe(user => {
       this.isLoggedIn = !!user;
       if (user) {
         this.loadUserProfile();
+        // Carrega o carrinho do servidor quando o usuário está logado
+        this.carregarCarrinhoDoServidor();
+        // Carrega os favoritos do servidor quando o usuário está logado
+        this.carregarFavoritosDoServidor();
       } else {
         this.userProfile = null;
+        this.qtdItensCarrinho = 0; // Zera o carrinho quando deslogado
+        this.qtdFavoritos = 0; // Zera os favoritos quando deslogado
+      }
+    });
+  }
+
+  private carregarCarrinhoDoServidor() {
+    this.carrinhoService.buscarCarrinhoDoServidor().subscribe({
+      next: (carrinho) => {
+        if (carrinho && carrinho.itens) {
+          this.qtdItensCarrinho = carrinho.itens.length;
+        }
+      },
+      error: (error) => {
+        console.error('Erro ao carregar carrinho no header:', error);
+        this.qtdItensCarrinho = 0;
+      }
+    });
+  }
+
+  private carregarFavoritosDoServidor() {
+    this.favoritoService.getFavoritos().subscribe({
+      next: (favoritos) => {
+        if (favoritos && Array.isArray(favoritos)) {
+          this.qtdFavoritos = favoritos.length;
+        }
+      },
+      error: (error) => {
+        console.error('Erro ao carregar favoritos no header:', error);
+        this.qtdFavoritos = 0;
       }
     });
   }
