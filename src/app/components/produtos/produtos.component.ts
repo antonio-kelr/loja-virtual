@@ -44,10 +44,16 @@ export class ProdutosComponent implements OnInit {
   constructor(private produtoService: ProdutoService) {}
 
   ngOnInit() {
+    console.log('ngOnInit chamado');
+    this.celulares = [];
+    this.notebooks = [];
+    this.monitores = [];
     this.carregarProdutosPorCategoria();
   }
 
   carregarProdutosPorCategoria() {
+
+
     // Carregar Celulares
     this.produtoService.getProdutosPorCategoria('celular-smartphone').subscribe({
       next: (produtos) => {
@@ -69,7 +75,7 @@ export class ProdutosComponent implements OnInit {
     });
 
     // Carregar Monitores
-    this.produtoService.getProdutosPorCategoria('moinitor').subscribe({
+    this.produtoService.getProdutosPorCategoria('monitor').subscribe({
       next: (produtos) => {
         this.monitores = produtos;
       },
