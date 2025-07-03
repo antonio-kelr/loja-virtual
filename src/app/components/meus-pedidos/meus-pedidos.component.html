@@ -5,40 +5,38 @@
 
   </div>
 
-  <div *ngIf="pedidos.length === 0" class="sem-pedidos">
+  <div *ngIf="carregando" class="carregando">
+    <p-progressSpinner styleClass="custom-spinner" strokeWidth="4" animationDuration=".1.5s"></p-progressSpinner>
+  </div>
+
+  <div *ngIf="!carregando && pedidos.length === 0" class="sem-pedidos">
     <fa-icon [icon]="faceFrown"></fa-icon>
     <h2>Você ainda não fez nenhum pedido.</h2>
     <p>Assim que fizer, eles aparecerão aqui.</p>
-    <button
-
-    routerLink="/"
-  >
-    Ver produtos
-  </button>
+    <button routerLink="/">Ver produtos</button>
   </div>
-  <div *ngFor="let pedido of pedidos" class="pedido-bloco">
-    <div class="pedido-info">
-        <span>Pedido: #{{ pedido.id }}</span> -
-        <span class="data">{{ pedido.dataPedido | date: 'dd/MM/yyyy' }}</span>
-    </div>
-    <div class="pedido-status">
 
-      {{ pedido.status }}
-
-    </div>
-
-    <div class="itens-container">
-      <div *ngFor="let item of pedido.itens" class="item">
-        <img [src]="item.produto.imagens?.[0]?.url">
-        <div class="item-detalhes">
-          <p class="descricao">{{ item.produto?.descricao }}</p>
-          <div>
-            <span>Quantidade: {{ item.quantidade }}</span>
-            <span>Preço: R$ {{ item.produto?.preco | number: '1.2-2' }}</span>
+  <div *ngIf="!carregando && pedidos.length > 0">
+    <div *ngFor="let pedido of pedidos" class="pedido-bloco">
+      <div class="pedido-info">
+          <span>Pedido: #{{ pedido.id }}</span> -
+          <span class="data">{{ pedido.dataPedido | date: 'dd/MM/yyyy' }}</span>
+      </div>
+      <div class="pedido-status">
+        {{ pedido.status }}
+      </div>
+      <div class="itens-container">
+        <div *ngFor="let item of pedido.itens" class="item">
+          <img [src]="item.produto.imagens?.[0]?.url">
+          <div class="item-detalhes">
+            <p class="descricao">{{ item.produto?.descricao }}</p>
+            <div>
+              <span>Quantidade: {{ item.quantidade }}</span>
+              <span>Preço: R$ {{ item.produto?.preco | number: '1.2-2' }}</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 </div>
