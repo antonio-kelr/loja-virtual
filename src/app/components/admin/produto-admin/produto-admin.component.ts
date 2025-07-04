@@ -42,7 +42,7 @@ export class ProdutoAdminComponent implements OnInit {
   categoriaSelecionada: Categoria | null = null;
   carregando: boolean = true;
   produtoIdParaUpload: number | null = null;
-  mostrarModalUpload: boolean = true;
+  mostrarModalUpload: boolean = false;
 
   @Input() produtoId!: number;
   @ViewChild('fileUploader') fileUploader!: FileUpload;

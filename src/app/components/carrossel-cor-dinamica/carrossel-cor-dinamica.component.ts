@@ -17,10 +17,10 @@ export class CarrosselCorDinamicaComponent implements AfterViewInit {
     'assets/img/img-1.webp',
     'assets/img/img-2.webp',
     'assets/img/img-3.webp',
-    'assets/img/img-4.webp',
-    'assets/img/img-5.webp',
     'assets/img/img-6.webp',
     'assets/img/img-7.webp',
+    'assets/img/img-8.gif',
+    'assets/img/img-9.webp',
   ];
 
   constructor(
