@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Produto } from '../interfaces/produto.interface';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -51,4 +52,16 @@ getProdutosPorCategoria(nomeCategoria: string): Observable<Produto[]> {
   getProdutoPorSlug(slug: string): Observable<Produto> {
     return this.http.get<Produto>(`${this.apiUrl}/slug/${slug}`);
   }
+
+  // Criar ProdutoImagem recebendo produtoId e imagens
+  criarProdutoImagem(produtoId: number, imagens: File[]): Observable<any> {
+    const formData = new FormData();
+    formData.append('produtoId', produtoId.toString());
+    imagens.forEach(imagem => {
+      formData.append('imagens', imagem);
+    });
+    const url = environment.uploadProdutoImagemUrl;
+    return this.http.post<any>(url, formData);
+  }
+
 }

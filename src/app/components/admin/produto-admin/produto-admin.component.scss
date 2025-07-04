@@ -1,10 +1,9 @@
 :host ::ng-deep {
   .p-datatable .p-datatable-header {
-    background: #e9ecef!important;
+    background: #e9ecef !important;
     border: 1px solid #e9ecef !important;
     color: #495057 !important;
     text-transform: uppercase;
-
   }
   .table-header h2 {
     font-size: 1.5rem !important;
@@ -46,18 +45,14 @@
     object-fit: contain;
     border-radius: 6px;
     vertical-align: middle;
-
   }
   .produt-img {
     width: 250px !important;
-
-
   }
   .p-datatable-tbody > tr > td {
-    border-color: #e9ecef  !important;
+    border-color: #e9ecef !important;
     border: 1px solid #e9ecef !important;
-
-}
+  }
 
   .table-header {
     display: flex;
@@ -109,18 +104,75 @@
       }
     }
   }
+
+  .p-dialog {
+    background: white !important;
+    border: none !important;
+
+    input,
+    textarea,
+    .p-inputtext,
+    .p-dropdown,
+    .p-inputnumber-input {
+      background: white !important;
+      color: #222 !important;
+      border: 1px solid #e9ecef !important;
+    }
+  }
+
+  .p-dialog-header {
+    background: white !important;
+    border-bottom: 1px solid #e9ecef !important;
+    color: #222 !important;
+  }
+
+  .p-dialog-title {
+    color: #222 !important;
+    text-transform: uppercase;
+  }
+  .p-fileupload-advanced {
+    border: 1px solid #e2e8f0;
+    background: transparent;
+    color: #334155;
+  }
+  .p-fileupload-header {
+    background: #f8fafc;
+
+    border-color: #e2e8f0;
+  }
+}
+:host ::ng-deep .p-fileupload-choose-button {
+  background-color: var(--cor-primaria) !important;
+  border-color: var(--cor-principal) !important;
+  color: #fff !important; // ou a cor que preferir para o texto
 }
 
-.btn-edit {
-  background-color: #007bff !important; /* azul */
+
+.p-button-primary,
+.p-button.p-button-primary,
+button.p-button-primary,
+button.p-button {
+  background-color: var(--cor-primaria);
   color: #fff !important;
   border: none !important;
 }
-
+.btn-criar {
+  text-transform: uppercase;
+  font-family: sans-serif;
+  font-size: 0.93rem;
+}
 .btn-delete {
-  background-color: #dc3545 !important; /* vermelho */
-  color: #fff !important;
-  border: none !important;
+  background-color: red !important;
+}
+
+// Ajuste para hover
+.btn-edit:hover,
+.btn-delete:hover,
+.p-button-primary:hover,
+.p-button.p-button-primary:hover,
+button.p-button-primary:hover,
+button.p-button:hover {
+  background-color: var(--cor-primaria-escura) !important;
 }
 
 // Estilos para filtros
@@ -196,7 +248,10 @@
     color: #495057;
   }
 
-  input, textarea, p-dropdown, p-inputnumber {
+  input,
+  textarea,
+  p-dropdown,
+  p-inputnumber {
     width: 100%;
   }
 
@@ -297,9 +352,20 @@
     color: #ef4444;
   }
   .p-select-label {
-
     color: #000000 !important;
   }
+
+  .p-dialog-header {
+    background: white !important;
+    border-bottom: 1px solid #e9ecef !important;
+  }
+
+  .p-dialog-content {
+    background: white !important;
+  }
+
+  .p-dialog-footer {
+    background: white !important;
+    border-top: 1px solid #e9ecef !important;
+  }
 }
-
-

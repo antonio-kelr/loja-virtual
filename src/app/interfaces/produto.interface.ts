@@ -6,6 +6,8 @@ export interface Produto {
   preco: number;
   precoAntigo: number;
   categoriaId: number;
+  marca:string;
+  quantidade:number
   categoria?: Categoria;
   imagens?: ProdutoImagem[];
 }

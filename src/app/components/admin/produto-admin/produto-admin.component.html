@@ -11,7 +11,8 @@
         placeholder="Selecione uma categoria"
         [showClear]="true"
         (onChange)="filtrarPorCategoria()"
-        styleClass="w-full md:w-20rem">
+        styleClass="w-full md:w-20rem"
+      >
       </p-dropdown>
       <button
         pButton
@@ -20,72 +21,97 @@
         icon="pi pi-times"
         class="btn-limpar-filtro"
         (click)="limparFiltro()"
-        [disabled]="!categoriaSelecionada">
-      </button>
+        [disabled]="!categoriaSelecionada"
+      ></button>
     </div>
   </div>
 
   <p-table
-      [value]="produtosFiltrados"
-      [paginator]="true"
-      [rows]="10"
-      [showCurrentPageReport]="true"
-      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} produtos"
-      [rowsPerPageOptions]="[10, 25, 50]"
-      styleClass="p-datatable-striped">
-      <ng-template pTemplate="caption">
-          <div class="table-header">
-              <h2 class="m-0">Gerenciar Produtos</h2>
-              <button pButton pRipple label="Novo Produto" icon="pi pi-plus" (click)="abrirModalCriar()"></button>
+    [value]="produtosFiltrados"
+    [paginator]="true"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} produtos"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    styleClass="p-datatable-striped"
+  >
+    <ng-template pTemplate="caption">
+      <div class="table-header">
+        <h2 class="m-0">Gerenciar Produtos</h2>
+        <button
+          pButton
+          pRipple
+          label="Novo Produto"
+          class="btn-criar"
+          icon="pi pi-cart-plus"
+          (click)="abrirModalCriar()"
+        ></button>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 5rem">Imagem</th>
+        <th pSortableColumn="nome">
+          Nome <p-sortIcon field="nome"></p-sortIcon>
+        </th>
+        <th>Descrição</th>
+        <th>Categoria</th>
+        <th pSortableColumn="preco">
+          Preço <p-sortIcon field="preco"></p-sortIcon>
+        </th>
+        <th style="width: 8rem">Ações</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-produto>
+      <tr>
+        <td class="produt-img">
+          <img
+            [src]="produto.imagens?.[0]?.url || 'https://via.placeholder.com/50'"
+            [alt]="produto.nome"
+            class="product-image"
+          />
+        </td>
+        <td class="product-name">{{ produto.nome }}</td>
+        <td class="product-description" [title]="produto.descricao">
+          {{ produto.descricao }}
+        </td>
+        <td class="product-category">
+          {{ getNomeCategoria(produto.categoriaId) }}
+        </td>
+        <td>{{ produto.preco | currency : "BRL" }}</td>
+        <td>
+          <div class="actions">
+            <button pButton pRipple icon="pi pi-pencil" class="btn-edit">
+              edit
+            </button>
+            <button pButton pRipple icon="pi pi-trash" class="btn-delete">
+              excluir
+            </button>
           </div>
-      </ng-template>
-      <ng-template pTemplate="header">
-          <tr>
-              <th style="width: 5rem">Imagem</th>
-              <th pSortableColumn="nome">Nome <p-sortIcon field="nome"></p-sortIcon></th>
-              <th>Descrição</th>
-              <th>Categoria</th>
-              <th pSortableColumn="preco">Preço <p-sortIcon field="preco"></p-sortIcon></th>
-              <th style="width: 8rem">Ações</th>
-          </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-produto>
-          <tr>
-              <td class="produt-img">
-                <img [src]="produto.imagens?.[0]?.url || 'https://via.placeholder.com/50'" [alt]="produto.nome" class="product-image" />
-              </td>
-              <td class="product-name">{{ produto.nome }}</td>
-              <td class="product-description" [title]="produto.descricao">{{ produto.descricao }}</td>
-              <td class="product-category">{{ getNomeCategoria(produto.categoriaId) }}</td>
-              <td>{{ produto.preco | currency: 'BRL' }}</td>
-              <td>
-                <div class="actions">
-                  <button pButton pRipple icon="pi pi-pencil" class="btn-edit">edit</button>
-                  <button pButton pRipple icon="pi pi-trash" class="btn-delete">excluir</button>
-                </div>
-              </td>
-          </tr>
-      </ng-template>
-      <ng-template pTemplate="summary">
-          <div class="summary-info">
-            <span>Total de {{produtosFiltrados?.length || 0}} produtos</span>
-            <span *ngIf="categoriaSelecionada" class="filtro-ativo">
-              (Filtrado por: {{categoriaSelecionada.nome}})
-            </span>
-          </div>
-      </ng-template>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="summary-info">
+        <span>Total de {{ produtosFiltrados.length || 0 }} produtos</span>
+        <span *ngIf="categoriaSelecionada" class="filtro-ativo">
+          (Filtrado por: {{ categoriaSelecionada.nome }})
+        </span>
+      </div>
+    </ng-template>
   </p-table>
 </div>
 
 <!-- Modal de Criação de Produto -->
+
 <p-dialog
   header="Criar Novo Produto"
   [(visible)]="mostrarModalCriar"
   [modal]="true"
-  [style]="{width: '50vw'}"
+  [style]="{ width: '50vw' }"
   [draggable]="false"
-  [resizable]="false">
-
+  [resizable]="false"
+>
   <div class="form-container">
     <div class="form-group">
       <label for="nome">Nome do Produto *</label>
@@ -95,7 +121,8 @@
         type="text"
         [(ngModel)]="produtoNovo.nome"
         placeholder="Digite o nome do produto"
-        class="w-full" />
+        class="w-full"
+      />
     </div>
 
     <div class="form-group">
@@ -106,7 +133,36 @@
         [(ngModel)]="produtoNovo.descricao"
         placeholder="Digite a descrição do produto"
         rows="4"
-        class="w-full"></textarea>
+        class="w-full"
+      ></textarea>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="marca">marca *</label>
+        <input
+          id="marca"
+          pInputText
+          type="text"
+          [(ngModel)]="produtoNovo.marca"
+          placeholder="Digite a marca do produto"
+          class="w-full"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="quantidade">Quantidade</label>
+        <p-inputNumber
+          id="quantidade"
+          [(ngModel)]="produtoNovo.quantidade"
+          [min]="0"
+          [max]="9999"
+          [step]="1"
+          [useGrouping]="false"
+          placeholder="0"
+          class="w-full"
+        />
+      </div>
     </div>
 
     <div class="form-row">
@@ -119,7 +175,8 @@
           currency="BRL"
           locale="pt-BR"
           placeholder="0,00"
-          class="w-full" />
+          class="w-full"
+        />
       </div>
 
       <div class="form-group">
@@ -131,7 +188,8 @@
           currency="BRL"
           locale="pt-BR"
           placeholder="0,00"
-          class="w-full" />
+          class="w-full"
+        />
       </div>
     </div>
 
@@ -147,7 +205,8 @@
         [appendTo]="'body'"
         [autoZIndex]="true"
         [baseZIndex]="1000"
-        class="w-full">
+        class="w-full"
+      >
       </p-dropdown>
     </div>
   </div>
@@ -161,8 +220,8 @@
         icon="pi pi-times"
         class="p-button-text"
         (click)="fecharModalCriar()"
-        [disabled]="salvando">
-      </button>
+        [disabled]="salvando"
+      ></button>
       <button
         pButton
         pRipple
@@ -170,10 +229,38 @@
         icon="pi pi-check"
         (click)="criarProduto()"
         [loading]="salvando"
-        [disabled]="salvando">
-      </button>
+        [disabled]="salvando"
+      ></button>
     </div>
   </ng-template>
+</p-dialog>
+
+<!-- Modal de Criação imagem de  Produto -->
+
+<p-dialog
+  header="Envie as imagens do produto"
+  closable="p-dialog-upload"
+  [(visible)]="mostrarModalUpload"
+  [modal]="true"
+  [style]="{ width: '40vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <p-fileUpload
+    #fileUploader
+    name="imagens"
+    [auto]="false"
+    [customUpload]="true"
+    [multiple]="true"
+    accept="image/*"
+    maxFileSize="1000000"
+    (onSelect)="onFileSelect($event)"
+    (uploadHandler)="uploadFiles($event)"
+  >
+    <ng-template pTemplate="empty">
+      <div>Arraste as imagens aqui ou clique para selecionar.</div>
+    </ng-template>
+  </p-fileUpload>
 </p-dialog>
 
 <!-- Toast para mensagens -->
