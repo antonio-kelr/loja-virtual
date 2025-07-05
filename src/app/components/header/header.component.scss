@@ -8,9 +8,33 @@
 .header {
   background-color: #161719;
 }
+.input-search {
+  position: relative;
+  width: 100%;
+
+}
+.suggestions-list {
+  position: absolute;
+  margin-top: 5px;
+  width: 100%;
+  background: white;
+  list-style: none;
+  z-index: 999;
+
+  li {
+    padding: 5px;
+    cursor: pointer;
+    font-size: 0.87rem;
+    font-family: sans-serif;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+  }
+
+}
 
 .search {
-  width: 730px;
+  width: 930px;
   display: flex;
   align-items: center;
   position: relative;
@@ -24,7 +48,7 @@
   }
 }
 .p-inputtext {
-  height: 2.25rem;
+  height: 2rem;
   border-radius: 4px;
   width: 100%;
   background: white;
@@ -59,6 +83,14 @@
   color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
 }
+.clear-search-icon {
+  position: absolute;
+  z-index: 99;
+  cursor: pointer;
+  right: 45px;
+  top: 50%;
+  transform: translateY(-50%);
+}
 
 .nav-links {
   display: flex;
@@ -67,7 +99,8 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  width: 460px;
+  width: 360px;
+
 }
 
 .isLogin {

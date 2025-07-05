@@ -64,4 +64,8 @@ getProdutosPorCategoria(nomeCategoria: string): Observable<Produto[]> {
     return this.http.post<any>(url, formData);
   }
 
+  // Buscar produtos por termo de busca
+  searchProdutos(searchTerm: string): Observable<Produto[]> {
+    return this.http.get<Produto[]>(`${this.apiUrl}/search?query=${searchTerm}`);
+  }
 }

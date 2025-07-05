@@ -24,7 +24,7 @@
   <div class="categoria-section" *ngIf="notebooks.length > 0">
     <h2 class="categoria-titulo">
       <i class="pi pi-shopping-bag"></i>
-      Notebooks
+      Computadores
     </h2>
     <div class="card maxWidth">
       <p-carousel
@@ -50,6 +50,26 @@
     <div class="card maxWidth">
       <p-carousel
         [value]="monitores"
+        [numVisible]="5"
+        [numScroll]="1"
+        [showIndicators]="false"
+        [responsiveOptions]="responsiveOptions"
+      >
+        <ng-template let-produto pTemplate="item">
+          <app-produto-card [produto]="produto"></app-produto-card>
+        </ng-template>
+      </p-carousel>
+    </div>
+  </div>
+  <!-- Seção de Teclados -->
+  <div class="categoria-section" *ngIf="cadeiraGamer.length > 0">
+    <h2 class="categoria-titulo">
+      <i class="pi pi-shopping-bag"></i>
+      cadeira-gamers
+    </h2>
+    <div class="card maxWidth">
+      <p-carousel
+        [value]="cadeiraGamer"
         [numVisible]="5"
         [numScroll]="1"
         [showIndicators]="false"

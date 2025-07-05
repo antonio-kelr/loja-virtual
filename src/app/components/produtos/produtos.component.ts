@@ -17,6 +17,7 @@ export class ProdutosComponent implements OnInit {
   celulares: Produto[] = [];
   notebooks: Produto[] = [];
   monitores: Produto[] = [];
+  cadeiraGamer: Produto[] = [];
 
   responsiveOptions = [
     {
@@ -48,6 +49,7 @@ export class ProdutosComponent implements OnInit {
     this.celulares = [];
     this.notebooks = [];
     this.monitores = [];
+    this.cadeiraGamer = [];
     this.carregarProdutosPorCategoria();
   }
 
@@ -81,6 +83,14 @@ export class ProdutosComponent implements OnInit {
       },
       error: (erro) => {
         console.error('Erro ao carregar monitores:', erro);
+      }
+    });
+    this.produtoService.getProdutosPorCategoria('cadeira-Gamer').subscribe({
+      next: (produtos) => {
+        this.cadeiraGamer = produtos;
+      },
+      error: (erro) => {
+        console.error('Erro ao carregar cadeira-Gamer:', erro);
       }
     });
   }
