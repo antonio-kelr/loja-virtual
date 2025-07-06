@@ -37,7 +37,7 @@ export class ProdutosComponent implements OnInit {
     },
     {
       breakpoint: '992px',
-      numVisible: 2,
+      numVisible: 3,
       numScroll: 1
     },
     {
@@ -92,6 +92,7 @@ export class ProdutosComponent implements OnInit {
     });
     this.produtoService.getProdutosPorCategoria('cadeira-Gamer').subscribe({
       next: (produtos) => {
+
         this.cadeiraGamer = produtos;
       },
       error: (erro) => {

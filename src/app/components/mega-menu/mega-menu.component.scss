@@ -32,3 +32,12 @@
   color: #fff;
   text-decoration: none
 }
+
+
+@media screen and (max-width:540px) {
+  .mega-menu  {
+    display: none;
+  }
+
+
+}

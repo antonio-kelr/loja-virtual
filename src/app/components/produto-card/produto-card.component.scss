@@ -1,20 +1,17 @@
 .p_item_componet {
-  background: #FFFFFF;
+  background: #ffffff;
   transition: all 0.3s ease;
-   padding: 10px 10px !important;
+  padding: 10px 10px !important;
   cursor: pointer;
 
   &:hover {
-    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
     transition: box-shadow 0.3s ease-in-out;
   }
 }
 
 .nameCard {
-
   font-size: 0.875rem;
   line-height: 1.25rem;
-
   font-weight: 600;
   margin-top: 0.5rem;
   color: rgb(66, 70, 77);
@@ -30,6 +27,7 @@
 
 .old-price {
   color: #999;
+  min-height: 23px;
 }
 
 .value_atual {
@@ -39,10 +37,11 @@
   font-weight: 700;
 }
 
-.op_payment, span {
+.op_payment,
+span {
   padding-top: 2px;
 
-  font-size: .75rem;
+  font-size: 0.75rem;
 }
 
 .botoes-container {
@@ -102,7 +101,7 @@
   gap: 13px;
 }
 
-.icon-favorito{
+.icon-favorito {
   background: white;
   width: 32px;
   height: 32px;
@@ -165,31 +164,32 @@
 }
 
 .produto-imagem {
-  height: 150px !important;
-  width: 100% !important;
+  height: 140px ;
+  width: 100% ;
   max-width: 100%;
   object-fit: contain;
-  margin: 0 auto !important;
+  margin: 0 auto ;
 
   padding: 15px;
   background: white;
   border-radius: 8px;
   transition: transform 0.3s ease;
-
 }
 
-@media screen and (max-width:1023px) {
-  .p_item_componet {
-    background: #FFFFFF;
-    transition: all 0.3s ease;
-    border: 1px solid red;
-     padding: 10px 10px !important;
-    cursor: pointer;
+@media screen and (max-width: 1023px) {
+  .produto-imagem {
+    height: 100px;
+    padding: auto 0px;
 
-    &:hover {
-      box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
-      transition: box-shadow 0.3s ease-in-out;
-    }
+  }
+  .p_item_componet {
+    width: 320px;
+  }
+
+
+  .produto-prece {
+    text-align: center;
+
   }
 
 

@@ -1,12 +1,13 @@
 .footer {
   background-color: #1a1a1a;
   color: #fff;
-  padding: 4rem 0 0;
+  padding: 2rem;
 
   .footer-content {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
+
     padding-bottom: 3rem;
   }
 
@@ -132,8 +133,10 @@
 
 @media (max-width: 768px) {
   .footer {
+    padding: 2rem 0 0;
     .footer-content {
       grid-template-columns: 1fr;
+      padding: 0 1rem;
     }
 
     .footer-bottom {
