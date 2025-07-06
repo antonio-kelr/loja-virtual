@@ -32,11 +32,16 @@ export class ProdutosComponent implements OnInit {
     },
     {
       breakpoint: '1100px',
+      numVisible: 3,
+      numScroll: 1
+    },
+    {
+      breakpoint: '992px',
       numVisible: 2,
       numScroll: 1
     },
     {
-      breakpoint: '768px',
+      breakpoint: '600px',
       numVisible: 1,
       numScroll: 1
     }

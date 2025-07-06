@@ -1,10 +1,13 @@
-<div class="p_item_componet border-surface-200 dark:border-surface-700 rounded m-2 p-4" (click)="verDetalhes(produto)">
+<div
+  class="p_item_componet border-surface-200 dark:border-surface-700 rounded m-2 p-4"
+  (click)="verDetalhes(produto)"
+>
   <div class="mb-4">
     <div class="relative mx-auto">
       <img
-        src={{produto.imagens}}
-        [src]="produto.imagens?.[0]?.url" [alt]="produto.imagens.nome"
-        [alt]="produto.nome"
+        src="{{ produto.imagens }}"
+        [src]="produto.imagens?.[0]?.url"
+        [alt]="produto.imagens.nome"
         class="w-full rounded-border produto-imagem"
       />
       <div class="opçes-butoes">
@@ -18,20 +21,28 @@
       </div>
     </div>
   </div>
-  <div class="sc-d79c9c3f-0 nlmfp sc-27518a44-9 iJKRqI nameCard">{{ produto.descricao }}</div>
+  <div class="sc-d79c9c3f-0 nlmfp sc-27518a44-9 iJKRqI nameCard">
+    {{ produto.descricao }}
+  </div>
   <div class="">
     <div class="font-semibold text-xl" style="margin: 0; padding: 4px 0">
-      <p *ngIf="produto.precoAntigo" class="old-price" style="font-size: 0.75rem; margin: 0; padding: 4px 0">
+      <p
+        *ngIf="produto.precoAntigo"
+        class="old-price"
+        style="font-size: 0.75rem; margin: 0; padding: 4px 0"
+      >
         <s>R$ {{ produto.precoAntigo | currency : "BRL" }}</s>
       </p>
     </div>
     <div class="value_atual">
       {{ produto.preco | currency : "BRL" }}
     </div>
-    <div class="op_payment" style="margin-bottom: 20px;">
+    <div class="op_payment" style="margin-bottom: 20px">
       À vista no PIX
       <br />
-      <span> ou até <b>10x de R$ {{ precoParcelado | number:'1.2-2' }}</b> </span>
+      <span>
+        ou até <b>10x de R$ {{ precoParcelado | number : "1.2-2" }}</b>
+      </span>
     </div>
 
     <div class="botoes-container">
