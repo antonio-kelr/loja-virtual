@@ -65,6 +65,16 @@
     text-decoration: none;
     font-weight: bold;
   }
+
+  position: relative;
+
+  .user-profile-desktop {
+    display: block;
+  }
+
+  .user-profile-mobile {
+    display: none;
+  }
 }
 
 .icons {
@@ -299,29 +309,29 @@
     }
   }
 }
+
+.menu-hamburguer-icon,
 .logo-amburgue {
   display: none;
 }
 
 @media (max-width: 992px) {
   .navbar {
-    border: 2px solid red;
+    position: relative;
     grid-template-columns: 1fr;
     gap: 0px;
+  }
+  .menu-hamburguer-icon  {
+    display: flex;
+
+    .icon-menu {
+      font-size: 1.875rem;
+    }
   }
   .nav-links {
     order: 1;
     grid-row: 1;
-  }
-  .nav-links {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    list-style: none;
-    border: 2px solid red;
 
-    margin: 0;
-    padding: 0;
     width: 100%;
   }
 
@@ -333,13 +343,100 @@
 
   .nav-container {
     order: 2;
+
     grid-row: 2;
   }
   .logo-amburgue {
     display: flex;
   }
   .navbar .logo {
-    border: 2px solid red;
     display: none;
+  }
+  .profile-trigger-mobile {
+    position: absolute;
+    background: var(--cor-primaria);
+    width: 100%;
+    color: white;
+    top: 36px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    z-index: 999999;
+    height: 100vh;
+  }
+
+  .info-user {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .menu-mobile {
+    width: 100%;
+
+
+    ul {
+      list-style: none;
+
+    }
+    li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      cursor: pointer;
+      color: white !important;
+    }
+    a {
+      color: white !important;
+      font-size: .975rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+  }
+  .btn-sair {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    padding: 12px 24px;
+    background: var(--cor-primaria-escura);
+    color: white;
+    border: none;
+    text-transform: uppercase;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+
+
+
+  }
+
+  .user-info-mobile  {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+  }
+  .user-info-mobile span {
+    font-size: 1.25rem;
+  }
+  .isLogin {
+    .user-profile-desktop {
+      display: none;
+    }
+
+    .user-profile-mobile {
+      display: flex;
+    }
+  }
+  .user-profile-mobile {
+    width: 100%;
+  }
+  .profile-trigger-mobile {
+    // border: 2px solid red;
   }
 }

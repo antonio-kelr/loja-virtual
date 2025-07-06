@@ -4,7 +4,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faShoppingCart, faHeart, faChevronDown, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart, faHeart, faChevronDown, faTimes, faBars } from '@fortawesome/free-solid-svg-icons';
 import { MegaMenuComponent } from "../mega-menu/mega-menu.component";
 import { CarrinhoService } from '../../services/carrinho.service';
 import { FavoritoService } from '../../services/favorito.service';
@@ -31,10 +31,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   faHeart = faHeart;
   faChevronDown = faChevronDown;
   faTimes = faTimes;
+  faBars = faBars;
   qtdItensCarrinho: number = 0;
   qtdFavoritos: number = 0;
   userProfile: UserProfile | null = null;
   isLoggedIn = false;
+  showMobileMenu: boolean = false;
   favoritos: any[] = []; // Array para armazenar os favoritos
   searchTerm: string = '';
   suggestedProducts: Produto[] = [];
@@ -237,6 +239,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.suggestedProducts = [];
     // Opcional: navegar para a página inicial ou de produtos sem filtro
     this.router.navigate(['/produto']);
+  }
+
+  toggleMobileMenu() {
+    this.showMobileMenu = !this.showMobileMenu;
   }
 
   ngOnDestroy() {
