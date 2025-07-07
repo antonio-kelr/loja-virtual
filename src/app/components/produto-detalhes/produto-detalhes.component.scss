@@ -66,6 +66,7 @@ p {
   height: 400px;
 
   .imagem-principal {
+
     flex: 1;
     display: flex;
 
@@ -137,11 +138,7 @@ p {
   }
 
   @media (max-width: 1600px) {
-    height: 500px;
 
-    .imagem-principal {
-      height: 500px;
-    }
 
     .miniaturas {
       max-height: 500px;
@@ -149,11 +146,7 @@ p {
   }
 
   @media (max-width: 1400px) {
-    height: 450px;
 
-    .imagem-principal {
-      height: 450px;
-    }
 
     .miniaturas {
       max-height: 450px;
@@ -161,55 +154,14 @@ p {
   }
 
   @media (max-width: 1200px) {
-    height: 400px;
 
-    .imagem-principal {
-      height: 400px;
-    }
 
     .miniaturas {
       max-height: 400px;
     }
   }
 
-  @media (max-width: 992px) {
-    height: 350px;
 
-    .imagem-principal {
-      height: 350px;
-    }
-
-    // .miniaturas {
-    //   max-height: 350px;
-    // }
-  }
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    height: auto;
-
-    .imagem-principal {
-      height: 300px;
-    }
-
-    // .miniaturas {
-    //   flex-direction: row;
-    //   max-height: none;
-    //   overflow-x: auto;
-    //   overflow-y: hidden;
-    //   padding-left: 0;
-    //   padding-bottom: 10px;
-
-    //   .miniatura {
-    //     width: 70px;
-    //     height: 70px;
-
-    //     &:hover {
-    //       transform: translateY(-2px);
-    //     }
-    //   }
-    // }
-  }
 }
 
 .produto-info {
@@ -490,8 +442,10 @@ p {
     width: 100% !important ;
   }
   .slider-produtos {
-    gap: 80px !important;
+    gap: 10px !important;
+    transition: transform 0.1s ease;
   }
+
 }
 .produtos-relacionados-mobile,
 .produtos-relacionados {
@@ -623,6 +577,10 @@ p {
     grid-template-columns: 1fr 0.9fr;
 
   }
+  .p-radiobutton-input {
+
+    background: red !important;
+  }
 
   .entrega span {
     font-size: 0.975rem;
@@ -634,10 +592,10 @@ p {
 
   .miniaturas-radio {
     display: flex;
-    align-items: center;
-    gap: 10px;
+    flex-direction: row;
     justify-content: center;
-
+    gap: 10px;
+    margin-top: 15px;
 
   }
 
@@ -686,10 +644,32 @@ p {
   }
 
 
-  .imagem-principal {
-    width: 350px;
-    text-align: center;
+  .produto-imagens {
+    display: flex;
+
+    flex-direction: row-reverse;
+    gap: 20px;
+    flex-direction: column !important;
+
+    height: 400px;
+
+    .imagem-principal {
+
+      flex: 1;
+      display: flex;
+      flex-direction: column !important;
+
+
+      .imagem-produto {
+        width: 100%;
+        height: 100%;
+
+        object-fit: contain;
+        padding: 20px;
+      }
+    }
   }
+
 
 
 }

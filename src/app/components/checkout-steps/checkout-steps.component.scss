@@ -49,3 +49,10 @@
     background: #28a745;
   }
 }
+
+@media screen and (max-width:1070px) {
+  .steps-container {
+    display: none;
+  }
+
+}

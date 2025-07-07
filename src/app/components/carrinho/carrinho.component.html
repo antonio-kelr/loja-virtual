@@ -84,20 +84,25 @@
             </div>
 
             <div class="produto-info">
-              <p class="produto-nome">{{ item.produto.nome }}</p>
+              <span class="produto-nome">{{ item.produto.marca }}</span>
               <h3 class="produto-nome">{{ item.produto.descricao }}</h3>
             </div>
+            <div class="acoes-produto-carinho">
 
             <div class="produto-quantidade">
-              <span>Quant</span>
-              <div class="controle-quantidade">
-                <button class="btn-quantidade" (click)="atualizarQuantidade(item, -1)" [disabled]="carregando">
-                  <i class="pi pi-angle-left"></i>
-                </button>
-                <span class="quantidade">{{ item.quantidade }}</span>
-                <button class="btn-quantidade" (click)="atualizarQuantidade(item, 1)" [disabled]="carregando">
-                  <i class="pi pi-angle-right"></i>
-                </button>
+
+              <div class="controle-quant">
+                <span>Quant</span>
+                <div class="controle-quantidade">
+                  <button class="btn-quantidade" (click)="atualizarQuantidade(item, -1)" [disabled]="carregando">
+                    <i class="pi pi-angle-left"></i>
+                  </button>
+
+                  <span class="quantidade">{{ item.quantidade }}</span>
+                  <button class="btn-quantidade" (click)="atualizarQuantidade(item, 1)" [disabled]="carregando">
+                    <i class="pi pi-angle-right"></i>
+                  </button>
+                </div>
               </div>
 
               <button class="btn-remover" (click)="removerItem(item)" [disabled]="carregando" [title]="'Remover ' + item.produto.nome">
@@ -107,8 +112,11 @@
             </div>
 
             <div class="produto-subtotal">
+              <p>Preço à vista no PIX:</p>
               R$ {{ (item.precoUnitario * item.quantidade) | number:'1.2-2' }}
             </div>
+          </div>
+
           </div>
         </div>
 
@@ -129,7 +137,7 @@
 <!-- Spinner -->
 <ng-container *ngIf="spinnerQuantidade !== null">
   <div class="overlay-spinner">
-    <div class="spinner"></div>
+    <p-progress-spinner ariaLabel="loading" />
   </div>
 </ng-container>
 

@@ -36,6 +36,7 @@ export class ConfirmacaoComponent implements OnInit {
   erro: string | null = null;
   etapaAtual = 3; // Etapa de confirmação
   metodoPagamento: string = 'pix'; // Método de pagamento padrão
+  mostrarDadosGrid2: boolean = false; // Nova propriedade para controlar a visibilidade
 
   constructor(
     private carrinhoService: CarrinhoService,
@@ -142,5 +143,9 @@ export class ConfirmacaoComponent implements OnInit {
 
   voltarParaPagamento(): void {
     this.router.navigate(['/pagamento']);
+  }
+
+  toggleDadosFiscais(): void {
+    this.mostrarDadosGrid2 = !this.mostrarDadosGrid2;
   }
 }

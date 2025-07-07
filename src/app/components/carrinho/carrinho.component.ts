@@ -14,6 +14,7 @@ import { MessageService } from 'primeng/api';
 import { NavComponent } from "../nav/nav.component";
 import { CheckoutStepsComponent } from '../checkout-steps/checkout-steps.component';
 import { ResumoCarrinhoComponent } from '../resumo-carrinho/resumo-carrinho.component';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-carrinho',
@@ -27,9 +28,13 @@ import { ResumoCarrinhoComponent } from '../resumo-carrinho/resumo-carrinho.comp
     ToastModule,
     NavComponent,
     CheckoutStepsComponent,
-    ResumoCarrinhoComponent
+    ResumoCarrinhoComponent,
+    ProgressSpinnerModule
+
   ],
-  providers: [ConfirmationService, MessageService],
+
+  providers: [ConfirmationService, MessageService ],
+
   templateUrl: './carrinho.component.html',
   styleUrls: ['./carrinho.component.scss']
 })
