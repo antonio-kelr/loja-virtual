@@ -18,8 +18,8 @@
           class="imagem-produto"
         />
       </div>
-      <!-- Miniaturas das imagens -->
-      <div class="miniaturas" *ngIf="produto.imagens && produto.imagens.length > 1">
+      <!-- Miniaturas das imagens (exibidas apenas em telas maiores) -->
+      <div class="miniaturas" *ngIf="produto.imagens && produto.imagens.length > 1 && !isMobileView">
         <div
           class="miniatura"
           *ngFor="let imagem of produto.imagens"
@@ -27,6 +27,24 @@
           (click)="trocarImagemPrincipal(imagem)"
         >
           <img [src]="imagem.url" [alt]="imagem.titulo" />
+        </div>
+      </div>
+
+      <!-- Rádios para seleção de imagem (exibidos apenas em telas menores) -->
+      <div class="miniaturas-radio" *ngIf="produto.imagens && produto.imagens.length > 1 && isMobileView">
+        <div
+          class="radio-item"
+          *ngFor="let imagem of produto.imagens; let i = index"
+          (click)="trocarImagemPrincipal(imagem)"
+        >
+          <p-radiobutton
+            [inputId]="'imageRadio' + i"
+            [name]="'imageSelect'"
+            [value]="imagem.id"
+            [ngModel]="imagemPrincipal?.id"
+            (ngModelChange)="onRadioChange($event)"
+          ></p-radiobutton>
+          <label [for]="'imageRadio' + i"></label>
         </div>
       </div>
     </div>

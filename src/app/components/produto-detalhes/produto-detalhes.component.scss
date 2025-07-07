@@ -50,16 +50,12 @@ p {
 }
 
 .produto-grid {
-  border: 1px solid red;
   display: grid;
   grid-template-columns: 1.5fr 0.5fr;
   gap: 30px;
 
   margin-bottom: 30px;
 
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
 }
 
 .produto-imagens {
@@ -183,9 +179,9 @@ p {
       height: 350px;
     }
 
-    .miniaturas {
-      max-height: 350px;
-    }
+    // .miniaturas {
+    //   max-height: 350px;
+    // }
   }
 
   @media (max-width: 768px) {
@@ -196,23 +192,23 @@ p {
       height: 300px;
     }
 
-    .miniaturas {
-      flex-direction: row;
-      max-height: none;
-      overflow-x: auto;
-      overflow-y: hidden;
-      padding-left: 0;
-      padding-bottom: 10px;
+    // .miniaturas {
+    //   flex-direction: row;
+    //   max-height: none;
+    //   overflow-x: auto;
+    //   overflow-y: hidden;
+    //   padding-left: 0;
+    //   padding-bottom: 10px;
 
-      .miniatura {
-        width: 70px;
-        height: 70px;
+    //   .miniatura {
+    //     width: 70px;
+    //     height: 70px;
 
-        &:hover {
-          transform: translateY(-2px);
-        }
-      }
-    }
+    //     &:hover {
+    //       transform: translateY(-2px);
+    //     }
+    //   }
+    // }
   }
 }
 
@@ -622,8 +618,27 @@ p {
   .produtos-relacionados-mobile {
     display: block;
   }
+  .produto-grid {
+
+    grid-template-columns: 1fr 0.9fr;
+
+  }
+
   .entrega span {
     font-size: 0.975rem;
+  }
+  .produto-imagens  {
+    flex-direction: column;
+
+  }
+
+  .miniaturas-radio {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+
+
   }
 
 
@@ -634,10 +649,6 @@ p {
   .botoes-acao {
     display: none;
   }
-  // .produto-grid {
-  //   grid-template-columns: 1.4fr .8fr;
-
-  // }
   .produto-info {
     display: flex;
     justify-content: center;
@@ -649,35 +660,37 @@ p {
       background-color: #f9f9f9;
       border-radius: 8px;
 
-      .preco-antigo {
-        font-size: 0.9rem;
-        color: #888;
-        margin-bottom: 5px;
 
-        .riscado {
-          text-decoration: line-through;
-        }
-      }
 
-      .preco-atual {
-        .valor {
-          font-size: 2rem;
-          font-weight: 700;
-          color: var(--cor-primaria);
-        }
-      }
-
-      .condicoes {
-        font-size: 0.9rem;
-        color: #333;
-        margin-top: 5px;
-
-        .parcelamento {
-          margin-top: 5px;
-        }
-      }
     }
   }
 
 
 }
+@media (max-width: 768px)  {
+
+  .produto-grid {
+
+    grid-template-columns: 1fr;
+
+  }
+  .produto-imagens  {
+    flex-direction: column;
+    justify-content: center !important;
+    align-items: center !important;
+
+
+  }
+  .produto-info {
+    justify-content: left;
+  }
+
+
+  .imagem-principal {
+    width: 350px;
+    text-align: center;
+  }
+
+
+}
+

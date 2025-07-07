@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -10,6 +10,10 @@ import { Produto, ProdutoImagem } from '../../interfaces/produto.interface';
 import { ProdutoCardComponent } from '../produto-card/produto-card.component';
 import { CarrinhoService } from '../../services/carrinho.service';
 import { MessageService } from 'primeng/api';
+import { BreakpointObserver, BreakpointState, LayoutModule } from '@angular/cdk/layout';
+import { Subject, takeUntil } from 'rxjs';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-produto-detalhes',
@@ -20,12 +24,15 @@ import { MessageService } from 'primeng/api';
     RouterModule,
     HeaderComponent,
     FooterComponent,
-    ProdutoCardComponent
+    ProdutoCardComponent,
+    LayoutModule,
+    RadioButtonModule,
+    FormsModule
   ],
   templateUrl: './produto-detalhes.component.html',
   styleUrls: ['./produto-detalhes.component.scss']
 })
-export class ProdutoDetalhesComponent implements OnInit {
+export class ProdutoDetalhesComponent implements OnInit, OnDestroy {
   faCartPlus = faCartPlus;
 
   produto: Produto | null = null;
@@ -38,15 +45,16 @@ export class ProdutoDetalhesComponent implements OnInit {
   larguraProduto: number = 130;
   produtosPorSlide: number = 4;
   slideAtual: number = 0;
+  isMobileView: boolean = false;
+  private destroy$ = new Subject<void>();
 
   constructor(
     private route: ActivatedRoute,
     private produtoService: ProdutoService,
     private carrinhoService: CarrinhoService,
     private messageService: MessageService,
-
-
-    private router: Router
+    private router: Router,
+    private breakpointObserver: BreakpointObserver
   ) {}
 
   ngOnInit(): void {
@@ -56,6 +64,17 @@ export class ProdutoDetalhesComponent implements OnInit {
         this.carregarProduto(produtoSlug);
       }
     });
+
+    this.breakpointObserver.observe(['(max-width: 1023px)'])
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((state: BreakpointState) => {
+        this.isMobileView = state.matches;
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   carregarProduto(slug: string): void {
@@ -83,7 +102,6 @@ export class ProdutoDetalhesComponent implements OnInit {
       return;
     }
 
-    // Recarrega o novo produto no mesmo componente sem mudar de rota
     this.carregarProduto(slug);
     this.router.navigateByUrl(`/produto/${slug}`, { skipLocationChange: false });
   }
@@ -128,9 +146,8 @@ export class ProdutoDetalhesComponent implements OnInit {
           detail: comprar ? 'Produto enviado para o carrinho!' : 'Produto adicionado ao carrinho!'
         });
 
-        // ✅ Se o objetivo for comprar, redireciona para o carrinho
         if (comprar) {
-          this.router.navigate(['/carrinho']); // ou outra rota que você usa
+          this.router.navigate(['/carrinho']);
         }
       },
       error: (erro) => {
@@ -151,8 +168,6 @@ export class ProdutoDetalhesComponent implements OnInit {
     });
   }
 
-
-
   slideAnterior(): void {
     if (this.slideAtual > 0) {
       this.slideAtual--;
@@ -170,6 +185,17 @@ export class ProdutoDetalhesComponent implements OnInit {
 
   trocarImagemPrincipal(imagem: ProdutoImagem): void {
     this.imagemPrincipal = imagem;
+  }
+
+  onRadioChange(selectedImageId: number): void {
+    console.log('Radio button clicado. ID da imagem:', selectedImageId);
+    const selectedImage = this.produto?.imagens?.find(img => img.id === selectedImageId);
+    if (selectedImage) {
+      this.imagemPrincipal = selectedImage;
+      console.log('Imagem principal atualizada para:', this.imagemPrincipal);
+    } else {
+      console.log('Imagem com ID', selectedImageId, 'não encontrada.');
+    }
   }
 
   get precoParcelado(): number {
