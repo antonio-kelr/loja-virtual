@@ -35,19 +35,27 @@
     <div class="produto-info">
       <!-- Preço e condições -->
       <div class="produto-preco-container">
+        <div class="entrega" >
+          <span>Vendido e entregue por:
+            <strong>            TurboSetup!
+            </strong>
+            </span>
+        </div>
         <div class="preco-antigo" *ngIf="produto.precoAntigo">
-          <span>De: </span>
+          <!-- <span>De: </span> -->
           <span class="riscado">R$ {{ produto.precoAntigo | number : "1.2-2" }}</span>
         </div>
         <div class="preco-atual">
-          <span>Por: </span>
+          <!-- <span>Por: </span> -->
           <span class="valor">R$ {{ produto.preco | number : "1.2-2" }}</span>
         </div>
         <div class="condicoes">
           À vista no PIX
           <div class="parcelamento">
             ou até
-            <strong>10x de R$ {{ precoParcelado | number : "1.2-2" }} sem juros</strong>
+            <strong>10x de R$ {{ precoParcelado | number : "1.2-2" }} sem juros  no cartão</strong>
+             <br>
+            <span>Ou em 1x no cartão com 7% OFF</span>
           </div>
         </div>
       </div>
@@ -92,6 +100,44 @@
       </div>
     </div>
   </div>
+
+  <div class="botoes-acao-mobile-add">
+    <button class="btn-comprar" (click)="adicionarOuComprarProduto($event, true)">
+      <i class="pi pi-shopping-cart"></i>
+      Comprar
+    </button>
+    <button class="btn-adicionar-carrinho" (click)="adicionarOuComprarProduto($event, false)">
+      <fa-icon [icon]="faCartPlus"  ></fa-icon>
+    </button>
+  </div>
+  <div class="produtos-relacionados-mobile" *ngIf="produtosRelacionados.length > 0">
+    <h2 class="titulo-secao">
+      <i class="pi pi-tag"></i>
+      Produtos Relacionados
+    </h2>
+    <div class="slider-wrapper">
+      <button class="btn-slider prev" (click)="slideAnterior()">
+        <i class="pi pi-chevron-left"></i>
+      </button>
+      <div class="slider-container">
+        <div class="slider-produtos" [style.transform]="'translateX(' + posicaoSlider + 'px)'">
+          <div class="produto-relacionado" *ngFor="let produto of produtosRelacionados" (click)="selecionarProduto(produto.slug)">
+            <div class="imagem-produto">
+              <img [src]="produto.imagens?.[0]?.url || 'https://via.placeholder.com/200'" [alt]="produto.nome">
+            </div>
+            <div class="preco-produto">
+              R$ {{ produto.preco | number : "1.2-2" }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="btn-slider next" (click)="slideProximo()">
+        <i class="pi pi-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+
+
 
   <!-- Seção de descrição e especificações -->
   <div class="produto-detalhes-tabs">

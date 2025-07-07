@@ -1,0 +1,7 @@
+/* Opcional: ajustar a altura para telas menores, se necessário */
+
+@media (max-width: 768px) {
+  .carousel-item img {
+    height: 200px; /* Altura ainda menor para celulares */
+  }
+}
