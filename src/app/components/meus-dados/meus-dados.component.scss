@@ -52,9 +52,7 @@
   flex-direction: column;
   background: white;
 
-
   padding: 1.5rem;
-  max-width: 700px;
   height: 790px;
 }
 .form-container {
@@ -123,13 +121,12 @@
     background: white !important;
     color: rgb(86, 92, 105);
     padding: 0.75rem;
-    border: 1px solid #B6BBC2;
+    border: 1px solid #b6bbc2;
 
     border-radius: 4px;
     font-size: 0.875rem;
     transition: all 0.3s ease;
   }
-
 
   input:focus,
   select:focus {
@@ -156,19 +153,15 @@
 .data-nascimento-group {
   border: 1px solid #ddd;
 
-
-
   label,
   input {
     user-select: none;
-    color: #B6BBC2;
+    color: #b6bbc2;
     user-select: none;
   }
 
-
-
   .lock-icon {
-    color: #B6BBC2;
+    color: #b6bbc2;
   }
 }
 
@@ -283,13 +276,9 @@
   }
 }
 
-
 ::ng-deep .p-dialog {
   background: white !important;
   border: none !important;
-
-
-
 }
 ::ng-deep .p-dialog-header {
   display: none !important;
@@ -313,7 +302,6 @@
     font-weight: 700;
     text-transform: uppercase;
   }
-
 }
 
 .p-field {
@@ -356,8 +344,6 @@
       background-color: #fff;
       transition: border-color 0.2s;
       color: #666;
-      ;
-
       &:focus {
         outline: none;
         border-color: var(--cor-primaria);
@@ -382,14 +368,11 @@
   border-radius: 8px;
   padding: 1rem;
 
-
-
   .codigo-confirmacao-header {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
-
 
     h2 {
       font-size: 0.875rem;
@@ -412,8 +395,6 @@
     padding: 0.65rem 1.2rem;
     border-radius: 4px;
   }
-
-
 }
 
 .mensagem-sucesso {
@@ -452,4 +433,43 @@
   p {
     margin: 0;
   }
+}
+
+@media screen and (max-width: 1023px) {
+  .form-container {
+    grid-template-columns: 1fr;
+    padding: 0px;
+  }
+
+  .form-grid {
+    width: 100% !important;
+  }
+  .meus-dados-container {
+    border-radius: 8px;
+
+    padding: 10px;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .button-container {
+    flex-direction: column;
+  }
+  .form-actions {
+    padding: 0px 1rem;
+    gap: 1rem;
+    flex-direction: column;
+
+    button {
+      justify-content: center;
+    }
+  }
+
+  .from-indereço {
+
+    height: 900px;
+  }
+
+
+
 }
