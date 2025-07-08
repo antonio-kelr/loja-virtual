@@ -156,15 +156,15 @@
               <ul>
                 <li><a [routerLink]="['/minha-conta']">Minha Conta</a></li>
                 <li>
-                  <a [routerLink]="['minha-conta/meus-pedidos']"
+                  <a [routerLink]="['/minha-conta/meus-pedidos']"
                     >Meus Pedidos</a
                   >
                 </li>
                 <li>
-                  <a [routerLink]="['minha-conta/meus-dados']">Meus Dados</a>
+                  <a [routerLink]="['/minha-conta/meus-dados']">Meus Dados</a>
                 </li>
                 <li>
-                  <a [routerLink]="['minha-conta/meus-favoritos']"
+                  <a [routerLink]="['/minha-conta/meus-favoritos']"
                     >Meus Favoritos</a
                   >
                 </li>
@@ -228,25 +228,25 @@
 
         <div class="menu-mobile">
           <ul>
-            <li>
+            <li (click)="showMobileMenu = false">
               <i class="pi pi-home"></i>
               <a [routerLink]="['/minha-conta']">Minha Conta</a>
             </li>
-            <li>
+            <li (click)="showMobileMenu = false">
               <i class="pi pi-shopping-bag"></i>
 
-              <a [routerLink]="['minha-conta/meus-pedidos']">Meus Pedidos</a>
+              <a [routerLink]="['/minha-conta/meus-pedidos']">Meus Pedidos</a>
             </li>
-            <li>
+            <li (click)="showMobileMenu = false">
               <i class="pi pi-user"></i>
 
-              <a [routerLink]="['minha-conta/meus-dados']">Meus Dados</a>
+              <a [routerLink]="['/minha-conta/meus-dados']">Meus Dados</a>
             </li>
-            <li>
+            <li (click)="showMobileMenu = false">
               <i class="pi pi-heart"></i>
 
-              <a [routerLink]="['minha-conta/meus-favoritos']"
-                >Meus Favoritos</a
+              <a [routerLink]="['/minha-conta/meus-favoritos']">
+                Meus Favoritos</a
               >
             </li>
           </ul>

@@ -5,6 +5,8 @@ import { faFaceFrown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterLink } from '@angular/router';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ChangeDetectorRef } from '@angular/core';
+
 
 
 @Component({
@@ -19,7 +21,7 @@ export class MeusPedidosComponent implements OnInit {
   faceFrown = faFaceFrown;
   carregando = true;
 
-  constructor(private pedidoService: PedidoService) {}
+  constructor(private pedidoService: PedidoService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.carregarPedidos();
@@ -36,6 +38,8 @@ export class MeusPedidosComponent implements OnInit {
       next: (pedidos) => {
         this.pedidos = pedidos;
         this.carregando = false;
+        this.cdr.detectChanges();
+
         console.log('Pedidos carregados:', pedidos);
       },
       error: (err) => {

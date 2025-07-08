@@ -5,6 +5,7 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faFaceFrown } from '@fortawesome/free-solid-svg-icons';
 import { RouterLink } from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core';
 
 
 
@@ -17,23 +18,28 @@ import { RouterLink } from '@angular/router';
 })
 export class FavoritosComponent implements OnInit {
   favoritos: any[] = [];
-  faHeart = faHeart
-  faFaceFrown = faFaceFrown
+  faHeart = faHeart;
+  faFaceFrown = faFaceFrown;
+  isLoading: boolean = true; // Adiciona a variável de estado de carregamento
 
-  constructor(private favoritoService: FavoritoService) { }
+  constructor(private favoritoService: FavoritoService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.carregarFavoritos();
   }
 
   carregarFavoritos(): void {
+    this.isLoading = true; // Define como true ao iniciar o carregamento
     this.favoritoService.getFavoritos().subscribe({
       next: (data) => {
         console.log('favoritos carregados', data);
         this.favoritos = data;
+        this.isLoading = false; // Define como false após o sucesso
+        this.cdr.detectChanges();
       },
       error: (error) => {
         console.error('Erro ao carregar favoritos:', error);
+        this.isLoading = false; // Define como false mesmo em caso de erro
       }
     });
   }

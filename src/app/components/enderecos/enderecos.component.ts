@@ -63,6 +63,8 @@ export class EnderecosComponent implements OnInit {
       next: (enderecos) => {
         this.enderecos = enderecos;
         this.carregando = false;
+        this.cdRef.detectChanges();
+
       },
       error: (error) => {
         this.erro = 'Erro ao carregar endereços. Por favor, tente novamente.';

@@ -86,7 +86,7 @@
 
 .conta-container {
   display: flex;
-  background: #F2F3F4;
+  background: #f2f3f4;
   min-height: calc(100vh - 160px);
   position: relative;
 }
@@ -192,45 +192,51 @@
     h1 {
       color: var(--cor-primaria);
       margin: 0;
-      font-size: 1.8rem;
+      font-size: 1.4rem;
+      text-transform: uppercase;
       margin-bottom: 0.5rem;
+      text-align: left;
     }
 
     .user-email {
       display: flex;
 
-
       flex-direction: column;
-      align-items: right;
-        line-height: 5px;
+      align-items: flex-start;
+      line-height: normal;
       color: #666;
+      width: 100%;
+      flex-wrap: wrap;
 
-     h1 {
-      font-size: 1.25rem;
-      line-height: 1.75rem;
-     }
-     .user-name {
-      text-transform: uppercase;
-     }
       .user-email-text {
-        display: flex;
-        gap: 0.2rem;
+
+
+
+        max-width: 100%;
 
         i {
           color: var(--cor-primaria);
           font-size: 11px;
+        }
+
+        span {
+          word-break: break-word;
+          width: 100%;
+          margin-left: 5px;
         }
       }
     }
   }
 
   .user-avatar {
+    margin-bottom: 1rem;
+
     .profile-image {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      object-fit: cover;
+      width: 60px;
+      height: 60px;
+      border-radius: 60%;
       border: 1px solid var(--cor-primaria);
+      object-fit: contain;
     }
   }
 }
@@ -269,7 +275,7 @@
 
   h2 {
     margin: 0;
-    font-size: 1.20rem;
+    font-size: 1.2rem;
     padding: 0;
     line-height: 1;
     text-transform: uppercase;
@@ -278,7 +284,7 @@
 
   i {
     color: var(--cor-primaria);
-    font-size: 1.20rem;
+    font-size: 1.2rem;
   }
 }
 
@@ -286,13 +292,12 @@
   background: white;
   display: flex;
   gap: 1rem;
-  align-items:center;
+  align-items: center;
   justify-content: center;
   border-radius: 8px;
   padding: 1.5rem;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-
 
   i {
     font-size: 2rem;
@@ -308,5 +313,47 @@
     margin: 0;
     font-weight: 700;
     font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .conteudo {
+    padding: 1rem;
+    margin-left: 0rem;
+  }
+}
+@media screen and (max-width: 600px) {
+  .user-header {
+
+    .user-info {
+      display: flex;
+      gap: 0.5rem;
+
+      h1 {
+        color: var(--cor-primaria);
+        margin: 0;
+        font-size: 0.87rem !important;
+        margin-bottom: 0.5rem;
+      }
+
+      .user-email {
+
+        .user-email-text {
+          display: flex;
+          align-items: center;
+
+          span {
+            text-align: left;
+          }
+        }
+      }
+    }
+
+    .user-avatar {
+      .profile-image {
+        width: 60px;
+        height: 60px;
+      }
+    }
   }
 }
