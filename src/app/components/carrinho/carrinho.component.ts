@@ -15,6 +15,8 @@ import { NavComponent } from "../nav/nav.component";
 import { CheckoutStepsComponent } from '../checkout-steps/checkout-steps.component';
 import { ResumoCarrinhoComponent } from '../resumo-carrinho/resumo-carrinho.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { EnderecoService } from '../../services/endereco.service';
+import { Endereco } from '../../interfaces/endereco.interface';
 
 @Component({
   selector: 'app-carrinho',
@@ -51,12 +53,15 @@ export class CarrinhoComponent implements OnInit {
   displayEmailModal = false;
   itemParaRemover: ItemCarrinho | null = null;
   spinnerQuantidade: number | null = null;
+  enderecos: Endereco[] = [];
+  enderecoSelecionado: Endereco | null = null;
 
   constructor(
     private router: Router,
     private carrinhoService: CarrinhoService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
+    private enderecoService: EnderecoService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -65,6 +70,7 @@ export class CarrinhoComponent implements OnInit {
       this.verificarLogin();
       if (this.isLoggedIn) {
         this.carregarCarrinho();
+        this.carregarEnderecos();
       }
     }
   }
@@ -186,6 +192,14 @@ export class CarrinhoComponent implements OnInit {
   }
 
   finalizarCompra(): void {
+    if (!this.enderecoSelecionado) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Atenção',
+        detail: 'Por favor, selecione um endereço de entrega antes de prosseguir.'
+      });
+      return;
+    }
     this.router.navigate(['/pagamento']);
   }
 
@@ -221,5 +235,25 @@ export class CarrinhoComponent implements OnInit {
 
   isBrowser(): boolean {
     return isPlatformBrowser(this.platformId);
+  }
+
+  private carregarEnderecos(): void {
+    this.enderecoService.listarEnderecos().subscribe({
+      next: (enderecos) => {
+        this.enderecos = enderecos;
+      },
+      error: (erro) => {
+        console.error('Erro ao carregar endereços:', erro);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Erro ao carregar endereços. Tente novamente.'
+        });
+      }
+    });
+  }
+
+  selecionarEndereco(endereco: Endereco): void {
+    this.enderecoSelecionado = endereco;
   }
 }

@@ -5,10 +5,8 @@ import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { CarrinhoService } from '../../services/carrinho.service';
 import { UserService } from '../../services/user.service';
-import { EnderecoService } from '../../services/endereco.service';
 import { Carrinho } from '../../interfaces/carrinho.interface';
 import { UserProfile } from '../../models/user-profile.model';
-import { Endereco } from '../../interfaces/endereco.interface';
 import { ResumoCarrinhoComponent } from '../resumo-carrinho/resumo-carrinho.component';
 import { CheckoutStepsComponent } from '../checkout-steps/checkout-steps.component';
 import { NavComponent } from "../nav/nav.component";
@@ -30,8 +28,6 @@ import { NavComponent } from "../nav/nav.component";
 export class ConfirmacaoComponent implements OnInit {
   dadosUsuario: UserProfile | null = null;
   carrinho: Carrinho | null = null;
-  enderecos: Endereco[] = [];
-  enderecoSelecionado: Endereco | null = null;
   carregando = true;
   erro: string | null = null;
   etapaAtual = 3; // Etapa de confirmação
@@ -41,7 +37,6 @@ export class ConfirmacaoComponent implements OnInit {
   constructor(
     private carrinhoService: CarrinhoService,
     private userService: UserService,
-    private enderecoService: EnderecoService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -64,7 +59,6 @@ export class ConfirmacaoComponent implements OnInit {
       next: (dados) => {
         this.dadosUsuario = dados;
         this.carregarCarrinho();
-        this.carregarEnderecos();
       },
       error: (erro) => {
         console.error('Erro ao carregar dados do usuário:', erro);
@@ -89,31 +83,10 @@ export class ConfirmacaoComponent implements OnInit {
     });
   }
 
-  private carregarEnderecos() {
-    this.enderecoService.listarEnderecos().subscribe({
-      next: (enderecos) => {
-        this.enderecos = enderecos;
-        // Selecionar endereço principal por padrão
-        const enderecoPrincipal = enderecos.find(e => e.principal);
-        this.enderecoSelecionado = enderecoPrincipal || (enderecos.length > 0 ? enderecos[0] : null);
-        this.verificarCarregamentoCompleto();
-      },
-      error: (erro) => {
-        console.error('Erro ao carregar endereços:', erro);
-        this.erro = 'Erro ao carregar endereços. Por favor, tente novamente.';
-        this.carregando = false;
-      }
-    });
-  }
-
   private verificarCarregamentoCompleto() {
-    if (this.dadosUsuario && this.carrinho && this.enderecos.length > 0) {
+    if (this.dadosUsuario && this.carrinho) {
       this.carregando = false;
     }
-  }
-
-  selecionarEndereco(endereco: Endereco): void {
-    this.enderecoSelecionado = endereco;
   }
 
   calcularTotal(): number {
@@ -124,17 +97,11 @@ export class ConfirmacaoComponent implements OnInit {
   }
 
   finalizarPedido(): void {
-    if (!this.enderecoSelecionado) {
-      alert('Por favor, selecione um endereço de entrega antes de finalizar o pedido.');
-      return;
-    }
-
     this.carregando = true;
     this.router.navigate(['/concluir'], {
       queryParams: {
         metodoPagamento: this.metodoPagamento,
         valor: this.calcularTotal(),
-        enderecoId: this.enderecoSelecionado.id,
         itens: JSON.stringify(this.carrinho?.itens),
         carrinhoId: this.carrinho?.id
       }

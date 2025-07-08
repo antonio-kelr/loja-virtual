@@ -18,7 +18,7 @@
 .opcoes-pagamento {
   background: #fff;
   border-radius: 8px;
-  padding: 2rem;
+  padding: 1rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -169,7 +169,8 @@
     margin-bottom: 5px;
   }
 
-  input, select {
+  input,
+  select {
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
@@ -244,7 +245,7 @@
   gap: 20px;
   align-items: center;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1222px) {
     grid-template-columns: 1fr;
   }
 }
@@ -326,7 +327,7 @@
   margin-bottom: 30px;
 }
 
-.chip img{
+.chip img {
   width: 50px;
 }
 
@@ -342,7 +343,7 @@
   font-weight: 600;
   letter-spacing: 2px;
   margin-bottom: 30px;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
 }
 
 .cartao-footer {
@@ -427,7 +428,8 @@
       z-index: 1;
     }
 
-    input, select {
+    input,
+    select {
       width: 100%;
       padding: 12px;
       border: 2px solid #e0e0e0;
@@ -493,4 +495,19 @@
       flex: 1;
     }
   }
+}
+
+@media (max-width: 500px) {
+  .cartao-visual {
+    min-height: auto;
+  }
+
+  .cartao {
+    width: 100%;
+    height: 250px;
+  }
+  .nome-cartao span {
+    max-width: 200px;
+  }
+
 }

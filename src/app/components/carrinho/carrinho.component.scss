@@ -1,9 +1,13 @@
 .carrinho-container {
   max-width: 1600px;
-  border: 1px solid red;
   margin: 0 auto;
   margin-bottom: 4rem !important;
 }
+
+.remover-todos  {
+  display: none !important;
+}
+
 .titulo-carrinho-header {
   display: flex;
   align-items: center;
@@ -14,8 +18,8 @@
     display: flex;
     align-items: center;
     gap: 5px;
+    border: none;
     border-radius: 3px;
-    border: 1px solid red;
     text-transform: uppercase;
     font-size: 0.77rem;
     background: white;
@@ -28,6 +32,105 @@
     font-size: 0.69rem;
   }
 }
+.carrinho-resumo {
+  border-radius: 8px;
+
+  flex: 1 1 20%;
+
+
+
+  h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: left;
+  }
+}
+
+.definir-endereco {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 1rem;
+
+  h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #333;
+    font-size: 0.87rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    i {
+      color: var(--cor-primaria);
+      font-size: 1rem;
+    }
+  }
+
+  .enderecos-opcoes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    .endereco-opcao {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      padding: 0.75rem;
+      border: 1px solid #e9ecef;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+
+      &:hover {
+        border-color: var(--cor-primaria);
+        background: #f8f9fa;
+      }
+
+      input[type="radio"] {
+        margin-top: 0.25rem;
+        cursor: pointer;
+      }
+
+      .endereco-label {
+        flex: 1;
+        cursor: pointer;
+
+        .endereco-info {
+          display: flex;
+          flex-direction: column;
+          gap: 0.25rem;
+
+          .logradouro {
+            font-weight: 500;
+            color: #333;
+            font-size: 0.9rem;
+          }
+
+          .referencia {
+            color: #666;
+            font-size: 0.8rem;
+            font-style: italic;
+          }
+        }
+      }
+    }
+  }
+
+  .sem-enderecos {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    padding: 1rem;
+  }
+}
+
+
 
 .carrinho-content {
   border-radius: 8px;
@@ -139,12 +242,17 @@
   grid-template-columns: 1fr 350px;
   gap: 20px;
 }
+.indereço-2 {
+  display: none;
+}
 
 .lista-produtos {
   background: white;
+
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
   .produto-item {
+
     display: grid;
     grid-template-columns: 100px 1fr auto auto auto;
     gap: 5px;
@@ -382,6 +490,10 @@
     }
   }
 }
+.remover-2 {
+  display: none !important;
+
+}
 
 .botoes-container {
   display: flex;
@@ -600,134 +712,59 @@
   .produto-quantidade {
     display: flex;
   }
+  .remover-produtos-todos {
+    display: none !important;
+
+  }
+  .remover-todos {
+    display: flex !important;
+  }
   .acoes-produto-carinho {
+
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
   }
+  .indereço-1 {
+    display: none;
+  }
+  .indereço-2 {
+    display: block;
+  }
 
-  // .lista-produtos {
-  //   background: white;
-  //   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  //   padding: 0rem;
 
-  //   .produto-item {
-  //     border: 1px solid red;
-  //     display: grid;
-  //     grid-template-columns: 100px 1fr auto auto auto;
-  //     gap: 5px;
-  //     align-items: center;
-  //     padding: 15px;
-  //     // border-bottom: 1px solid #eee;
 
-  //     &:last-child {
-  //       border-bottom: none;
-  //     }
-  //   }
 
-  //   .produto-imagem {
-  //     width: 100px;
-  //     height: 100px;
-  //     border-radius: 8px;
-  //     overflow: hidden;
+}
+@media screen and (max-width: 600px)  {
+  .produto-item {
+    border: 1px solid red;
 
-  //     img {
-  //       width: 100%;
-  //       height: 100%;
-  //       object-fit: contain;
-  //       padding: 10px;
-  //     }
-  //   }
 
-  //   .produto-info {
-  //     .produto-nome {
-  //       font-size: 1rem;
-  //       font-weight: 500;
-  //       color: #333;
-  //       margin-bottom: 5px;
-  //     }
+    display: grid;
+    grid-template-columns: 100px 1fr  !important;
+    gap: 5px;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
 
-  //     p {
-  //       font-size: 1.1rem !important;
-  //       font-weight: 700 !important;
 
-  //     }
+  }
+  .acoes-produto-carinho {
+    align-items: end;
+    gap: 0px;
 
-  //   }
+    grid-column: 1 / -1;
+  }
 
-  //   .produto-quantidade {
-  //     text-align: center;
+  .remover-2 {
+    display: flex !important;
 
-  //     span {
-  //       font-size: .75rem;
-  //       font-family: sans-serif;
-  //     }
-  //     .controle-quantidade {
-  //       display: flex;
-  //       align-items: center;
-  //       margin-bottom: 20px;
-  //     }
+  }
+  .remover-1 {
+    display: none !important;
 
-  //     .btn-quantidade {
-  //       border-radius: 4px;
-  //       border: none;
-  //       background: white;;
-  //       color: #666;
-  //       display: flex;
-  //       align-items: center;
-  //       justify-content: center;
-  //       cursor: pointer;
-  //       transition: all 0.2s ease;
+  }
 
-  //     }
 
-  //     .quantidade {
-  //       font-size: 1rem;
-  //       font-weight: 500;
-  //       color: #333;
-  //       min-width: 30px;
-  //       text-align: center;
-  //     }
-  //   }
-
-  //   .produto-subtotal {
-  //     font-size: 1rem;
-  //     line-height: 0.75rem;
-  //     font-family: sans-serif;
-  //     font-weight: 700;
-  //     color: #333;
-  //     text-align: right;
-
-  //     p {
-  //         font-size: 0.75rem;
-  //         line-height: 1.125rem;
-  //         font-weight: 400;
-  //         color: rgb(66, 70, 77);
-
-  //     }
-  //   }
-
-  //   .btn-remover {
-  //     border-radius: 4px;
-  //     border: none;
-  //     padding: 0px 10px;
-  //     background: white;
-  //     color: #666;
-  //     display: flex;
-  //     gap: 5px;
-  //     align-items: center;
-  //     justify-content: center;
-  //     cursor: pointer;
-  //     transition: all 0.2s ease;
-  //     .icon-remover,
-  //     span {
-  //       text-transform: uppercase;
-  //       font-size: 12px;
-  //       font-weight: 700;
-  //       color: #f44336;
-  //     }
-
-  //   }
-  // }
 }

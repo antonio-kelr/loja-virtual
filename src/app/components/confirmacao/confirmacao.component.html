@@ -29,7 +29,11 @@
             <h6 class="info-nota-fiscal">
               Informações que serão inseridas na nota fiscal do pedido.
             </h6>
-            <i class="pi pi-angle-down arrow-icon ico-grid-2" [ngClass]="{'rotated': mostrarDadosGrid2}" (click)="toggleDadosFiscais()"></i>
+            <i
+              class="pi pi-angle-down arrow-icon ico-grid-2"
+              [ngClass]="{ rotated: mostrarDadosGrid2 }"
+              (click)="toggleDadosFiscais()"
+            ></i>
           </div>
         </div>
         <div class="dados-grid dados-1">
@@ -62,7 +66,7 @@
             <span class="valor">{{ dadosUsuario?.email }}</span>
           </div>
         </div>
-        <div class="dados-grid " *ngIf="mostrarDadosGrid2">
+        <div class="dados-grid" *ngIf="mostrarDadosGrid2">
           <div class="dado-item">
             <span class="label">Nome:</span>
             <span class="valor item-nome">{{ dadosUsuario?.nome }}</span>
@@ -91,7 +95,6 @@
             <span class="label">E-mail:</span>
             <span class="valor">{{ dadosUsuario?.email }}</span>
           </div>
-
         </div>
       </div>
 
@@ -111,21 +114,20 @@
               />
             </div>
             <div class="produto-info">
-              <h3 class="produto-nome">{{ item.produto.nome }}</h3>
+              <div class="info-prod">
+                <h3 class="produto-nome">{{ item.produto.marca }}</h3>
+                <h3 class="produto-descricao">{{ item.produto.descricao }}</h3>
+              </div>
+
               <div class="produto-detalhes">
-                <span class="quantidade"
-                  >Quantidade: {{ item.quantidade }}</span
+                <span class="quantidade">
+                  <p>Quant</p>
+                  {{ item.quantidade }}</span
                 >
-                <span class="preco-unitario"
-                  >Preço Unitário: R$
-                  {{ item.precoUnitario | number : "1.2-2" }}</span
-                >
-                <span class="subtotal"
-                  >Subtotal: R$
-                  {{
-                    item.precoUnitario * item.quantidade | number : "1.2-2"
-                  }}</span
-                >
+                <span class="preco-unitario">
+                  <p>Preço à vista no PIX:</p>
+                  <span> {{ item.precoUnitario | number : "1.2-2" }}</span>
+                </span>
               </div>
             </div>
           </div>
@@ -134,48 +136,27 @@
     </div>
 
     <!-- Resumo do Carrinho -->
-    <div class="carrinho-resumo">
+    <div class="resume-confimacao">
       <app-resumo-carrinho
-      [totalCarrinho]="calcularTotal()"
-      [mostrarBotoes]="true"
-      [metodoPagamento]="metodoPagamento"
-      botaoPrincipal="FINALIZAR"
-      botaoSecundario="VOLTAR"
-      (continuar)="finalizarPedido()"
-      (voltarAtras)="voltarParaPagamento()"
+        [totalCarrinho]="calcularTotal()"
+        [mostrarBotoes]="true"
+        [metodoPagamento]="metodoPagamento"
+        botaoPrincipal="FINALIZAR"
+        botaoSecundario="VOLTAR"
+        (continuar)="finalizarPedido()"
+        (voltarAtras)="voltarParaPagamento()"
       >
-     </app-resumo-carrinho>
-       <div class="definir-endereco">
-         <h2><i class="pi pi-map-marker"></i> Selecione seu endereço</h2>
-         <div class="enderecos-opcoes" *ngIf="enderecos.length > 0">
-           <div
-             *ngFor="let endereco of enderecos; let i = index"
-             class="endereco-opcao"
-           >
-             <input
-               type="radio"
-               [id]="'endereco-' + i"
-               name="enderecoSelecionado"
-               [value]="endereco.id"
-               [checked]="enderecoSelecionado?.id === endereco.id"
-               (change)="selecionarEndereco(endereco)"
-             >
-             <label [for]="'endereco-' + i" class="endereco-label">
-               <div class="endereco-info">
-                 <span class="logradouro">{{ endereco.logradouro }}, {{ endereco.numero }}</span>
-                 <span class="referencia" *ngIf="endereco.referencia">{{ endereco.referencia }}</span>
-               </div>
-             </label>
-           </div>
-         </div>
-         <div class="sem-enderecos" *ngIf="enderecos.length === 0">
-           <p>Nenhum endereço cadastrado.</p>
-         </div>
-       </div>
-
+      </app-resumo-carrinho>
     </div>
-
+    <div class="botoes-confirmacao">
+      <button class="btn-secundario" (click)="voltarParaPagamento()">
+        VOLTAR
+      </button>
+      <button class="btn-principal" (click)="finalizarPedido()">
+        FINALIZAR PEDIDO
+      </button>
+    </div>
   </div>
-</div>
 
+</div>
 <app-footer></app-footer>
