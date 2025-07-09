@@ -62,7 +62,6 @@
   }
 }
 
-
 .pedido-info {
   display: flex;
   background: #ffffff;
@@ -77,18 +76,20 @@
 .pedido-status {
   background: #ffffff;
   gap: 10px;
+  text-align: left;
+
   padding: 0.67rem;
   border-bottom: 1px solid rgb(222, 224, 228);
   font-weight: 700;
   color: var(--cor-primaria);
 }
 .itens-container {
-  padding: 1rem 1rem;
+  padding: 1rem 0rem;
   background: #ffffff;
-
 
   .item {
     display: flex;
+
     padding: 1rem;
     gap: 10px;
     border-bottom: 1px solid rgb(222, 224, 228);
@@ -98,11 +99,9 @@
     img {
       width: 5rem;
     }
-
-
   }
 
-  .item-detalhes{
+  .item-detalhes {
     display: flex;
     flex-direction: column;
     font-size: 0.875rem;
@@ -112,34 +111,32 @@
     div {
       display: flex;
       align-items: center;
-      gap: 1rem;
 
+      gap: 1rem;
 
       span {
         text-transform: uppercase;
         font-size: 12px;
         color: rgba(219, 11, 11, 0.836);
-
-
-
       }
-
-
     }
-
 
     .descricao {
+      text-align: justify;
+      max-width: 1300px;
       font-size: 0.975rem;
-      font-weight: 700;
+      line-height: 1.25rem;
+      font-weight: 600;
+      margin-top: 0.5rem;
       color: rgb(66, 70, 77);
-
-
-
-
+      min-height: 3.75rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      word-break: break-word;
+      max-height: 3.375rem;
     }
-
-
-
   }
-
 }

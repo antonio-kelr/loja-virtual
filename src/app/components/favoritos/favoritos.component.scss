@@ -4,12 +4,10 @@
   margin: 0 auto;
 }
 .icone-coracao {
-
   font-size: 1.5rem;
   color: var(--cor-primaria);
 }
 .icone-coracao-butao {
-
   font-size: 1.5rem;
   color: var(--cor-primaria);
   cursor: pointer;
@@ -54,16 +52,13 @@
   }
 }
 
-
-
-
 .favoritos-header {
   display: flex;
   align-items: center;
   gap: 10px;
+
   margin-bottom: 20px;
   color: #333;
-
 
   h2 {
     padding: 0px;
@@ -75,25 +70,22 @@
   }
 }
 
-
-
 .favorito-item {
   width: 100%;
+
   margin-bottom: 1rem;
 
-  padding: 1.5rem;
+  padding: 1rem;
   background: rgb(255, 255, 255);
   border-radius: 0.125rem;
   transition: width 1s;
-  box-shadow: rgba(40, 41, 61, 0.08) 0px 0px 1px, rgba(96, 97, 112, 0.16) 0px 0.5px 2px;
+  box-shadow: rgba(40, 41, 61, 0.08) 0px 0px 1px,
+    rgba(96, 97, 112, 0.16) 0px 0.5px 2px;
 }
 
 .favorito-item-content {
-  display: flex;
-  align-items: stretch;
-  min-height: 120px;
-  width: 100%;
-  gap: 24px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
 }
 
 .favorito-content {
@@ -101,8 +93,8 @@
   align-items: center;
   gap: 10px;
   border-right: 2px solid #dee0e4;
-  padding-right: 4rem;
-  margin-right: 4rem;
+  padding-right: 3rem;
+  margin-right: 3rem;
   flex: 2 1 0;
   min-width: 0;
 }
@@ -117,13 +109,13 @@
 .favorito-desc {
   display: flex;
   align-items: center;
-  width: 100%;
-  min-width: 0;
+  text-align: justify;
 }
 
 .favorito-desc h1 {
   font-size: 1rem;
   line-height: 1.5rem;
+
   font-weight: 600;
   color: rgb(66, 70, 77);
   word-break: break-word;
@@ -137,40 +129,44 @@
 
 .favorito-item-price {
   display: flex;
+
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  flex: 1 2 0;
-  min-width: 0;
   gap: 50px;
 }
-.precoAntigo{
-
+.precoAntigo {
   text-decoration: line-through;
   font-size: 0.875rem;
   line-height: 1.125rem;
   font-weight: 400;
   color: rgb(127, 133, 141);
 }
-
-.favorito-item-price .price {
+.preco,
+.price {
   display: flex;
+  gap: 4px;
   flex-direction: column;
-  justify-content: center;
-  width: 120px;
-  min-width: 100px;
-  max-width: 140px;
+  text-align: left;
 }
-
-.favorito-item-price h1 {
+.preco h1 {
   font-size: 1.5rem;
+
   line-height: 1.7rem;
   font-weight: 700;
+  margin: 0;
+
   color: var(--cor-primaria);
+}
+.price h1 {
+  font-size: 1.5rem;
+
+  line-height: 1.7rem;
+  font-weight: 700;
   margin: 0;
 }
-
-.favorito-item-price p {
+.preco,
+.price p {
   font-size: 0.875rem;
   line-height: 1.125rem;
   font-weight: 400;
@@ -179,11 +175,8 @@
 }
 
 .favorito-item-button {
-  text-align: end;
-  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: flex-end;
   gap: 10px;
 }
@@ -201,4 +194,72 @@
   gap: 10px;
   border: none;
 }
+.preco {
+  display: none;
+}
 
+@media screen and (max-width: 1023px) {
+  .favorito-desc h1 {
+    font-size: 0.875rem;
+  }
+
+  .precoAntigo {
+    font-size: 0.75rem;
+  }
+
+  .favorito-item-price .price {
+    display: flex;
+    gap: 4px;
+    flex-direction: column;
+    text-align: left;
+  }
+
+  .favorito-item-price h1 {
+    font-size: 1rem;
+  }
+
+  .favorito-item-price p {
+    font-size: 0.75rem;
+  }
+
+  .favorito-item-button button {
+    padding: 0.75rem;
+    height: 2rem;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .favorito-item-content {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .favorito-item-button {
+    display: none;
+  }
+  .favorito-content {
+    display: flex;
+
+
+    align-items: center;
+    gap: 26px;
+    border:none;
+    padding-right: 0rem;
+    margin-right: 0rem;
+  }
+  .favorito-desc {
+
+    text-align: justify;
+
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    align-items: center;
+  }
+  .preco {
+    width: 100%;
+    display: block;
+  }
+  .price {
+    display: none !important;
+  }
+}

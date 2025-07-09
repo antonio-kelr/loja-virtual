@@ -18,6 +18,16 @@
 
   <div class="favoritos-grid" *ngIf="!isLoading && favoritos.length > 0">
     <div class="favorito-item" *ngFor="let favorito of favoritos">
+      <div>
+        <fa-icon
+        [icon]="faHeart"
+        class="icone-coracao-butao"
+        (click)="deletetFavorito(favorito)"
+      ></fa-icon>
+
+
+      </div>
+
       <div class="favorito-item-content">
         <div class="favorito-content">
           <img
@@ -26,6 +36,15 @@
           />
           <div class="favorito-desc">
             <h1>{{ favorito.produto.descricao }}</h1>
+
+            <div class="preco">
+              <span class="favorito-item-price precoAntigo">{{
+                favorito.produto.precoAntigo | currency : "BRL"
+              }}</span>
+              <h1>{{ favorito.produto.preco | currency : "BRL" }}</h1>
+              <p>À vista no Pix</p>
+            </div>
+
           </div>
         </div>
 
@@ -39,11 +58,6 @@
           </div>
 
           <div class="favorito-item-button">
-            <fa-icon
-              [icon]="faHeart"
-              class="icone-coracao-butao"
-              (click)="deletetFavorito(favorito)"
-            ></fa-icon>
 
             <button class="pi pi-shopping-cart">comprar</button>
           </div>
