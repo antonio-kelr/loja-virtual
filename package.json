@@ -5,9 +5,11 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:ssr": "ng build && ng run kaboom:server",
+
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:Kaboom": "node dist/kaboom/server/server.mjs"
+    "serve:ssr": "node dist/kaboom/server/main.js"
   },
   "private": true,
   "dependencies": {
