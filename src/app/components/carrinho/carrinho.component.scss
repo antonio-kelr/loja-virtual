@@ -1,6 +1,7 @@
 .carrinho-container {
   max-width: 1600px;
   margin: 0 auto;
+
   margin-bottom: 4rem !important;
 }
 
@@ -157,6 +158,7 @@
 .carregando,
 .erro,
 .nao-logado {
+  border: 1px solid red;
   text-align: center;
   padding: 40px 20px;
 

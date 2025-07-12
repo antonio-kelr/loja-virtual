@@ -2,9 +2,11 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faFacebook, faInstagram, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons';
+import { faFacebook, faInstagram, faTwitter, faYoutube, faPix,  } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope, faPhone, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { FormsModule } from '@angular/forms';
+import { faQrcode, faCreditCard, faBarcode } from '@fortawesome/free-solid-svg-icons'
+
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 
@@ -30,6 +32,9 @@ export class FooterComponent {
   faEnvelope = faEnvelope;
   faPhone = faPhone;
   faMapMarkerAlt = faMapMarkerAlt;
+  faPix = faPix
+  faCreditCard = faCreditCard
+  faBarcode = faBarcode
 
   email: string = '';
 

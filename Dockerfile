@@ -17,4 +17,4 @@ RUN npm install -g @angular/cli
 EXPOSE 4200
 
 # Corrige o CMD
-CMD ["ng", "serve", "--host", "0.0.0.0"]
+CMD ["npx", "ng", "serve", "--host", "0.0.0.0"]
