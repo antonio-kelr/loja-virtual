@@ -129,7 +129,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
       },
       error: (error) => {
-        console.error('Erro ao carregar carrinho no header:', error);
         this.qtdItensCarrinho = 0;
       }
     });

@@ -40,11 +40,11 @@ export const AuthGuard = () => {
           return false;
         }
 
-        // Verifica se o usuário é admin
-        if (tokenPayload.role !== 'admin') {
-          // Não é admin, não deixa entrar
-          return false;
-        }
+        // // Verifica se o usuário é admin
+        // if (tokenPayload.role !== 'admin') {
+        //   // Não é admin, não deixa entrar
+        //   return false;
+        // }
 
         // Token válido, usuário autenticado e é admin
         return true;

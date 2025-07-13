@@ -76,7 +76,6 @@ export class ConfirmacaoComponent implements OnInit {
         this.verificarCarregamentoCompleto();
       },
       error: (erro) => {
-        console.error('Erro ao carregar carrinho:', erro);
         this.erro = 'Erro ao carregar carrinho. Por favor, tente novamente.';
         this.carregando = false;
       }

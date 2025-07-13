@@ -92,12 +92,27 @@ export class CarrinhoComponent implements OnInit {
     this.carrinhoService.buscarCarrinhoDoServidor().subscribe({
       next: (dados) => {
         console.log('Dados do carrinho recebidos:', dados);
-        this.carrinho = dados;
+        // Garante que está pegando o objeto Carrinho correto
+        if (dados && dados.itens) {
+          this.carrinho = dados;
+        } else if (dados && dados.carrinho && dados.carrinho.itens) {
+          this.carrinho = dados.carrinho;
+        } else {
+          this.carrinho = {
+            id: 0,
+            userId: 0,
+            dataCriacao: '',
+            dataFinalizacao: null,
+            total: 0,
+            ativo: false,
+            user: null,
+            itens: []
+          };
+        }
         this.calcularTotal();
         this.carregando = false;
       },
       error: (error) => {
-        console.error('Erro ao carregar carrinho:', error);
         this.erro = 'Erro ao carregar os dados do carrinho. Tente novamente.';
         this.carregando = false;
       }
@@ -160,7 +175,8 @@ export class CarrinhoComponent implements OnInit {
         this.messageService.add({
           severity: 'success',
           summary: 'Sucesso',
-          detail: 'Produto removido do carrinho com sucesso!'
+          detail: 'Produto removido do carrinho com sucesso!',
+          life: 240000 // 4 minutos
         });
       },
       error: (error) => {
@@ -181,13 +197,22 @@ export class CarrinhoComponent implements OnInit {
   }
 
   calcularTotal(): void {
-    if (this.carrinho) {
+    if (this.carrinho && Array.isArray(this.carrinho.itens)) {
       this.total = this.carrinho.itens.reduce((acc, item) => {
         return acc + (item.precoUnitario * item.quantidade);
       }, 0);
+              // Mostra mensagem de sucesso
+                      // Mostra mensagem de sucesso
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Sucesso',
+          detail: 'Produto removido do carrinho com sucesso!',
+          life: 240000 // 4 minutos
+        });
+
 
       // Atualiza o total no serviço para compartilhar com outros componentes
-      this.carrinhoService.atualizarTotalCarrinho(this.total);
+    } else {
     }
   }
 

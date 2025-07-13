@@ -279,78 +279,7 @@ button.p-button:hover {
   border-top: 1px solid #e9ecef;
 }
 
-// Estilos para o toast
 :host ::ng-deep {
-  .p-toast {
-    z-index: 1000;
-  }
-
-  .p-toast .p-toast-message {
-    margin: 0 0 1rem 0;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-    border-radius: 6px;
-  }
-
-  .p-toast .p-toast-message .p-toast-message-content {
-    padding: 1rem;
-    border-width: 0 0 0 6px;
-  }
-
-  .p-toast .p-toast-message .p-toast-message-content .p-toast-message-text {
-    margin: 0 0 0 1rem;
-  }
-
-  .p-toast .p-toast-message .p-toast-message-content .p-toast-message-icon {
-    font-size: 1.5rem;
-  }
-
-  .p-toast .p-toast-message.p-toast-message-info {
-    background: #eff6ff;
-    border: solid #3b82f6;
-    border-width: 0 0 0 6px;
-    color: #1e40af;
-  }
-
-  .p-toast .p-toast-message.p-toast-message-info .p-toast-message-icon,
-  .p-toast .p-toast-message.p-toast-message-info .p-toast-icon-close {
-    color: #3b82f6;
-  }
-
-  .p-toast .p-toast-message.p-toast-message-success {
-    background: #f0fdf4;
-    border: solid #22c55e;
-    border-width: 0 0 0 6px;
-    color: #15803d;
-  }
-
-  .p-toast .p-toast-message.p-toast-message-success .p-toast-message-icon,
-  .p-toast .p-toast-message.p-toast-message-success .p-toast-icon-close {
-    color: #22c55e;
-  }
-
-  .p-toast .p-toast-message.p-toast-message-warn {
-    background: #fffbeb;
-    border: solid #f59e0b;
-    border-width: 0 0 0 6px;
-    color: #a16207;
-  }
-
-  .p-toast .p-toast-message.p-toast-message-warn .p-toast-message-icon,
-  .p-toast .p-toast-message.p-toast-message-warn .p-toast-icon-close {
-    color: #f59e0b;
-  }
-
-  .p-toast .p-toast-message.p-toast-message-error {
-    background: #fef2f2;
-    border: solid #ef4444;
-    border-width: 0 0 0 6px;
-    color: #b91c1c;
-  }
-
-  .p-toast .p-toast-message.p-toast-message-error .p-toast-message-icon,
-  .p-toast .p-toast-message.p-toast-message-error .p-toast-icon-close {
-    color: #ef4444;
-  }
   .p-select-label {
     color: #000000 !important;
   }

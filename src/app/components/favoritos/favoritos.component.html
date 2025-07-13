@@ -1,8 +1,5 @@
 <div class="favoritos-container">
-
-  <div *ngIf="isLoading" class="loading-spinner">
-    Carregando favoritos...
-  </div>
+  <div *ngIf="isLoading" class="loading-spinner">Carregando favoritos...</div>
 
   <div class="favoritos-header" *ngIf="!isLoading && favoritos.length > 0">
     <fa-icon [icon]="faHeart" class="icone-coracao"></fa-icon>
@@ -18,15 +15,13 @@
 
   <div class="favoritos-grid" *ngIf="!isLoading && favoritos.length > 0">
     <div class="favorito-item" *ngFor="let favorito of favoritos">
-      <div>
+      <span class="icon-remove">
         <fa-icon
-        [icon]="faHeart"
-        class="icone-coracao-butao"
-        (click)="deletetFavorito(favorito)"
-      ></fa-icon>
-
-
-      </div>
+          [icon]="faHeart"
+          class="icone-coracao-butao"
+          (click)="deletetFavorito(favorito)"
+        ></fa-icon>
+      </span>
 
       <div class="favorito-item-content">
         <div class="favorito-content">
@@ -44,7 +39,6 @@
               <h1>{{ favorito.produto.preco | currency : "BRL" }}</h1>
               <p>À vista no Pix</p>
             </div>
-
           </div>
         </div>
 
@@ -58,12 +52,10 @@
           </div>
 
           <div class="favorito-item-button">
-
             <button class="pi pi-shopping-cart">comprar</button>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 </div>

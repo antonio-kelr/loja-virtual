@@ -50,6 +50,8 @@
   }
 }
 
+
+
 .definir-endereco {
   background: white;
   border-radius: 8px;
@@ -158,8 +160,8 @@
 .carregando,
 .erro,
 .nao-logado {
-  border: 1px solid red;
   text-align: center;
+  height: 50vh;
   padding: 40px 20px;
 
   i {
@@ -188,7 +190,7 @@
 
 .erro {
   i {
-    color: #f44336;
+    color: var(--cor-primaria);
   }
 
   .btn-tentar-novamente {
@@ -402,22 +404,23 @@
     margin-bottom: 20px;
   }
 
-  .btn-continuar-comprando {
-    display: inline-block;
-    padding: 12px 24px;
-    background: var(--cor-primaria);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s ease;
+}
+.btn-continuar-comprando {
+  display: inline-block;
+  padding: 12px 24px;
+  background: var(--cor-primaria);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
 
-    &:hover {
-      background: var(--cor-primaria-escura);
-    }
+  &:hover {
+    background: var(--cor-primaria-escura);
   }
 }
+
 
 .resumo-pedido {
   background: #f9f9f9;

@@ -45,12 +45,11 @@
 
 <div class="carrinho-container">
   <div class="carrinho-content">
-    <!-- Estado de Erro -->
     <div class="erro" *ngIf="erro">
-      <i class="pi pi-exclamation-triangle"></i>
-      <p>{{ erro }}</p>
-      <button class="btn-tentar-novamente" (click)="carregarCarrinho()">
-        Tentar Novamente
+      <i class="pi pi-shopping-bag"></i>
+      <p>Seu carrinho está vazio</p>
+      <button class="btn-continuar-comprando" (click)="continuarComprando()">
+        Continuar Comprando
       </button>
     </div>
 
