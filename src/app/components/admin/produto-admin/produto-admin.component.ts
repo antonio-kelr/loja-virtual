@@ -14,6 +14,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { FileUpload, FileUploadHandlerEvent, FileUploadModule } from 'primeng/fileupload';
+import { log } from 'node:console';
 
 @Component({
   selector: 'app-produto-admin',
@@ -50,6 +51,8 @@ export class ProdutoAdminComponent implements OnInit {
   arquivosSelecionados: File[] = [];
 
 
+  mostrarModaAtualizar: boolean = false;
+  produtoParaEditar: Produto | null = null;
   // Modal de criação
   mostrarModalCriar: boolean = false;
   produtoNovo: any = {
@@ -168,6 +171,12 @@ export class ProdutoAdminComponent implements OnInit {
     });
   }
 
+  abrirModalAtualizar(produto: Produto): void {
+    this.produtoParaEditar = { ...produto }; // copia os dados para edição
+    console.log(`dados aQUI`, produto);
+
+    this.mostrarModaAtualizar = true;
+  }
   abrirModalCriar(): void {
     this.produtoNovo = {
       nome: '',
@@ -183,6 +192,42 @@ export class ProdutoAdminComponent implements OnInit {
   fecharModalCriar(): void {
     this.mostrarModalCriar = false;
     this.salvando = false;
+  }
+  fecharModalAtualizar(): void {
+    this.mostrarModaAtualizar = false;
+    this.produtoParaEditar = null;
+    this.salvando = false;
+  }
+
+  atualizarProduto(): void {
+    if (!this.produtoParaEditar) return;
+    this.salvando = true;
+
+    this.produtoService.atualizarProduto(this.produtoParaEditar.id, this.produtoParaEditar).subscribe({
+      next: (produtoAtualizado) => {
+        // Atualiza o produto na lista
+        const idx = this.produtos.findIndex(p => p.id === produtoAtualizado.id);
+        if (idx !== -1) {
+          this.produtos[idx] = produtoAtualizado;
+        }
+        this.produtosFiltrados = [...this.produtos];
+        this.fecharModalAtualizar();
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Sucesso',
+          detail: 'Produto atualizado com sucesso!'
+        });
+        this.cdr.detectChanges();
+      },
+      error: (erro) => {
+        this.salvando = false;
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Erro ao atualizar produto. Tente novamente.'
+        });
+      }
+    });
   }
 
   criarProduto(): void {
