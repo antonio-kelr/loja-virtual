@@ -2,11 +2,13 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../../services/user.service';
 import { UserProfile } from '../../../models/user-profile.model';
+import { FormsModule } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-usuario-admin',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,FormsModule],
   templateUrl: './usuario-admin.component.html',
   styleUrls: ['./usuario-admin.component.scss']
 })
@@ -17,7 +19,9 @@ export class UsuarioAdminComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private messageService: MessageService
+
   ) { }
 
   ngOnInit(): void {
@@ -73,20 +77,28 @@ export class UsuarioAdminComponent implements OnInit {
     }, 100);
   }
 
-  deletarUsuario(idUser: string): void {
-    if (confirm('Tem certeza que deseja deletar este usuário?')) {
-      console.log('Deletando usuário:', idUser);
-      this.userService.deleteUser(idUser).subscribe({
-        next: () => {
-          console.log('Usuário deletado com sucesso');
-          this.usuarios = this.usuarios.filter(u => u.idUser !== idUser);
-          this.cdr.detectChanges();
-        },
-        error: (err) => {
-          console.error('Erro ao deletar usuário:', err);
-          alert('Erro ao deletar usuário.');
-        }
-      });
-    }
+
+  atualizarUsuario(usuario: UserProfile) {
+    console.log(`valor`, usuario);
+
+    this.userService.updateUserProfile(usuario).subscribe({
+      next: (res) => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Sucesso',
+          detail: 'Usuário atualizado com sucesso!'
+        });
+        this.carregarUsuarios();
+      },
+      error: (err) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Erro ao atualizar usuário. Tente novamente.'
+        });
+        console.error(err);
+      }
+    });
   }
+
 }

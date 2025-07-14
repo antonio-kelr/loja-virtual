@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { ThemeService } from './services/theme.service';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -13,10 +14,14 @@ import { MessageService } from 'primeng/api';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'KaBum!';
+  title = 'Turbosetup';
 
-  constructor(private themeService: ThemeService) {
-    // O serviço já está configurado para lidar com mudanças de rota
-    // e definir o background adequadamente
+  constructor(private router: Router) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        window.scrollTo(0, 0); // volta para o topo
+      }
+    });
   }
+
 }

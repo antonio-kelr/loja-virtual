@@ -5,7 +5,7 @@ import { map, take } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID, Inject } from '@angular/core';
 
-export const AuthGuard = () => {
+export const AuthGuardMinhaConta = () => {
   const router = inject(Router);
   const authService = inject(AuthService);
   const platformId = inject(PLATFORM_ID);
@@ -37,12 +37,6 @@ export const AuthGuard = () => {
           localStorage.removeItem('token');
           localStorage.removeItem('userId');
           router.navigate(['/login']);
-          return false;
-        }
-
-        // Verifica se o usuário é admin
-        if (tokenPayload.role !== 'admin') {
-          // Não é admin, não deixa entrar
           return false;
         }
 

@@ -17,9 +17,14 @@
     <span>{{ usuario.email }}</span>
     <span>{{ usuario.dataNascimento | date:'dd/MM/yyyy' }}</span>
     <span>{{ usuario.ativo ? 'Ativo' : 'Inativo' }}</span>
-    <span>{{ usuario.role }}</span>
     <span>
-      <button (click)="deletarUsuario(usuario.idUser)" class="btn-delete">Deletar</button>
+      <select [(ngModel)]="usuario.role" class="usuario-role-select">
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select>
+    </span>
+    <span>
+      <button (click)="atualizarUsuario(usuario)" class="btn-delete">Atualizar</button>
     </span>
   </div>
 

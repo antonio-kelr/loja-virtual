@@ -17,6 +17,7 @@ import { MeusDadosComponent } from './components/meus-dados/meus-dados.component
 import { FavoritosComponent } from './components/favoritos/favoritos.component';
 import { ProdutoAdminComponent } from './components/admin/produto-admin/produto-admin.component';
 import { UsuarioAdminComponent } from './components/admin/usuarioAdmin/usuario-admin.component';
+import { AuthGuardMinhaConta } from './guards/minaConta.guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -32,6 +33,8 @@ export const routes: Routes = [
   {
     path: 'minha-conta',
     component: MinhaContaComponent,
+    canActivate: [AuthGuardMinhaConta],
+
     children: [
       { path: 'meus-dados', component: MeusDadosComponent },
       { path: 'meus-pedidos', component: MeusPedidosComponent },

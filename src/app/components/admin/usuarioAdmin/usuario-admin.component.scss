@@ -27,7 +27,7 @@
   border-bottom: none;
 }
 .btn-delete {
-  background: #e74c3c;
+  background: #1fc957;
   color: #fff;
   border: none;
   padding: 0.4rem 1rem;
@@ -36,5 +36,19 @@
   transition: background 0.2s;
 }
 .btn-delete:hover {
-  background: #c0392b;
+  background: #0ec74c;
+}
+.usuario-role-select {
+  padding: 0.3rem 0.8rem;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  background: #f9f9f9;
+  color: #333;
+  font-size: 1rem;
+  transition: border 0.2s;
+}
+.usuario-role-select:focus {
+  border: 1.5px solid var(--cor-primaria, #007bff);
+  outline: none;
+  background: #fff;
 }

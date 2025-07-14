@@ -379,4 +379,43 @@ export class MeusDadosComponent implements OnInit {
     return !!senhaAtual && !!novaSenha && !!confirmarNovaSenha && novaSenha.length >= 6;
   }
 
+  excluirConta(): void {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Erro',
+        detail: 'ID do usuário não encontrado',
+        life: 5000
+      });
+      return;
+    }
+
+    this.userServiceTrocaEmail.deleteUser(userId).subscribe({
+      next: () => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Conta excluída',
+          detail: 'Sua conta foi excluída com sucesso.',
+          life: 5000
+        });
+        // Logout após exclusão
+        setTimeout(() => {
+          localStorage.removeItem('userId');
+          localStorage.removeItem('token');
+          window.location.href = '/login';
+        }, 2000);
+      },
+      error: (error) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Erro ao excluir conta. Tente novamente.',
+          life: 5000
+        });
+        console.error(error);
+      }
+    });
+  }
+
 }
