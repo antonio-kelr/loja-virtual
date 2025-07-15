@@ -117,6 +117,7 @@ export class EnderecosComponent implements OnInit {
   salvarEndereco(): void {
     if (this.enderecoForm.valid && this.enderecoEditando) {
       const enderecoAtualizado = {
+        identificacao: this.enderecoForm.get('identificacao')?.value,
         cep: this.enderecoForm.get('cep')?.value,
         logradouro: this.enderecoForm.get('logradouro')?.value,
         numero: this.enderecoForm.get('numero')?.value,
@@ -147,8 +148,13 @@ export class EnderecosComponent implements OnInit {
     }
 }
   salvarNovoEndereco(): void {
+
+
+
     if (this.enderecoForm.valid) {
       const novoEndereco = this.enderecoForm.value;
+      console.log('Formulário', novoEndereco);
+
       this.enderecoService.criarEndereco(novoEndereco).subscribe({
         next: (endereco) => {
           console.log('Endereço criado com sucesso:', endereco);
@@ -159,7 +165,16 @@ export class EnderecosComponent implements OnInit {
         },
         error: (error) => {
           console.error('Erro ao criar endereço:', error);
-          this.erro = 'Erro ao criar endereço. Por favor, tente novamente.';
+          // Tenta pegar a mensagem detalhada do backend
+          if (error.error && typeof error.error === 'string') {
+            this.erro = error.error;
+          } else if (error.error && error.error.message) {
+            this.erro = error.error.message;
+          } else if (error.message) {
+            this.erro = error.message;
+          } else {
+            this.erro = 'Erro ao criar endereço. Por favor, tente novamente.';
+          }
         }
       });
     } else {
@@ -172,6 +187,30 @@ export class EnderecosComponent implements OnInit {
       });
     }
   }
+
+  deletarEndereco(id: number): void {
+    this.carregando = true;
+
+    this.enderecoService.deletarEndereco(id).subscribe({
+      next: () => {
+        console.log('Endereço excluído com sucesso');
+        // Fechar formulários e voltar para a lista de endereços
+        this.mostrarFormulario = false;
+        this.mostrarFormularioVolta = true;
+        this.mostrarNovoEndereco = false;
+        this.enderecoEditando = null;
+        this.carregarEnderecos(); // Recarrega a lista de endereços
+        this.cdRef.detectChanges();
+      },
+      error: (error) => {
+        console.error('Erro ao excluir endereço:', error);
+        this.erro = 'Erro ao excluir endereço. Por favor, tente novamente.';
+        this.carregando = false;
+        this.cdRef.detectChanges();
+      }
+    });
+  }
+
 
   toggleFormulario(): void {
     this.mostrarFormulario = !this.mostrarFormulario;

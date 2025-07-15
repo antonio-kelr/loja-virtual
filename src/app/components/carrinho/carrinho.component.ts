@@ -82,10 +82,9 @@ export class CarrinhoComponent implements OnInit {
   }
 
   irParaLogin(): void {
-    this.router.navigate(['/login']);
+    window.location.href = '/login';
   }
-
-  carregarCarrinho(): void {
+    carregarCarrinho(): void {
     this.carregando = true;
     this.erro = null;
 
@@ -176,7 +175,6 @@ export class CarrinhoComponent implements OnInit {
           severity: 'success',
           summary: 'Sucesso',
           detail: 'Produto removido do carrinho com sucesso!',
-          life: 240000 // 4 minutos
         });
       },
       error: (error) => {
@@ -201,17 +199,6 @@ export class CarrinhoComponent implements OnInit {
       this.total = this.carrinho.itens.reduce((acc, item) => {
         return acc + (item.precoUnitario * item.quantidade);
       }, 0);
-              // Mostra mensagem de sucesso
-                      // Mostra mensagem de sucesso
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Sucesso',
-          detail: 'Produto removido do carrinho com sucesso!',
-          life: 240000 // 4 minutos
-        });
-
-
-      // Atualiza o total no serviço para compartilhar com outros componentes
     } else {
     }
   }
@@ -225,7 +212,13 @@ export class CarrinhoComponent implements OnInit {
       });
       return;
     }
-    this.router.navigate(['/pagamento']);
+
+    // Navega para o pagamento passando o enderecoId
+    this.router.navigate(['/pagamento'], {
+      queryParams: {
+        enderecoId: this.enderecoSelecionado.id
+      }
+    });
   }
 
   continuarComprando(): void {

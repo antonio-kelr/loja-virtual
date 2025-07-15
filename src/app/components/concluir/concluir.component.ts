@@ -28,8 +28,9 @@ export class ConcluirComponent implements OnInit {
   qrCodeValue: string = '98984158711'; // Valor inicial para evitar erro de QR Code vazio
   enderecoId: number | null = null;
   itensCarrinho: any[] = [];
-  userId: number | null = null; // <- Adicione isso!
+  userId: number | null = null;
   carrinhoId: number | null = null;
+  pedidoCriado = false; // Flag para controlar se o pedido já foi criado
 
   constructor(
     private router: Router,
@@ -40,6 +41,8 @@ export class ConcluirComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
+      console.log('Parâmetros recebidos:', params);
+
       if (params['metodoPagamento']) {
         this.metodoPagamento = params['metodoPagamento'];
       }
@@ -58,6 +61,12 @@ export class ConcluirComponent implements OnInit {
         try {
           this.itensCarrinho = JSON.parse(params['itens']);
           console.log('itens carrinho:', this.itensCarrinho);
+
+          // Verifica a estrutura dos itens
+          if (this.itensCarrinho.length > 0) {
+            console.log('Estrutura do primeiro item:', this.itensCarrinho[0]);
+            console.log('Propriedades do primeiro item:', Object.keys(this.itensCarrinho[0]));
+          }
         } catch (e) {
           console.error('Erro ao converter itens do carrinho:', e);
         }
@@ -68,7 +77,7 @@ export class ConcluirComponent implements OnInit {
         console.log('carrinhoId:', this.carrinhoId);
       }
 
-      // CORRIGIDO: Salva o ID do usuário na propriedade da classe
+      // Obtém o ID do usuário do localStorage
       const userId = localStorage.getItem('userId');
       if (userId) {
         this.userId = Number(userId);
@@ -80,38 +89,90 @@ export class ConcluirComponent implements OnInit {
       }
 
       // Verifica se tudo está pronto para enviar o pedido
-      if (this.userId && this.enderecoId && this.itensCarrinho.length > 0) {
-        const payload = {
-          userId: this.userId,
-          EnderecoId: this.enderecoId,
-          itens: this.itensCarrinho,
-        };
-
-        console.log('dados AQUII', payload);
-
-        this.pedidoService.criarPedido(payload).subscribe({
-          next: (res) => {
-            console.log('Pedido criado com sucesso:', res);
-          },
-          error: (err) => {
-            console.error('Erro ao criar pedido:', err);
-          },
-        });
-      }
+      this.tentarCriarPedido();
     });
+  }
 
-    if (this.carrinhoId) {
-      this.carrinhoService.limparCarrinho().subscribe({
-        next: () => {
-          console.log('Carrinho limpo com sucesso.');
-        },
-        error: (err) => {
-          console.error('Erro ao limpar carrinho:', err);
-        }
-      });
+  private tentarCriarPedido(): void {
+    // Verifica se já tentou criar o pedido
+    if (this.pedidoCriado) {
+      console.log('Pedido já foi criado, não tentando novamente.');
+      return;
     }
 
+    // Verifica se todos os dados necessários estão disponíveis
+    if (!this.userId) {
+      console.warn('userId não disponível');
+      return;
+    }
 
+    if (!this.enderecoId) {
+      console.warn('enderecoId não disponível');
+      return;
+    }
+
+    if (!this.itensCarrinho || this.itensCarrinho.length === 0) {
+      console.warn('itensCarrinho não disponível ou vazio');
+      return;
+    }
+
+    // Verifica se o token está disponível
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.error('Token não encontrado no localStorage');
+      return;
+    }
+
+    console.log('Todos os dados necessários estão disponíveis, criando pedido...');
+    console.log('Token disponível:', token.substring(0, 20) + '...');
+
+    // Prepara os dados do pedido
+    const payload = {
+      userId: this.userId,
+      EnderecoId: this.enderecoId,
+      itens: this.itensCarrinho.map(item => ({
+        produtoId: item.produtoId,
+        quantidade: item.quantidade,
+        precoUnitario: item.precoUnitario
+      }))
+    };
+
+    console.log('Payload do pedido:', payload);
+    console.log('Estrutura dos itens processados:', payload.itens);
+
+    // Marca que já tentou criar o pedido
+    this.pedidoCriado = true;
+
+    this.pedidoService.criarPedido(payload).subscribe({
+      next: (res) => {
+        console.log('Pedido criado com sucesso:', res);
+
+        // Limpa o carrinho após criar o pedido com sucesso
+        if (this.carrinhoId) {
+          this.carrinhoService.limparCarrinho().subscribe({
+            next: () => {
+              console.log('Carrinho limpo com sucesso.');
+            },
+            error: (err) => {
+              console.error('Erro ao limpar carrinho:', err);
+            }
+          });
+        }
+      },
+      error: (err) => {
+        console.error('Erro ao criar pedido:', err);
+        console.error('Detalhes do erro:', {
+          status: err.status,
+          statusText: err.statusText,
+          message: err.message,
+          error: err.error,
+          url: err.url
+        });
+
+        // Reseta a flag para permitir nova tentativa
+        this.pedidoCriado = false;
+      },
+    });
   }
 
   private gerarQRCodePix(): void {

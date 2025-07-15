@@ -24,7 +24,7 @@ export class EnderecoService {
 
   criarEndereco(endereco: Omit<Endereco, 'id'>): Observable<Endereco> {
     const token = localStorage.getItem('token');
-    return this.http.post<Endereco>(this.apiUrl, { endereco }, {
+    return this.http.post<Endereco>(this.apiUrl, endereco, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
@@ -40,4 +40,15 @@ export class EnderecoService {
         'Content-Type': 'application/json'
       }
     });
-}}
+  }
+
+  deletarEndereco(id: number): Observable<void> {
+    const token = localStorage.getItem('token');
+    return this.http.delete<void>(`${this.apiUrl}/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+}

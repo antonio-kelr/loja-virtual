@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ResumoCarrinhoComponent } from '../resumo-carrinho/resumo-carrinho.component';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
@@ -30,8 +30,9 @@ export class PagamentoComponent implements OnInit {
   formaPagamentoSelecionada: string = 'pix';
   descontoPix: number = 0.1; // 10% de desconto
   etapaAtual: number = 2;
+  enderecoId: number | null = null; // Adiciona propriedade para enderecoId
 
-  // Dados do cartão para visualização em tempo real
+  // Dados do cartão de crédito
   numeroCartao: string = '';
   nomeCartao: string = '';
   validadeCartao: string = '';
@@ -39,7 +40,7 @@ export class PagamentoComponent implements OnInit {
   cpfCartao: string = '';
   dataNascimento: string = '';
 
-  // Estados de validação
+  // Validações do cartão
   numeroCartaoValido: boolean = true;
   validadeCartaoValida: boolean = true;
   cvvCartaoValido: boolean = true;
@@ -49,10 +50,19 @@ export class PagamentoComponent implements OnInit {
 
   constructor(
     private carrinhoService: CarrinhoService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    // Carrega o enderecoId dos queryParams
+    this.route.queryParams.subscribe(params => {
+      if (params['enderecoId']) {
+        this.enderecoId = Number(params['enderecoId']);
+        console.log('Endereço selecionado:', this.enderecoId);
+      }
+    });
+
     // Usa o total do serviço compartilhado
     this.carrinhoService.getTotalCarrinho().subscribe(total => {
       if (total > 0) {
@@ -105,7 +115,8 @@ export class PagamentoComponent implements OnInit {
       queryParams: {
         metodoPagamento: this.formaPagamentoSelecionada,
         valor: valorFinal,
-        desconto: this.calcularEconomia()
+        desconto: this.calcularEconomia(),
+        enderecoId: this.enderecoId
       }
     });
   }

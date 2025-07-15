@@ -136,10 +136,6 @@
     box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
   }
 
-  input.erro,
-  select.erro {
-    border-color: #dc3545;
-  }
 }
 
 .cep-group,
@@ -167,6 +163,7 @@
 
 .erro-mensagem {
   color: #dc3545;
+  text-align: left;
 
   font-size: 0.8rem;
   margin-top: 0.25rem;

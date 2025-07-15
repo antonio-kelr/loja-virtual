@@ -44,7 +44,6 @@ export const routes: Routes = [
   {
     path: 'complete-registration',
     component: CompleteRegistrationComponent,
-    canActivate: [AuthGuard]
   },
   {
     path: 'painel-administrativo',

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HeaderComponent } from '../header/header.component';
@@ -10,6 +10,7 @@ import { UserProfile } from '../../models/user-profile.model';
 import { ResumoCarrinhoComponent } from '../resumo-carrinho/resumo-carrinho.component';
 import { CheckoutStepsComponent } from '../checkout-steps/checkout-steps.component';
 import { NavComponent } from "../nav/nav.component";
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-confirmacao',
@@ -20,8 +21,9 @@ import { NavComponent } from "../nav/nav.component";
     FooterComponent,
     ResumoCarrinhoComponent,
     CheckoutStepsComponent,
-    NavComponent
-],
+    NavComponent,
+    ProgressSpinnerModule
+  ],
   templateUrl: './confirmacao.component.html',
   styleUrls: ['./confirmacao.component.scss']
 })
@@ -33,18 +35,24 @@ export class ConfirmacaoComponent implements OnInit {
   etapaAtual = 3; // Etapa de confirmação
   metodoPagamento: string = 'pix'; // Método de pagamento padrão
   mostrarDadosGrid2: boolean = false; // Nova propriedade para controlar a visibilidade
+  enderecoId: number | null = null; // Adiciona propriedade para enderecoId
 
   constructor(
     private carrinhoService: CarrinhoService,
     private userService: UserService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       if (params['metodoPagamento']) {
         this.metodoPagamento = params['metodoPagamento'];
+      }
+      if (params['enderecoId']) {
+        this.enderecoId = Number(params['enderecoId']);
+        console.log('Endereço recebido:', this.enderecoId);
       }
     });
     this.carregarDados();
@@ -53,17 +61,20 @@ export class ConfirmacaoComponent implements OnInit {
   private carregarDados() {
     this.carregando = true;
     this.erro = null;
+    this.cdr.detectChanges(); // Força a detecção de mudanças
 
     // Carregar dados do usuário
     this.userService.getUserProfile().subscribe({
       next: (dados) => {
         this.dadosUsuario = dados;
+        this.cdr.detectChanges(); // Força a detecção de mudanças
         this.carregarCarrinho();
       },
       error: (erro) => {
         console.error('Erro ao carregar dados do usuário:', erro);
         this.erro = 'Erro ao carregar dados do usuário. Por favor, tente novamente.';
         this.carregando = false;
+        this.cdr.detectChanges(); // Força a detecção de mudanças
       }
     });
   }
@@ -78,13 +89,18 @@ export class ConfirmacaoComponent implements OnInit {
       error: (erro) => {
         this.erro = 'Erro ao carregar carrinho. Por favor, tente novamente.';
         this.carregando = false;
+        this.cdr.detectChanges(); // Força a detecção de mudanças
       }
     });
   }
 
   private verificarCarregamentoCompleto() {
     if (this.dadosUsuario && this.carrinho) {
-      this.carregando = false;
+      // Simula um carregamento de 3 segundos
+      setTimeout(() => {
+        this.carregando = false;
+        this.cdr.detectChanges(); // Força a detecção de mudanças
+      }, 1000);
     }
   }
 
@@ -97,12 +113,14 @@ export class ConfirmacaoComponent implements OnInit {
 
   finalizarPedido(): void {
     this.carregando = true;
+    this.cdr.detectChanges(); // Força a detecção de mudanças
     this.router.navigate(['/concluir'], {
       queryParams: {
         metodoPagamento: this.metodoPagamento,
         valor: this.calcularTotal(),
         itens: JSON.stringify(this.carrinho?.itens),
-        carrinhoId: this.carrinho?.id
+        carrinhoId: this.carrinho?.id,
+        enderecoId: this.enderecoId
       }
     });
   }
@@ -113,5 +131,6 @@ export class ConfirmacaoComponent implements OnInit {
 
   toggleDadosFiscais(): void {
     this.mostrarDadosGrid2 = !this.mostrarDadosGrid2;
+    this.cdr.detectChanges(); // Força a detecção de mudanças
   }
 }

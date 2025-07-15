@@ -105,7 +105,56 @@
     font-weight: 700;
     text-transform: uppercase;
     color: rgb(182, 187, 194);
+
+    &.btn-excluir {
+      color: #dc3545;
+
+      &:hover {
+        color: #c82333;
+      }
+    }
   }
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.form-group input[type="text"] {
+  width: 100%;
+  padding: 12px 8px 12px 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.form-group label {
+  position: absolute;
+  left: 8px;
+  top: 12px;
+  color: #888;
+  padding: 0 4px;
+  transition: 0.2s;
+  pointer-events: none;
+  font-size: 16px;
+}
+
+.form-group input[type="text"]:focus + label,
+.form-group input[type="text"]:not(:placeholder-shown) + label {
+  top: -10px;
+  left: 4px;
+  font-size: 12px;
+  color: #1976d2;
+  z-index: 1;
+}
+
+
+
+// Ajuste para o label quando o input está com erro
+.form-group input.erro:focus + label,
+.form-group input.erro:not(:placeholder-shown) + label {
+  color: #e53935;
 }
 
 @media screen and (max-width:460px) {

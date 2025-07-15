@@ -81,10 +81,26 @@ export class AuthService {
     });
   }
 
+  // Função para verificar se o perfil está completo (sem valores padrão/vazios)
+  private isProfileComplete(profile: UserProfile): boolean {
+    console.log('Verificando perfil:', profile);
+    return !!(
+      profile.nome &&
+      profile.email &&
+      profile.senha && profile.senha.trim() !== '' &&
+      profile.cpf && profile.cpf !== '00000000000' &&
+      profile.dataNascimento && profile.dataNascimento !== '2025-07-14' &&
+      profile.genero && profile.genero !== 'Não informado' &&
+      profile.telefone && profile.telefone.trim() !== ''
+    );
+  }
+
   private async verificarCadastroCompleto(userId: number): Promise<boolean> {
     try {
       const profile = await firstValueFrom(this.getUserProfile());
-      return !!profile.nome && !!profile.cpf; // Verifica se tem nome e CPF cadastrados
+      console.log('Verificando perfil:', profile); // Mantenha esse log
+      return this.isProfileComplete(profile);
+      return this.isProfileComplete(profile);
     } catch (error) {
       console.error('Erro ao verificar cadastro:', error);
       return false;

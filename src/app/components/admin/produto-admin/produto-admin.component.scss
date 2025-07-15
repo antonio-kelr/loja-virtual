@@ -147,7 +147,6 @@
   color: #fff !important; // ou a cor que preferir para o texto
 }
 
-
 .p-button-primary,
 .p-button.p-button-primary,
 button.p-button-primary,
@@ -296,5 +295,23 @@ button.p-button:hover {
   .p-dialog-footer {
     background: white !important;
     border-top: 1px solid #e9ecef !important;
+  }
+
+  .p-select {
+    background: var(--cor-primaria);
+    border: 1px solid var(--cor-primaria);
+  }
+  .p-select-label {
+    color: white !important;
+  }
+  .p-paginator-page.p-paginator-page-selected {
+    color: white !important;
+  }
+  .p-paginator-page,
+  .p-paginator-next,
+  .p-paginator-last,
+  .p-paginator-first,
+  .p-paginator-prev {
+    background: var(--cor-primaria) !important;
   }
 }
