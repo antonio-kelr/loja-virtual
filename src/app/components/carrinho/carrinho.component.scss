@@ -1,6 +1,10 @@
 .carrinho-container {
   max-width: 1600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 0 auto;
+  height: 70vh;
 
   margin-bottom: 4rem !important;
 }
